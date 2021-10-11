@@ -1,0 +1,26 @@
+{
+  "name": "hotel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "*hotel*\r >Hotel MERN app (task on subject \"Structures and databases\" in BSUIR)",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index",
+    "test": "concurrently \"npm run dev --prefix server\" \"npm run start --prefix client\"",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IIPEKOLICT/hotel.git"
+  },
+  "keywords": [],
+  "author": "IIREKOLICT <iipekolict@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IIPEKOLICT/hotel/issues"
+  },
+  "homepage": "https://github.com/IIPEKOLICT/hotel#readme",
+  "dependencies": {
+    "concurrently": "^6.3.0"
+  }
+}

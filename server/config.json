@@ -1,0 +1,10 @@
+{
+    "PORT": 5000,
+    "mongo": {
+        "url": "mongodb+srv://admin:123@cluster0.j4r44.mongodb.net/main?retryWrites=true&w=majority",
+        "options": {
+            "useNewUrlParser": true,
+            "useUnifiedTopology": true
+        }
+    }
+}
