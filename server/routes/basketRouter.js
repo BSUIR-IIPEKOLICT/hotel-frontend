@@ -1,6 +1,6 @@
 const {Router} = require('express')
 const router = Router()
-const controller = require('../controllers/ClientController')
+const controller = require('../controllers/BasketController')
 
 router.get('/', controller.get)
 router.get('/current', controller.current)

@@ -1,5 +1,7 @@
 const Room = require('../models/Room')
 const Building = require('../models/Building')
+const Order = require('../models/Order')
+const Basket = require('../models/Basket')
 
 class RoomController {
     async get(req, res) {
@@ -10,7 +12,7 @@ class RoomController {
     }
 
     async current(req, res) {
-        const {_id} = req.query
+        const {_id} = req.param
 
         const item = await Room.findById(_id).lean()
         return res.json({item})
@@ -27,15 +29,25 @@ class RoomController {
         })
 
         await room.save()
-        await Building.updateOne({_id: _building}, {$push: {_rooms: room['_id']}})
+        await Building.updateOne({_id: _building}, {$push: {_rooms: room.id}})
 
         return res.json({message: 'Success'})
     }
 
     async delete(req, res) {
         const {_id} = req.body
+        const room = await Room.findById(_id).lean()
 
-        await Room.deleteOne({_id})
+        await Building.updateOne({_id: room['_building']}, {$pull: {_rooms: room['_id']}})
+        const order = await Order.find({_room: room['_id']}).lean()
+
+        if (order) {
+            await Basket.updateOne({_id: order['_basket']}, {$pull: {_orders: order['_id']}})
+            await Order.deleteOne(order)
+        }
+
+        await Room.deleteOne(room)
+
         return res.json({message: 'Success'})
     }
 }

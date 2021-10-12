@@ -1,6 +1,6 @@
 const {Schema, model, Types} = require('mongoose')
 
-module.exports = model('Client', new Schema({
+module.exports = model('Basket', new Schema({
     _user: {
         type: Types.ObjectId,
         require: true,
@@ -11,9 +11,5 @@ module.exports = model('Client', new Schema({
             type: Types.ObjectId,
             ref: 'Order'
         }
-    ],
-    name: {
-        type: String,
-        require: true
-    }
+    ]
 }))

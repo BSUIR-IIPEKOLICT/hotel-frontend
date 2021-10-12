@@ -1,12 +1,12 @@
 const Order = require('../models/Order')
-const Client = require('../models/Client')
+const Basket = require('../models/Basket')
 const Room = require('../models/Room')
 
 class OrderController {
     async get(req, res) {
-        const {_client} = req.body
+        const {_basket} = req.body
 
-        const orders = await Order.find({_id: _client}).lean()
+        const orders = await Order.find({_basket}).lean()
         return res.json({orders})
     }
 
@@ -18,10 +18,10 @@ class OrderController {
     }
 
     async create(req, res) {
-        const {_client, _room, _services, population, date} = req.body
+        const {_basket, _room, _services, population, date} = req.body
 
         const order = await new Order({
-            _client,
+            _basket,
             _room,
             _services,
             population,
@@ -29,7 +29,7 @@ class OrderController {
         })
 
         await order.save()
-        await Client.updateOne({_id: _client}, {$push: {_orders: order['_id']}})
+        await Basket.updateOne({_id: _basket}, {$push: {_orders: order['_id']}})
         await Room.updateOne({_id: _room}, {$set: {isFree: false}})
         await Room.updateOne({_id: _room}, {$set: {population}})
 
@@ -40,8 +40,9 @@ class OrderController {
         const {_id} = req.body
         const order = await Order.findById(_id)
 
+        await Basket.updateOne({_id: order['_basket']}, {$pull: {_orders: order['_id']}})
         await Room.updateOne({_id: order['_room']}, {$set: {isFree: true}})
-        await Order.deleteOne({_id})
+        await Order.deleteOne(order)
 
         return res.json({message: 'Success'})
     }

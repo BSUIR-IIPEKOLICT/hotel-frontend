@@ -1,10 +1,10 @@
 const {Schema, model, Types} = require('mongoose')
 
 module.exports = model('Order', new Schema({
-    _client: {
+    _basket: {
         type: Types.ObjectId,
         require: true,
-        ref: 'Client'
+        ref: 'Basket'
     },
     _room: {
         type: Types.ObjectId,
