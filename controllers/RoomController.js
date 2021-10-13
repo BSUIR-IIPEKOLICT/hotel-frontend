@@ -31,7 +31,7 @@ class RoomController {
         await room.save()
         await Building.updateOne({_id: _building}, {$push: {_rooms: room.id}})
 
-        return res.json({message: 'Success'})
+        return res.json({message: 'Success', id: room.id})
     }
 
     async delete(req, res) {

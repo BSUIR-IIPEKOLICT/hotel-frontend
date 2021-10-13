@@ -10,7 +10,7 @@ const generateToken = user => {
         {
             id: user['_id'],
             email: user.email,
-            isAmin: user.isAdmin
+            role: user.role
         },
         secret,
         {expiresIn: '24h'}
@@ -19,7 +19,7 @@ const generateToken = user => {
 
 class UserController {
     async register(req, res, next) {
-        const {email, password, isAdmin} = req.body
+        const {email, password, role} = req.body
 
         if (!email || !password) return next(ApiError.badRequest('Invalid login data'))
 
@@ -28,7 +28,7 @@ class UserController {
         if (candidate.length) return next(ApiError.badRequest('User with that email already exists'))
 
         const hashPassword = await bcrypt.hash(password, 5)
-        const user = await new User({email, password: hashPassword, isAdmin})
+        const user = await new User({email, password: hashPassword, role})
         const token = generateToken(user)
 
         await new Basket({_user: user['_id']}).save()
@@ -48,12 +48,9 @@ class UserController {
         return res.json({token})
     }
 
-    async auth(req, res, next) {
-        const {id} = req.query
-
-        if (!id) return next(ApiError.badRequest('No id'))
-
-        res.json({message: id})
+    async auth(req, res) {
+        const token = generateToken(req.user)
+        return res.json({token})
     }
 }
 

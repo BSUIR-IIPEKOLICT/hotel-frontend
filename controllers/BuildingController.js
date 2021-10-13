@@ -18,8 +18,8 @@ class BuildingController {
 
     async delete(req, res) {
         const {_id} = req.body
-        const building = Building.findById(_id).lean()
-        const rooms = Room.find({_building: building['_id']}).lean()
+        const building = await Building.findById(_id).lean()
+        const rooms = await Room.find({_building: building['_id']}).lean()
 
         await rooms.map(v => {
             const order = Order.findOne({_room: v['_id']}).lean()
@@ -29,7 +29,7 @@ class BuildingController {
         })
 
         await Room.deleteMany({_building: building['_id']})
-        await Building.deleteOne({_id})
+        await Building.deleteOne(building)
 
         return res.json({message: 'Success'})
     }

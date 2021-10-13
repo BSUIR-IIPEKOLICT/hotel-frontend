@@ -1,10 +1,11 @@
 const {Router} = require('express')
 const router = Router()
 const controller = require('../controllers/RoomController')
+const RoleMiddleware = require('../middleware/RoleMiddleware')
 
 router.get('/', controller.get)
 router.get('/:id', controller.current)
-router.put('/', controller.create)
-router.delete('/', controller.delete)
+router.put('/', RoleMiddleware('admin'), controller.create)
+router.delete('/', RoleMiddleware('admin'), controller.delete)
 
 module.exports = router

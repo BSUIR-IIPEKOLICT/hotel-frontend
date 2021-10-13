@@ -5,6 +5,10 @@ module.exports = class ApiError extends Error {
         this.message = message
     }
 
+    static authError(message) {
+        return new ApiError(401, message)
+    }
+
     static badRequest(message) {
         return new ApiError(404, message)
     }

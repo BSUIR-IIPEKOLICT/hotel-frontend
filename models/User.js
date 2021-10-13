@@ -10,9 +10,9 @@ module.exports = model('User', new Schema({
         type: String,
         require: true
     },
-    isAdmin: {
-        type: Boolean,
-        default: false,
+    role: {
+        type: String,
+        default: 'client',
         require: true
     }
 }))
