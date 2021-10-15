@@ -12,28 +12,29 @@ class TypeController {
     async create(req, res) {
         const {_services, name, places} = req.body
 
-        new Type({
+        const type = await new Type({
             _services,
             name,
             places
-        }).save()
+        })
+        await type.save()
 
-        return res.json({message: 'Success'})
+        return res.json('Success')
     }
 
     async delete(req, res) {
         const {_id} = req.body
-        const type = Type.findById(_id)
-        const rooms = Room.find({_type: type['_id']})
+        const type = await Type.findById(_id).lean()
+        const rooms = await Room.find({_type: _id}).lean()
 
-        await rooms.map(v => {
-            Building.updateMany({}, {$pull: {_rooms: v['_id']}})
-            Order.deleteOne({_room: v['_id']})
+        await rooms.map(({_id}) => {
+            Building.updateMany({}, {$pull: {_rooms: _id}})
+            Order.deleteOne({_room: _id})
         })
 
-        await Type.deleteOne({_id})
+        await Type.deleteOne(type)
 
-        return res.json({message: 'Success'})
+        return res.json('Success')
     }
 }
 

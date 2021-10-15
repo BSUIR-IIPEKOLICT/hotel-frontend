@@ -5,25 +5,27 @@ const Order = require('../models/Order')
 class ServiceController {
     async get(req, res) {
         const services = await Service.find({}).lean()
-        return res.json({services})
+        return res.json(services)
     }
 
     async create(req, res) {
         const {name, price} = req.body
 
-        await new Service({name, price}).save()
-        return res.json({message: 'Success'})
+        const service = await new Service({name, price})
+        await service.save()
+
+        return res.json(service)
     }
 
     async delete(req, res) {
         const {_id} = req.body
-        const service = await Service.findById(_id)
+        const service = await Service.findById(_id).lean()
 
-        await Type.updateMany({}, {$pull: {_services: service['_id']}})
-        await Order.updateMany({}, {$pull: {_services: service['_id']}})
-        await Service.deleteOne({_id})
+        await Type.updateMany({}, {$pull: {_services: _id}})
+        await Order.updateMany({}, {$pull: {_services: _id}})
+        await Service.deleteOne(service)
 
-        return res.json({message: 'Success'})
+        return res.json('Success')
     }
 }
 

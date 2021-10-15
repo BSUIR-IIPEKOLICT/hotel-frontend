@@ -1,14 +1,14 @@
-import {AdminPage} from '../pages/AdminPage'
+import {CreatePage} from '../pages/CreatePage'
 import {BasketPage} from '../pages/BasketPage'
 import {RoomPage} from '../pages/RoomPage'
 import {MainPage} from '../pages/MainPage'
 import {AuthPage} from '../pages/AuthPage'
-import {adminRoute, basketRoute, loginRoute, mainRoute, registerRoute, roomRoute} from './constants'
+import {createRoute, basketRoute, loginRoute, mainRoute, registerRoute, roomRoute} from './constants'
 
 export const authRoutes = [
     {
-        path: adminRoute,
-        component: AdminPage
+        path: createRoute,
+        component: CreatePage
     },
     {
         path: basketRoute,

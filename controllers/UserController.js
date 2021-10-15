@@ -4,13 +4,13 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const Basket = require('../models/Basket')
 const {secret} = require('../config.json')
+const {objectId} = require('../db')
 
 const generateToken = user => {
     return jwt.sign(
         {
-            id: user['_id'],
-            email: user.email,
-            role: user.role
+            id: user._id,
+            email: user.email
         },
         secret,
         {expiresIn: '24h'}
@@ -19,7 +19,8 @@ const generateToken = user => {
 
 class UserController {
     async register(req, res, next) {
-        const {email, password, role} = req.body
+        const {email, password} = req.body
+        const id = objectId()
 
         if (!email || !password) return next(ApiError.badRequest('Invalid login data'))
 
@@ -28,13 +29,18 @@ class UserController {
         if (candidate.length) return next(ApiError.badRequest('User with that email already exists'))
 
         const hashPassword = await bcrypt.hash(password, 5)
-        const user = await new User({email, password: hashPassword, role})
+        const user = await new User({
+            _id: id,
+            email,
+            password: hashPassword
+        })
         const token = generateToken(user)
 
-        await new Basket({_user: user['_id']}).save()
+        const basket = await new Basket({_user: id})
+        await basket.save()
         await user.save()
 
-        return res.json({token})
+        return res.json(token)
     }
 
     async login(req, res, next) {
@@ -44,13 +50,11 @@ class UserController {
         if (!user) return next(ApiError.internal('User not exists'))
         if (!bcrypt.compareSync(password, user.password)) return next(ApiError.internal('Invalid password'))
 
-        const token = generateToken(user)
-        return res.json({token})
+        return res.json(generateToken(user))
     }
 
     async auth(req, res) {
-        const token = generateToken(req.user)
-        return res.json({token})
+        return res.json(generateToken(req.user))
     }
 }
 

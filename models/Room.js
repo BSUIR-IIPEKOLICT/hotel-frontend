@@ -11,6 +11,10 @@ module.exports = model('Room', new Schema({
         require: true,
         ref: 'Type'
     },
+    _order: {
+        type: Types.ObjectId,
+        ref: 'Order'
+    },
     isFree: {
         type: Boolean,
         require: true,

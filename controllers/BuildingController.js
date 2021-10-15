@@ -5,33 +5,34 @@ const Basket = require('../models/Basket')
 
 class BuildingController {
     async get(req, res) {
-        const buildings = await Building.find({}).lean()
-        return res.json({buildings})
+        const buildings = await Building.find({}).populate('_rooms').lean()
+        return res.json(buildings)
     }
 
     async create(req, res) {
         const {address} = req.body
 
-        await new Building({address}).save()
-        return res.json({message: 'Success'})
+        const building = await new Building({address})
+        await building.save()
+
+        return res.json(building)
     }
 
     async delete(req, res) {
         const {_id} = req.body
-        const building = await Building.findById(_id).lean()
-        const rooms = await Room.find({_building: building['_id']}).lean()
+        const building = await Building.findById(_id).populate('_rooms').lean()
 
-        await rooms.map(v => {
-            const order = Order.findOne({_room: v['_id']}).lean()
+        building._rooms.map(async ({_id}) => {
+            const order = await Order.findOne({_room: _id}).lean()
 
-            Basket.updateOne({_id: order['_basket']}, {$pull: {_orders: order['_id']}})
-            Order.deleteOne(order)
+            await Basket.updateOne({_id: order._basket}, {$pull: {_orders: order._id}})
+            await Order.deleteOne(order)
+            await Room.deleteOne({_id})
         })
 
-        await Room.deleteMany({_building: building['_id']})
-        await Building.deleteOne(building)
+        await Building.deleteOne({_id: building._id})
 
-        return res.json({message: 'Success'})
+        return res.json('Success')
     }
 }
 

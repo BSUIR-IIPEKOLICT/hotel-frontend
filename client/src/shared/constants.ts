@@ -1,4 +1,4 @@
-export const adminRoute = '/admin'
+export const createRoute = '/create'
 export const loginRoute = '/login'
 export const registerRoute = '/register'
 export const basketRoute = '/basket'

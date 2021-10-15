@@ -2,7 +2,7 @@ const ApiError = require('../errors/ApiError')
 const jwt = require('jsonwebtoken')
 const {secret} = require('../config.json')
 
-module.exports = (req, res, next, role) => {
+module.exports = (req, res, next, roles) => {
     if (req.method === 'OPTIONS') return next()
 
     try {
@@ -12,8 +12,8 @@ module.exports = (req, res, next, role) => {
 
         const decoded = jwt.verify(token, secret)
 
-        if (role) {
-            if (decoded.role !== role) return next(ApiError.forbidden('No access'))
+        if (roles) {
+            if (roles.indexOf(decoded.role) === -1) return next(ApiError.forbidden('No access'))
         }
 
         req.user = decoded

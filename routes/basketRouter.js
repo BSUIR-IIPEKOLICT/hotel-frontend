@@ -1,10 +1,8 @@
 const {Router} = require('express')
 const router = Router()
 const controller = require('../controllers/BasketController')
+const RoleMiddleware = require('../middleware/RoleMiddleware')
 
-router.get('/', controller.get)
-router.get('/current', controller.current)
-router.put('/', controller.create)
-router.delete('/', controller.delete)
+router.get('/', RoleMiddleware(['admin']), controller.get)
 
 module.exports = router

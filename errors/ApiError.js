@@ -1,3 +1,5 @@
+const {UNAUTHORIZED, FORBIDDEN, NOT_FOUND, INTERNAL_SERVER_ERROR} = require('./statusCode')
+
 module.exports = class ApiError extends Error {
     constructor(status, message) {
         super()
@@ -6,18 +8,18 @@ module.exports = class ApiError extends Error {
     }
 
     static authError(message) {
-        return new ApiError(401, message)
-    }
-
-    static badRequest(message) {
-        return new ApiError(404, message)
-    }
-
-    static internal(message) {
-        return new ApiError(500, message)
+        return new ApiError(UNAUTHORIZED, message)
     }
 
     static forbidden(message) {
-        return new ApiError(403, message)
+        return new ApiError(FORBIDDEN, message)
+    }
+
+    static badRequest(message) {
+        return new ApiError(NOT_FOUND, message)
+    }
+
+    static internal(message) {
+        return new ApiError(INTERNAL_SERVER_ERROR, message)
     }
 }
