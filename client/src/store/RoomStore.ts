@@ -1,29 +1,105 @@
-import {makeAutoObservable} from 'mobx'
+import {action, computed, makeAutoObservable} from 'mobx'
+import {Room} from '../interfaces/models'
+import {RoomResponse} from '../interfaces/responses'
 
 export default class RoomStore {
 
-    private _rooms: Array<any>
-    private _room: Object
+    private _rooms: RoomResponse[]
+    private _current: Room
 
     constructor() {
-        this._rooms = []
-        this._room = {}
+        this._rooms = [
+            {
+                _id: '1',
+                _building: {
+                    _id: '123',
+                    _rooms: [],
+                    address: 'zalupa str. 14/88'
+                },
+                _type: {
+                    _id: '34567',
+                    name: 'VIP',
+                    _services: [],
+                    places: 3
+                },
+                _order: {
+                    _id: '44545',
+                    _basket: '43434',
+                    _room: '4343',
+                    _services: [],
+                    date: '34343'
+                },
+                isFree: true,
+                population: 4
+            },
+            {
+                _id: '2',
+                _building: {
+                    _id: '123',
+                    _rooms: [],
+                    address: 'zalupa str. 14/88'
+                },
+                _type: {
+                    _id: '34567',
+                    name: 'VIP',
+                    _services: [],
+                    places: 3
+                },
+                _order: {
+                    _id: '44545',
+                    _basket: '43434',
+                    _room: '4343',
+                    _services: [],
+                    date: '34343'
+                },
+                isFree: true,
+                population: 4
+            },
+            {
+                _id: '3',
+                _building: {
+                    _id: '123',
+                    _rooms: [],
+                    address: 'zalupa str. 14/88'
+                },
+                _type: {
+                    _id: '34567',
+                    name: 'VIP',
+                    _services: [],
+                    places: 3
+                },
+                _order: {
+                    _id: '44545',
+                    _basket: '43434',
+                    _room: '4343',
+                    _services: [],
+                    date: '34343'
+                },
+                isFree: true,
+                population: 4
+            }
+        ]
+        this._current = {} as Room
         makeAutoObservable(this)
     }
 
-    setRooms(value: Array<any>) {
+    @action
+    setRooms(value: RoomResponse[]) {
         this._rooms = value
     }
 
-    setRoom(value: Object) {
-        this._room = value
+    @action
+    setCurrent(room: Room) {
+        this._current = room
     }
 
+    @computed
     get rooms() {
         return this._rooms
     }
 
-    get room() {
-        return this._room
+    @computed
+    get current() {
+        return this._current
     }
 }

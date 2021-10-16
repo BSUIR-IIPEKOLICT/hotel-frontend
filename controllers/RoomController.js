@@ -6,17 +6,26 @@ const {objectId} = require('../db')
 
 class RoomController {
     async get(req, res) {
-        let {_building, _type, page, limit} = req.query
+        let {_building, _type, page, limit, isFree} = req.query
 
+        isFree = isFree || true
         page = page || 1
         limit = limit || 20
         const offset = page * limit - limit
 
         let rooms
-        if (!_building && !_type) rooms = await Room.find({}).skip(offset).limit(limit).lean()
-        if (_building && !_type) rooms = await Room.find({_building}).skip(offset).limit(limit).lean()
-        if (!_building && _type) rooms = await Room.find({_type}).skip(offset).limit(limit).lean()
-        if (_building && _type) rooms = await Room.find({_building, _type}).skip(offset).limit(limit).lean()
+        if (!_building && !_type) {
+            rooms = await Room.find({isFree}).skip(offset).limit(limit).lean()
+        }
+        if (_building && !_type) {
+            rooms = await Room.find({_building, isFree}).skip(offset).limit(limit).lean()
+        }
+        if (!_building && _type) {
+            rooms = await Room.find({_type, isFree}).skip(offset).limit(limit).lean()
+        }
+        if (_building && _type) {
+            rooms = await Room.find({_building, _type, isFree}).skip(offset).limit(limit).lean()
+        }
 
         return res.json(rooms)
     }
@@ -51,14 +60,14 @@ class RoomController {
         const room = await Room.findById(_id).populate('_order').lean()
 
         await Building.updateOne({_id: room._building}, {$pull: {_rooms: _id}})
-        const order = await Order.findById(room._order._id).lean()
 
-        if (order) {
-            await Basket.updateOne({_id: order._basket}, {$pull: {_orders: order._id}})
-            await Order.deleteOne(order)
+        if (room._order) {
+            const {_id, _basket} = room._order
+            await Basket.updateOne({_id: _basket}, {$pull: {_orders: _id}})
+            await Order.deleteOne({_id})
         }
 
-        await Room.deleteOne({_id: room._id})
+        await Room.deleteOne({_id})
 
         return res.json('Success')
     }

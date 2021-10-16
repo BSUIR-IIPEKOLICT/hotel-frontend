@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import {Context} from '../index'
 import {observer} from 'mobx-react-lite'
+import {NavLink} from 'react-router-dom'
+import {loginRoute, registerRoute} from '../shared/constants'
 
 export const Nav: React.FC = observer(() => {
     const {user} = useContext(Context)
@@ -18,7 +20,7 @@ export const Nav: React.FC = observer(() => {
                         Hotel app
                     </Typography>
 
-                    {user.isAuth && user.role === 'admin' && (
+                    {user.isAuth && user.user.role === 'admin' && (
                         <Button variant={'outlined'} color='inherit' sx={{mx: 1}}>Create</Button>
                     )}
 
@@ -28,8 +30,12 @@ export const Nav: React.FC = observer(() => {
 
                     {!user.isAuth && (
                         <Box>
-                            <Button variant={'outlined'} color='inherit' sx={{mx: 1}}>Register</Button>
-                            <Button variant={'outlined'} color='inherit' sx={{mx: 1}}>Login</Button>
+                            <NavLink to={registerRoute}>
+                                <Button variant={'outlined'} color='inherit' sx={{mx: 1}}>Register</Button>
+                            </NavLink>
+                            <NavLink to={loginRoute}>
+                                <Button variant={'outlined'} color='inherit' sx={{mx: 1}}>Login</Button>
+                            </NavLink>
                         </Box>
                     )}
                 </Toolbar>

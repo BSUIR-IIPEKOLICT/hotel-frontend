@@ -1,15 +1,14 @@
 import {makeAutoObservable} from 'mobx'
+import {User} from "../interfaces/models";
 
 export default class UserStore {
 
     private _isAuth: boolean
-    private _role: string
-    private _user: Object
+    private _user: User
 
     constructor() {
         this._isAuth = false
-        this._user = {}
-        this._role = ''
+        this._user = {} as User
         makeAutoObservable(this)
     }
 
@@ -17,12 +16,8 @@ export default class UserStore {
         this._isAuth = value
     }
 
-    setUser(user: Object) {
+    setUser(user: User) {
         this._user = user
-    }
-
-    setRole(value: string) {
-        this._role = value
     }
 
     get isAuth() {
@@ -31,9 +26,5 @@ export default class UserStore {
 
     get user() {
         return this._user
-    }
-
-    get role() {
-        return this._role
     }
 }

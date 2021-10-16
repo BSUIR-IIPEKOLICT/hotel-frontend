@@ -9,18 +9,19 @@ import RoomStore from './store/RoomStore'
 import ServiceStore from './store/ServiceStore'
 import TypeStore from './store/TypeStore'
 import OrderStore from './store/OrderStore'
+import {AppStore} from './interfaces/types'
 
-export const Context = createContext(null) as any
+export const Context = createContext<AppStore>({} as AppStore)
 
 ReactDOM.render(
     <Context.Provider value={{
         user: new UserStore(),
         basket: new BasketStore(),
-        buildings: new BuildingStore(),
+        building: new BuildingStore(),
         room: new RoomStore(),
-        services: new ServiceStore(),
-        types: new TypeStore(),
-        orders: new OrderStore()
+        service: new ServiceStore(),
+        type: new TypeStore(),
+        order: new OrderStore()
     }}>
         <App />
     </Context.Provider>,

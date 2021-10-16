@@ -7,7 +7,7 @@ import {loginRoute, registerRoute} from '../shared/constants'
 export const AuthPage: React.FC = () => {
     const location = useLocation()
     const isRegister = location.pathname === registerRoute
-    const theme = useTheme()
+    const {palette} = useTheme()
 
     return (
         <div className="container">
@@ -45,7 +45,7 @@ export const AuthPage: React.FC = () => {
                     }}>
                         <Typography component='div'>
                             {isRegister ? 'Already have account? ' : `Don't have account? `}
-                            <Typography component='span' sx={{color: theme.palette.primary.main}}>
+                            <Typography component='span' sx={{color: palette.primary.main}}>
                                 <NavLink to={isRegister ? loginRoute : registerRoute}>
                                     {isRegister ? ' Login' : 'Register'}
                                 </NavLink>
