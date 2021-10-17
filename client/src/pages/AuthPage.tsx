@@ -1,13 +1,36 @@
-import React from 'react'
+import React, {useContext, useState} from 'react'
 import {Box, Button, Container, TextField, useTheme} from '@mui/material'
 import Typography from '@mui/material/Typography'
-import {NavLink, useLocation} from 'react-router-dom'
-import {loginRoute, registerRoute} from '../shared/constants'
+import {NavLink, useHistory, useLocation} from 'react-router-dom'
+import {loginRoute, mainRoute, registerRoute} from '../shared/constants'
+import {register, login} from '../http/userAPI'
+import {Context} from '../index'
+import {User} from '../interfaces/models'
+import {observer} from 'mobx-react-lite'
 
-export const AuthPage: React.FC = () => {
+export const AuthPage: React.FC = observer(() => {
     const location = useLocation()
     const isRegister = location.pathname === registerRoute
     const {palette} = useTheme()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const {push} = useHistory()
+    const {user} = useContext(Context)
+
+    const submitHandler = async () => {
+        try {
+            let data
+
+            if (isRegister) data = await register(email, password)
+            else data = await login(email, password)
+
+            user.setUser(data as unknown as User)
+            user.setIsAuth(true)
+            push(mainRoute)
+        } catch (e) {
+            alert(e)
+        }
+    }
 
     return (
         <div className="container">
@@ -29,12 +52,14 @@ export const AuthPage: React.FC = () => {
                         label="E-mail"
                         type="email"
                         autoComplete="current-email"
+                        onChange={e => setEmail(e.target.value)}
                     />
                     <TextField
                         id="outlined-password"
                         label="Password"
                         type="password"
                         autoComplete="current-password"
+                        onChange={e => setPassword(e.target.value)}
                     />
                     <Box sx={{
                         py: 3,
@@ -51,10 +76,12 @@ export const AuthPage: React.FC = () => {
                                 </NavLink>
                             </Typography>
                         </Typography>
-                        <Button variant='contained'>{isRegister ? 'Register' : 'Login'}</Button>
+                        <Button variant='contained' onClick={submitHandler}>
+                            {isRegister ? 'Register' : 'Login'}
+                        </Button>
                     </Box>
                 </Box>
             </Container>
         </div>
     )
-}
+})

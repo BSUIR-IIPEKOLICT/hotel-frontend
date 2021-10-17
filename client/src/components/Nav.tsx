@@ -6,21 +6,21 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import {Context} from '../index'
 import {observer} from 'mobx-react-lite'
-import {NavLink, useLocation} from 'react-router-dom'
-import {basketRoute, loginRoute, registerRoute, mainRoute} from '../shared/constants'
+import {NavLink, useHistory, useLocation} from 'react-router-dom'
+import {basketRoute, createRoute, loginRoute, registerRoute, mainRoute} from '../shared/constants'
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded'
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded'
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded'
 import {useTheme} from '@mui/material'
 import {NavProps} from '../interfaces/props'
+import {User} from '../interfaces/models'
 
 export const Nav: React.FC<NavProps> = observer(({toggleTheme}) => {
     const {user} = useContext(Context)
     const {pathname} = useLocation()
     const isAuthPage = pathname === loginRoute || pathname === registerRoute
     const {palette} = useTheme()
-
-    user.setIsAuth(true)
+    const {push} = useHistory()
 
     return (
         <Box sx={{flexGrow: 1}}>
@@ -34,29 +34,61 @@ export const Nav: React.FC<NavProps> = observer(({toggleTheme}) => {
                     </Typography>
 
                     {user.isAuth && user.user.role === 'admin' && (
-                        <Button variant='outlined' color='inherit' sx={{mx: 1}}>Create</Button>
+                        <Button
+                            variant='outlined'
+                            color='inherit'
+                            sx={{mx: 1}}
+                            onClick={() => push(createRoute)}
+                        >
+                            Create
+                        </Button>
                     )}
 
                     {user.isAuth && (
                         <>
-                            <NavLink to={basketRoute}>
-                                <Button variant='text' color='inherit' sx={{mx: 1}}>
-                                    <AccountCircleRoundedIcon />
-                                </Button>
-                            </NavLink>
-                            <Button variant='outlined' color='inherit' sx={{mx: 1}}>Logout</Button>
+                            <Button
+                                variant='text'
+                                color='inherit'
+                                sx={{mx: 1}}
+                                onClick={() => push(basketRoute)}
+                            >
+                                <AccountCircleRoundedIcon />
+                            </Button>
+
+                            <Button
+                                variant='outlined'
+                                color='inherit'
+                                sx={{mx: 1}}
+                                onClick={() => {
+                                    push(mainRoute)
+                                    user.setUser({} as User)
+                                    user.setIsAuth(false)
+                                }}
+                            >
+                                Logout
+                            </Button>
                         </>
                     )}
 
                     {!isAuthPage && !user.isAuth && (
-                        <Box>
-                            <NavLink to={registerRoute}>
-                                <Button variant='outlined' color='inherit' sx={{mx: 1}}>Register</Button>
-                            </NavLink>
-                            <NavLink to={loginRoute}>
-                                <Button variant='outlined' color='inherit' sx={{mx: 1}}>Login</Button>
-                            </NavLink>
-                        </Box>
+                        <>
+                            <Button
+                                variant='outlined'
+                                color='inherit'
+                                sx={{mx: 1}}
+                                onClick={() => push(registerRoute)}
+                            >
+                                Register
+                            </Button>
+                            <Button
+                                variant='outlined'
+                                color='inherit'
+                                sx={{mx: 1}}
+                                onClick={() => push(loginRoute)}
+                            >
+                                Login
+                            </Button>
+                        </>
                     )}
                 </Toolbar>
             </AppBar>

@@ -1,11 +1,13 @@
 const {connect} = require('./db')
 const express = require('express')
+const cors = require('cors')
 const port = process.env.PORT || require('./config.json').PORT
 const {resolve} = require('path')
 const fileLoader = require('express-fileupload')
 
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 app.use('/api', require('./routes/index'))
 app.use(express.static(resolve(__dirname, 'static')))

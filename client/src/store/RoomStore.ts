@@ -1,5 +1,4 @@
 import {action, computed, makeAutoObservable} from 'mobx'
-// import {Room} from '../interfaces/models'
 import {RoomPopulated} from '../interfaces/populatedModels'
 
 export default class RoomStore {

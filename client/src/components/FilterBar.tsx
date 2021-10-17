@@ -26,9 +26,7 @@ export const FilterBar: React.FC = observer(() => {
                 component="nav"
                 aria-labelledby="nested-list-subheader"
                 subheader={
-                    <ListSubheader component="div" id="nested-list-subheader">
-                        Buildings
-                    </ListSubheader>
+                    <ListSubheader component="div" id="nested-list-subheader">Buildings</ListSubheader>
                 }
             >
                 {building.buildings.map(({_id, address}) => (
@@ -48,9 +46,7 @@ export const FilterBar: React.FC = observer(() => {
                 component="nav"
                 aria-labelledby="nested-list-subheader"
                 subheader={
-                    <ListSubheader component="div" id="nested-list-subheader">
-                        Types
-                    </ListSubheader>
+                    <ListSubheader component="div" id="nested-list-subheader">Types</ListSubheader>
                 }
             >
                 {type.types.map(({_id, name}) => (
