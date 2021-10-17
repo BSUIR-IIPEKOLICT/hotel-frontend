@@ -13,19 +13,22 @@ class RoomController {
         limit = limit || 20
         const offset = page * limit - limit
 
-        let rooms
-        if (!_building && !_type) {
-            rooms = await Room.find({isFree}).skip(offset).limit(limit).lean()
+        const query = {isFree}
+
+        if (_building && !_type) query._building = _building
+        else if (!_building && _type) query._type = _type
+        else if (_building && _type) {
+            query._building = _building
+            query._type = _type
         }
-        if (_building && !_type) {
-            rooms = await Room.find({_building, isFree}).skip(offset).limit(limit).lean()
-        }
-        if (!_building && _type) {
-            rooms = await Room.find({_type, isFree}).skip(offset).limit(limit).lean()
-        }
-        if (_building && _type) {
-            rooms = await Room.find({_building, _type, isFree}).skip(offset).limit(limit).lean()
-        }
+
+        const rooms = await Room
+            .find(query)
+            .populate('_type')
+            .populate('_building')
+            .skip(offset)
+            .limit(limit)
+            .lean()
 
         return res.json(rooms)
     }

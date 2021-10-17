@@ -1,10 +1,10 @@
-import {Building, Order, Type} from './models'
+import {Building, Type} from './models'
 
-export interface RoomResponse {
+export interface RoomPopulated {
     _id: string,
     _building: Building,
     _type: Type,
-    _order?: Order,
+    _order?: string,
     isFree: boolean,
     population: number
 }

@@ -10,6 +10,11 @@ import ServiceStore from './store/ServiceStore'
 import TypeStore from './store/TypeStore'
 import OrderStore from './store/OrderStore'
 import {AppStore} from './interfaces/types'
+import {configure} from 'mobx'
+
+configure({
+    enforceActions: 'never'
+})
 
 export const Context = createContext<AppStore>({} as AppStore)
 

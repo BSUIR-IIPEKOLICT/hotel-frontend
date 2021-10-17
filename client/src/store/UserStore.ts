@@ -1,5 +1,5 @@
-import {makeAutoObservable} from 'mobx'
-import {User} from "../interfaces/models";
+import {action, computed, makeAutoObservable} from 'mobx'
+import {User} from '../interfaces/models'
 
 export default class UserStore {
 
@@ -12,18 +12,22 @@ export default class UserStore {
         makeAutoObservable(this)
     }
 
+    @action
     setIsAuth(value: boolean) {
         this._isAuth = value
     }
 
+    @action
     setUser(user: User) {
         this._user = user
     }
 
+    @computed
     get isAuth() {
         return this._isAuth
     }
 
+    @computed
     get user() {
         return this._user
     }

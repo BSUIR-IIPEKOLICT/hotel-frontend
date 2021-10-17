@@ -1,7 +1,7 @@
 import React from 'react'
 import {Grid} from '@mui/material'
 import {FilterBar} from '../components/FilterBar'
-import {RoomGrid} from '../components/RoomGrid'
+import {RoomGrid} from '../components/room/RoomGrid'
 
 export const MainPage: React.FC = () => {
     return (

@@ -6,35 +6,55 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import {Context} from '../index'
 import {observer} from 'mobx-react-lite'
-import {NavLink} from 'react-router-dom'
-import {loginRoute, registerRoute} from '../shared/constants'
+import {NavLink, useLocation} from 'react-router-dom'
+import {basketRoute, loginRoute, registerRoute, mainRoute} from '../shared/constants'
+import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded'
+import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded'
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded'
+import {useTheme} from '@mui/material'
+import {NavProps} from '../interfaces/props'
 
-export const Nav: React.FC = observer(() => {
+export const Nav: React.FC<NavProps> = observer(({toggleTheme}) => {
     const {user} = useContext(Context)
+    const {pathname} = useLocation()
+    const isAuthPage = pathname === loginRoute || pathname === registerRoute
+    const {palette} = useTheme()
+
+    user.setIsAuth(true)
 
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position='static'>
                 <Toolbar>
                     <Typography variant='h5' component='div' sx={{ flexGrow: 1 }}>
-                        Hotel app
+                        <NavLink to={mainRoute}>Hotel app</NavLink>
+                        <Button variant='text' color='inherit' sx={{mx: 1}} onClick={() => toggleTheme()}>
+                            {(palette.mode === 'dark') ? <DarkModeRoundedIcon /> : <LightModeRoundedIcon />}
+                        </Button>
                     </Typography>
 
                     {user.isAuth && user.user.role === 'admin' && (
-                        <Button variant={'outlined'} color='inherit' sx={{mx: 1}}>Create</Button>
+                        <Button variant='outlined' color='inherit' sx={{mx: 1}}>Create</Button>
                     )}
 
                     {user.isAuth && (
-                        <Button variant={'outlined'} color='inherit' sx={{mx: 1}}>Logout</Button>
+                        <>
+                            <NavLink to={basketRoute}>
+                                <Button variant='text' color='inherit' sx={{mx: 1}}>
+                                    <AccountCircleRoundedIcon />
+                                </Button>
+                            </NavLink>
+                            <Button variant='outlined' color='inherit' sx={{mx: 1}}>Logout</Button>
+                        </>
                     )}
 
-                    {!user.isAuth && (
+                    {!isAuthPage && !user.isAuth && (
                         <Box>
                             <NavLink to={registerRoute}>
-                                <Button variant={'outlined'} color='inherit' sx={{mx: 1}}>Register</Button>
+                                <Button variant='outlined' color='inherit' sx={{mx: 1}}>Register</Button>
                             </NavLink>
                             <NavLink to={loginRoute}>
-                                <Button variant={'outlined'} color='inherit' sx={{mx: 1}}>Login</Button>
+                                <Button variant='outlined' color='inherit' sx={{mx: 1}}>Login</Button>
                             </NavLink>
                         </Box>
                     )}

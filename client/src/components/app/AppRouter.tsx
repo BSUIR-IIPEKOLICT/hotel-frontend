@@ -1,8 +1,8 @@
 import React, {useContext} from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
-import {authRoutes, publicRoutes} from '../shared/routes'
-import {mainRoute} from '../shared/constants'
-import {Context} from '../index'
+import {authRoutes, publicRoutes} from '../../shared/routes'
+import {mainRoute} from '../../shared/constants'
+import {Context} from '../../index'
 
 export const AppRouter: React.FC = () => {
     const {user} = useContext(Context)
