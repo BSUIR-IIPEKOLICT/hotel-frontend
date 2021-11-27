@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
     Box,
     Button,
@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography'
 import { AppSelect } from '../components/app/AppSelect'
 import PlaceSelect from '../classes/PlaceSelect'
 import { RoomInfo } from '../components/room/RoomInfo'
+import { serviceApi } from '../api'
 
 export const RoomPage: React.FC = () => {
     const { service, room } = useContext(Context)
@@ -23,16 +24,27 @@ export const RoomPage: React.FC = () => {
     const [price, setPrice] = useState(100)
     const [placesPrice, setPlacesPrice] = useState(50)
 
+    useEffect(() => {
+        serviceApi
+            .getAll()
+            .then((services) => service.setServices(services))
+            .catch((e) => console.error(e))
+    }, [])
+
     const calcServices = (checked: boolean, servicePrice: number) => {
         if (checked) setPrice((prev) => prev + servicePrice)
         else setPrice((prev) => prev - servicePrice)
     }
 
     const availableServices = service.services.filter((service) => {
-        return room.current._type._services.indexOf(service._id) !== -1
+        return room.current._type
+            ? room.current._type._services.indexOf(service._id) !== -1
+            : []
     })
 
-    const selectOptions = new PlaceSelect(room.current._type.places)
+    const selectOptions = new PlaceSelect(
+        room.current._type ? room.current._type.places : 0
+    )
 
     return (
         <Container maxWidth="sm">

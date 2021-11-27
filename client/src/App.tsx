@@ -4,9 +4,8 @@ import { AppRouter } from './components/app/AppRouter'
 import { Nav } from './components/Nav'
 import { Box, CircularProgress, ThemeProvider } from '@mui/material'
 import theme from './shared/theme'
-import { auth } from './http/userAPI'
 import { Context } from './store'
-import { User } from './interfaces/models'
+import { userApi } from './api'
 
 export const App: React.FC = () => {
     const [isDark, setIsDark] = useState(
@@ -23,9 +22,10 @@ export const App: React.FC = () => {
     )
 
     useEffect(() => {
-        auth()
+        userApi
+            .auth()
             .then((data) => {
-                user.setUser(data as unknown as User)
+                user.setUser(data)
                 user.setIsAuth(true)
             })
             .finally(() => setIsLoading(false))

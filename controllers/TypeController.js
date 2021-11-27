@@ -6,16 +6,16 @@ const Order = require('../models/Order')
 class TypeController {
     async get(req, res) {
         const types = await Type.find({}).lean()
-        return res.json({types})
+        return res.json(types)
     }
 
     async create(req, res) {
-        const {_services, name, places} = req.body
+        const { _services, name, places } = req.body
 
         const type = await new Type({
             _services,
             name,
-            places
+            places,
         })
         await type.save()
 
@@ -23,13 +23,13 @@ class TypeController {
     }
 
     async delete(req, res) {
-        const {_id} = req.body
+        const { _id } = req.query
         const type = await Type.findById(_id).lean()
-        const rooms = await Room.find({_type: _id}).lean()
+        const rooms = await Room.find({ _type: _id }).lean()
 
-        await rooms.map(({_id}) => {
-            Building.updateMany({}, {$pull: {_rooms: _id}})
-            Order.deleteOne({_room: _id})
+        await rooms.map(({ _id }) => {
+            Building.updateMany({}, { $pull: { _rooms: _id } })
+            Order.deleteOne({ _room: _id })
         })
 
         await Type.deleteOne(type)

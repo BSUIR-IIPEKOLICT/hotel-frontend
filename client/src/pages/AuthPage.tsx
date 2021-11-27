@@ -2,9 +2,8 @@ import React, { useContext, useState } from 'react'
 import { Box, Button, Container, TextField, useTheme } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
-import { login, register } from '../http/userAPI'
+import { userApi } from '../api'
 import { Context } from '../store'
-import { User } from '../interfaces/models'
 import { observer } from 'mobx-react-lite'
 import { paths } from '../shared/enums'
 
@@ -21,14 +20,15 @@ export const AuthPage: React.FC = observer(() => {
         try {
             let data
 
-            if (isRegister) data = await register(email, password)
-            else data = await login(email, password)
+            if (isRegister) data = await userApi.register(email, password)
+            else data = await userApi.login(email, password)
 
-            user.setUser(data as unknown as User)
+            user.setUser(data)
             user.setIsAuth(true)
             push(paths.main)
         } catch (e) {
-            console.error(e)
+            // @ts-ignore
+            alert(e.response.data.message || 'Error')
         }
     }
 

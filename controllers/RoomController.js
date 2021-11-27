@@ -2,18 +2,18 @@ const Room = require('../models/Room')
 const Building = require('../models/Building')
 const Order = require('../models/Order')
 const Basket = require('../models/Basket')
-const {objectId} = require('../db')
+const { objectId } = require('../db')
 
 class RoomController {
     async get(req, res) {
-        let {_building, _type, page, limit, isFree} = req.query
+        let { _building, _type, page, limit, isFree } = req.query
 
         isFree = isFree || true
         page = page || 1
         limit = limit || 20
         const offset = page * limit - limit
 
-        const query = {isFree}
+        const query = { isFree }
 
         if (_building && !_type) query._building = _building
         else if (!_building && _type) query._type = _type
@@ -22,8 +22,7 @@ class RoomController {
             query._type = _type
         }
 
-        const rooms = await Room
-            .find(query)
+        const rooms = await Room.find(query)
             .populate('_type')
             .populate('_building')
             .skip(offset)
@@ -34,14 +33,17 @@ class RoomController {
     }
 
     async current(req, res) {
-        const {_id} = req.params
-        const room = await Room.findById(_id).populate('_type').populate('_building').lean()
+        const { _id } = req.params
+        const room = await Room.findById(_id)
+            .populate('_type')
+            .populate('_building')
+            .lean()
 
         return res.json(room)
     }
 
     async create(req, res) {
-        const {_building, _type} = req.body
+        const { _building, _type } = req.body
         const id = objectId()
 
         const room = await new Room({
@@ -49,28 +51,34 @@ class RoomController {
             _building,
             _type,
             isFree: true,
-            population: 0
+            population: 0,
         })
 
         await room.save()
-        await Building.updateOne({_id: _building}, {$push: {_rooms: id}})
+        await Building.updateOne({ _id: _building }, { $push: { _rooms: id } })
 
         return res.json(room)
     }
 
     async delete(req, res) {
-        const {_id} = req.body
+        const { _id } = req.body
         const room = await Room.findById(_id).populate('_order').lean()
 
-        await Building.updateOne({_id: room._building}, {$pull: {_rooms: _id}})
+        await Building.updateOne(
+            { _id: room._building },
+            { $pull: { _rooms: _id } }
+        )
 
         if (room._order) {
-            const {_id, _basket} = room._order
-            await Basket.updateOne({_id: _basket}, {$pull: {_orders: _id}})
-            await Order.deleteOne({_id})
+            const { _id, _basket } = room._order
+            await Basket.updateOne(
+                { _id: _basket },
+                { $pull: { _orders: _id } }
+            )
+            await Order.deleteOne({ _id })
         }
 
-        await Room.deleteOne({_id})
+        await Room.deleteOne({ _id })
 
         return res.json('Success')
     }

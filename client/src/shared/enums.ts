@@ -6,3 +6,14 @@ export const enum paths {
     main = '/',
     room = '/room',
 }
+
+export const enum userApiPaths {
+    register = 'api/user/register',
+    login = 'api/user/login',
+    auth = 'api/user/auth',
+}
+
+export const enum apiPaths {
+    type = 'api/type',
+    building = 'api/building'
+}
