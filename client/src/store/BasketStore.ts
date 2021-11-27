@@ -1,7 +1,6 @@
-import {makeAutoObservable} from 'mobx'
+import { makeAutoObservable } from 'mobx'
 
 export default class BasketStore {
-
     private _basket: Object
 
     constructor() {

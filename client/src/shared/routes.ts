@@ -1,36 +1,36 @@
-import {CreatePage} from '../pages/CreatePage'
-import {BasketPage} from '../pages/BasketPage'
-import {RoomPage} from '../pages/RoomPage'
-import {MainPage} from '../pages/MainPage'
-import {AuthPage} from '../pages/AuthPage'
-import {createRoute, basketRoute, loginRoute, mainRoute, registerRoute, roomRoute} from './constants'
+import { CreatePage } from '../pages/CreatePage'
+import { BasketPage } from '../pages/BasketPage'
+import { RoomPage } from '../pages/RoomPage'
+import { MainPage } from '../pages/MainPage'
+import { AuthPage } from '../pages/AuthPage'
+import { paths } from './enums'
 
 export const authRoutes = [
     {
-        path: createRoute,
-        component: CreatePage
+        path: paths.create,
+        component: CreatePage,
     },
     {
-        path: basketRoute,
-        component: BasketPage
-    }
+        path: paths.basket,
+        component: BasketPage,
+    },
 ]
 
 export const publicRoutes = [
     {
-        path: mainRoute,
-        component: MainPage
+        path: paths.main,
+        component: MainPage,
     },
     {
-        path: registerRoute,
-        component: AuthPage
+        path: paths.register,
+        component: AuthPage,
     },
     {
-        path: loginRoute,
-        component: AuthPage
+        path: paths.login,
+        component: AuthPage,
     },
     {
-        path: `${roomRoute}/:id`,
-        component: RoomPage
-    }
+        path: `${paths.room}/:id`,
+        component: RoomPage,
+    },
 ]

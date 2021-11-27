@@ -1,4 +1,4 @@
-import {RoomPopulated} from './populatedModels'
+import { RoomPopulated } from './populatedModels'
 
 export interface NavProps {
     toggleTheme(): void

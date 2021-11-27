@@ -1,20 +1,26 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import Box from '@mui/material/Box'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import ListSubheader from '@mui/material/ListSubheader'
-import {Context} from '../index'
-import {Divider, useTheme} from '@mui/material'
-import {observer} from 'mobx-react-lite'
+import { Context } from '../store'
+import { Divider, useTheme } from '@mui/material'
+import { observer } from 'mobx-react-lite'
 
 export const FilterBar: React.FC = observer(() => {
-    const {building, type} = useContext(Context)
-    const {palette} = useTheme()
+    const { building, type } = useContext(Context)
+    const { palette } = useTheme()
 
     return (
-        <Box component='div' sx={{bgcolor: 'background.paper', minHeight: 'calc(100vh - 64px)'}}>
+        <Box
+            component="div"
+            sx={{
+                bgcolor: 'background.paper',
+                minHeight: 'calc(100vh - 64px)',
+            }}
+        >
             <List
                 sx={{
                     width: '100%',
@@ -26,10 +32,12 @@ export const FilterBar: React.FC = observer(() => {
                 component="nav"
                 aria-labelledby="nested-list-subheader"
                 subheader={
-                    <ListSubheader component="div" id="nested-list-subheader">Buildings</ListSubheader>
+                    <ListSubheader component="div" id="nested-list-subheader">
+                        Buildings
+                    </ListSubheader>
                 }
             >
-                {building.buildings.map(({_id, address}) => (
+                {building.buildings.map(({ _id, address }) => (
                     <ListItem disablePadding key={_id}>
                         <ListItemButton
                             selected={_id === building.active}
@@ -40,16 +48,22 @@ export const FilterBar: React.FC = observer(() => {
                     </ListItem>
                 ))}
             </List>
-            <Divider color={palette.divider} variant='fullWidth' />
+            <Divider color={palette.divider} variant="fullWidth" />
             <List
-                sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                sx={{
+                    width: '100%',
+                    maxWidth: 360,
+                    bgcolor: 'background.paper',
+                }}
                 component="nav"
                 aria-labelledby="nested-list-subheader"
                 subheader={
-                    <ListSubheader component="div" id="nested-list-subheader">Types</ListSubheader>
+                    <ListSubheader component="div" id="nested-list-subheader">
+                        Types
+                    </ListSubheader>
                 }
             >
-                {type.types.map(({_id, name}) => (
+                {type.types.map(({ _id, name }) => (
                     <ListItem disablePadding key={_id}>
                         <ListItemButton
                             selected={_id === type.active}
@@ -60,7 +74,7 @@ export const FilterBar: React.FC = observer(() => {
                     </ListItem>
                 ))}
             </List>
-            <Divider color={palette.divider} variant='fullWidth' />
+            <Divider color={palette.divider} variant="fullWidth" />
         </Box>
     )
 })

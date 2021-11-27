@@ -1,8 +1,7 @@
-import {action, computed, makeAutoObservable} from 'mobx'
-import {Type} from '../interfaces/models'
+import { action, computed, makeAutoObservable } from 'mobx'
+import { Type } from '../interfaces/models'
 
 export default class TypeStore {
-
     private _types: Type[]
     private _active: string
 
@@ -12,14 +11,14 @@ export default class TypeStore {
                 _id: '34567',
                 name: 'VIP',
                 _services: [],
-                places: 3
+                places: 3,
             },
             {
                 _id: '1234',
                 name: 'basic',
                 _services: [],
-                places: 2
-            }
+                places: 2,
+            },
         ]
         this._active = ''
         makeAutoObservable(this)

@@ -1,8 +1,7 @@
-import {action, computed, makeAutoObservable} from 'mobx'
-import {User} from '../interfaces/models'
+import { action, computed, makeAutoObservable } from 'mobx'
+import { User } from '../interfaces/models'
 
 export default class UserStore {
-
     private _isAuth: boolean
     private _user: User
 

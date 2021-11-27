@@ -1,8 +1,7 @@
-import {action, computed, makeAutoObservable} from 'mobx'
-import {Building} from '../interfaces/models'
+import { action, computed, makeAutoObservable } from 'mobx'
+import { Building } from '../interfaces/models'
 
 export default class BuildingStore {
-
     private _buildings: Building[]
     private _active: string
 
@@ -11,13 +10,13 @@ export default class BuildingStore {
             {
                 _id: '123',
                 _rooms: [],
-                address: 'zalupa str. 14/88'
+                address: 'zalupa str. 14/88',
             },
             {
                 _id: '345',
                 _rooms: [],
-                address: 'hui prospect, 1'
-            }
+                address: 'hui prospect, 1',
+            },
         ]
         this._active = ''
         makeAutoObservable(this)

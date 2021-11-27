@@ -1,5 +1,4 @@
 export default class PlaceSelect {
-
     values: number[]
     options: string[]
 
@@ -9,7 +8,7 @@ export default class PlaceSelect {
 
         for (let i = 1; i <= n; i++) {
             this.values.push(i)
-            this.options.push((i === 1) ? `${i} place` : `${i} places`)
+            this.options.push(i === 1 ? `${i} place` : `${i} places`)
         }
     }
 }

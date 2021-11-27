@@ -1,7 +1,6 @@
-import {makeAutoObservable} from 'mobx'
+import { makeAutoObservable } from 'mobx'
 
 export default class OrderStore {
-
     private _orders: Array<any>
 
     constructor() {
