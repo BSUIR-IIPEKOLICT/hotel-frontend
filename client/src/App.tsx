@@ -24,9 +24,10 @@ export const App: React.FC = () => {
     useEffect(() => {
         userApi
             .auth()
-            .then((data) => {
-                user.setUser(data)
+            .then((response) => {
+                user.setUser(response.user)
                 user.setIsAuth(true)
+                user.setId(response.id)
             })
             .finally(() => setIsLoading(false))
     })

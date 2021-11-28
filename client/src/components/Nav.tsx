@@ -76,6 +76,7 @@ export const Nav: React.FC<NavProps> = observer(({ toggleTheme }) => {
                                     push(paths.main)
                                     user.setUser({} as User)
                                     user.setIsAuth(false)
+                                    user.setId('')
                                 }}
                             >
                                 Logout

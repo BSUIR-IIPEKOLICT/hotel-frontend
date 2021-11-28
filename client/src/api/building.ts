@@ -1,4 +1,4 @@
-import BaseApi from './base'
+import BaseApi from '../base/baseApi'
 import { Building } from '../interfaces/models'
 
 export default class BuildingApi extends BaseApi {

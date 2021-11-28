@@ -1,4 +1,4 @@
-import BaseApi from './base'
+import BaseApi from '../base/baseApi'
 import { Service } from '../interfaces/models'
 
 export default class ServiceApi extends BaseApi {

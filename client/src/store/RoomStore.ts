@@ -6,7 +6,7 @@ export default class RoomStore {
     private _current: RoomPopulated = {} as RoomPopulated
     private _pageAmount = 1
     private _page = 1
-    private readonly _limit = 2
+    private readonly _limit = 9
 
     constructor() {
         makeAutoObservable(this)

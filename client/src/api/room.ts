@@ -1,4 +1,4 @@
-import BaseApi from './base'
+import BaseApi from '../base/baseApi'
 import { RoomRequestConfig } from '../interfaces/types'
 import { RoomResponse } from '../interfaces/responses'
 

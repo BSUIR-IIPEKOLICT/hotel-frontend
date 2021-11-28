@@ -3,59 +3,64 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const Basket = require('../models/Basket')
-const {secret} = require('../config.json')
-const {objectId} = require('../db')
+const { secret } = require('../config.json')
+const { objectId } = require('../db')
 
-const generateToken = user => {
+const generateToken = (user) => {
     return jwt.sign(
         {
-            id: user._id,
+            id: user.id,
             email: user.email,
-            role: user.role
+            role: user.role,
         },
         secret,
-        {expiresIn: '24h'}
+        { expiresIn: '24h' }
     )
 }
 
 class UserController {
     async register(req, res, next) {
-        const {email, password} = req.body
+        const { email, password } = req.body
         const id = objectId()
 
-        if (!email || !password) return next(ApiError.badRequest('Invalid login data'))
+        if (!email || !password)
+            return next(ApiError.badRequest('Invalid login data'))
 
-        const candidate = await User.find({email}).lean()
+        const candidate = await User.find({ email }).lean()
 
-        if (candidate.length) return next(ApiError.badRequest('User with that email already exists'))
+        if (candidate.length)
+            return next(
+                ApiError.badRequest('User with that email already exists')
+            )
 
         const hashPassword = await bcrypt.hash(password, 5)
         const user = await new User({
             _id: id,
             email,
-            password: hashPassword
+            password: hashPassword,
         })
-        const token = generateToken(user)
 
-        const basket = await new Basket({_user: id})
+        const basket = await new Basket({ _user: id })
         await basket.save()
         await user.save()
 
-        return res.json(token)
+        return res.json({ token: generateToken(user), id })
     }
 
     async login(req, res, next) {
-        const {email, password} = req.body
-        const user = await User.findOne({email}).lean()
+        const { email, password } = req.body
+        const user = await User.findOne({ email }).lean()
 
         if (!user) return next(ApiError.internal('User not exists'))
-        if (!bcrypt.compareSync(password, user.password)) return next(ApiError.internal('Invalid password'))
+        if (!bcrypt.compareSync(password, user.password))
+            return next(ApiError.internal('Invalid password'))
 
-        return res.json(generateToken(user))
+        return res.json({ token: generateToken(user), id: user._id })
     }
 
     async auth(req, res) {
-        return res.json(generateToken(req.user))
+        const user = await User.findOne({ email: req.user.email }).lean()
+        return res.json({ token: generateToken(req.user), id: user._id })
     }
 }
 

@@ -1,7 +1,7 @@
 import { roles } from '../shared/enums'
 
 export interface User {
-    id: string
+    id?: string
     email: string
     role: roles
 }
@@ -33,6 +33,7 @@ export interface Order {
     _room: string
     _services: string[]
     date: string
+    population: number
 }
 
 export interface Service {

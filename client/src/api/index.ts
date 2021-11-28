@@ -1,9 +1,11 @@
 import UserApi from './user'
-import ApiConfig from './config'
+import ApiConfig from '../shared/apiConfig'
 import TypeApi from './type'
 import BuildingApi from './building'
 import ServiceApi from './service'
 import RoomApi from './room'
+import OrderApi from './order'
+import BasketApi from './basket'
 
 const config = new ApiConfig()
 
@@ -12,3 +14,5 @@ export const typeApi = new TypeApi(config)
 export const buildingApi = new BuildingApi(config)
 export const serviceApi = new ServiceApi(config)
 export const roomApi = new RoomApi(config)
+export const orderApi = new OrderApi(config)
+export const basketApi = new BasketApi(config)

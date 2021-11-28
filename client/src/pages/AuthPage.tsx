@@ -18,13 +18,13 @@ export const AuthPage: React.FC = observer(() => {
 
     const submitHandler = async () => {
         try {
-            let data
+            const data = isRegister
+                ? await userApi.register(email, password)
+                : await userApi.login(email, password)
 
-            if (isRegister) data = await userApi.register(email, password)
-            else data = await userApi.login(email, password)
-
-            user.setUser(data)
+            user.setUser(data.user)
             user.setIsAuth(true)
+            user.setId(data.id)
             push(paths.main)
         } catch (e) {
             // @ts-ignore

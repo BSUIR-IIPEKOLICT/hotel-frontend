@@ -1,10 +1,21 @@
 const Basket = require('../models/Basket')
-const Room = require('../models/Room')
 
 class BasketController {
     async get(req, res) {
-        const baskets = await Basket.find({}).populate('_user').populate('_orders').lean()
+        const baskets = await Basket.find({})
+            .populate('_user')
+            .populate('_orders')
+            .lean()
         return res.json(baskets)
+    }
+
+    async getOne(req, res) {
+        const { _user } = req.params
+        const basket = await Basket.findOne({ _user })
+            .populate('_user')
+            .populate('_orders')
+            .lean()
+        return res.json(basket)
     }
 }
 

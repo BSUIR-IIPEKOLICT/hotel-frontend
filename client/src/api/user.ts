@@ -1,6 +1,7 @@
-import { User } from '../interfaces/models'
+// import { User } from '../interfaces/models'
 import jwtDecode from 'jwt-decode'
-import BaseApi from './base'
+import BaseApi from '../base/baseApi'
+import { ConvertedUserResponse, UserResponse } from '../interfaces/responses'
 
 export default class UserApi extends BaseApi {
     private readonly route = '/user'
@@ -10,35 +11,41 @@ export default class UserApi extends BaseApi {
         auth: '/auth',
     }
 
-    async register(email: string, password: string): Promise<User> {
-        const { data } = await this.api.post<string>(
+    async register(
+        email: string,
+        password: string
+    ): Promise<ConvertedUserResponse> {
+        const { data } = await this.api.post<UserResponse>(
             this.route + this.alias.register,
             {
                 email,
                 password,
             }
         )
-        localStorage.setItem('token', data)
-        return jwtDecode(data)
+        localStorage.setItem('token', data.token)
+        return { user: jwtDecode(data.token), id: data.id }
     }
 
-    async login(email: string, password: string): Promise<User> {
-        const { data } = await this.api.post<string>(
+    async login(
+        email: string,
+        password: string
+    ): Promise<ConvertedUserResponse> {
+        const { data } = await this.api.post<UserResponse>(
             this.route + this.alias.login,
             {
                 email,
                 password,
             }
         )
-        localStorage.setItem('token', data)
-        return jwtDecode(data)
+        localStorage.setItem('token', data.token)
+        return { user: jwtDecode(data.token), id: data.id }
     }
 
-    async auth(): Promise<User> {
-        const { data } = await this.authApi.post<string>(
+    async auth(): Promise<ConvertedUserResponse> {
+        const { data } = await this.authApi.post<UserResponse>(
             this.route + this.alias.auth
         )
-        localStorage.setItem('token', data)
-        return jwtDecode(data)
+        localStorage.setItem('token', data.token)
+        return { user: jwtDecode(data.token), id: data.id }
     }
 }
