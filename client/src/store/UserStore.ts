@@ -2,12 +2,10 @@ import { action, computed, makeAutoObservable } from 'mobx'
 import { User } from '../interfaces/models'
 
 export default class UserStore {
-    private _isAuth: boolean
-    private _user: User
+    private _isAuth: boolean = false
+    private _user: User = {} as User
 
     constructor() {
-        this._isAuth = false
-        this._user = {} as User
         makeAutoObservable(this)
     }
 

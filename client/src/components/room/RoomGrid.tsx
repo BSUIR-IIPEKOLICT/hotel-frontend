@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom'
 import { paths } from '../../shared/enums'
 import { observer } from 'mobx-react-lite'
 import { RoomPopulated } from '../../interfaces/populatedModels'
+import { Pagination } from '@mui/material'
 
 export const RoomGrid: React.FC = observer(() => {
     const { room } = useContext(Context)
@@ -17,8 +18,23 @@ export const RoomGrid: React.FC = observer(() => {
         push(`${paths.room}/${currentRoom._id}`)
     }
 
+    const paginationHandler = (
+        event: React.ChangeEvent<unknown>,
+        value: number
+    ) => {
+        room.setPage(value)
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
+            <Pagination
+                count={room.pageAmount}
+                page={room.page}
+                variant="outlined"
+                color="primary"
+                sx={{ p: 1 }}
+                onChange={paginationHandler}
+            />
             <Grid container spacing={2} columns={12} sx={{ p: 2 }}>
                 {room.rooms.map((currentRoom) => (
                     <RoomCard

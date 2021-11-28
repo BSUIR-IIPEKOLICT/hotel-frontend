@@ -8,12 +8,15 @@ class RoomController {
     async get(req, res) {
         let { _building, _type, page, limit, isFree } = req.query
 
-        isFree = isFree || true
-        page = page || 1
-        limit = limit || 20
+        page = parseInt(page) || 1
+        limit = parseInt(limit) || 20
         const offset = page * limit - limit
 
-        const query = { isFree }
+        const query = {}
+
+        if (isFree) {
+            query.isFree = isFree === 'true'
+        }
 
         if (_building && !_type) query._building = _building
         else if (!_building && _type) query._type = _type
@@ -22,14 +25,15 @@ class RoomController {
             query._type = _type
         }
 
+        const amount = await Room.find(query).countDocuments()
         const rooms = await Room.find(query)
-            .populate('_type')
-            .populate('_building')
             .skip(offset)
             .limit(limit)
+            .populate('_type')
+            .populate('_building')
             .lean()
 
-        return res.json(rooms)
+        return res.json({ rooms, amount })
     }
 
     async current(req, res) {

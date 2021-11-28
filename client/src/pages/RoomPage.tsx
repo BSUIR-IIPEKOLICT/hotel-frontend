@@ -17,8 +17,9 @@ import { AppSelect } from '../components/app/AppSelect'
 import PlaceSelect from '../classes/PlaceSelect'
 import { RoomInfo } from '../components/room/RoomInfo'
 import { serviceApi } from '../api'
+import { observer } from 'mobx-react-lite'
 
-export const RoomPage: React.FC = () => {
+export const RoomPage: React.FC = observer(() => {
     const { service, room } = useContext(Context)
     const { palette } = useTheme()
     const [price, setPrice] = useState(100)
@@ -121,4 +122,4 @@ export const RoomPage: React.FC = () => {
             </Paper>
         </Container>
     )
-}
+})
