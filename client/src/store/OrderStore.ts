@@ -13,6 +13,11 @@ export default class OrderStore {
     this._orders = value
   }
 
+  @action
+  deleteOrder(id: string) {
+    this._orders = this._orders.filter(({ _id }) => _id !== id)
+  }
+
   @computed
   get orders() {
     return this._orders

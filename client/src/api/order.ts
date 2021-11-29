@@ -21,8 +21,12 @@ export default class OrderApi extends BaseApi {
         _room,
         _services,
         population,
-        date: new Date(),
+        date: new Date().toDateString(),
       })
     ).data
+  }
+
+  async delete(_id: string): Promise<string> {
+    return (await this.api.delete<string>(this.route, { data: { _id } })).data
   }
 }

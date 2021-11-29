@@ -20,6 +20,13 @@ export const BasketPage: React.FC = observer(() => {
     basket.setDuty(basket.duty + value)
   }
 
+  const deleteOrder = (id: string) => {
+    orderApi
+      .delete(id)
+      .then(() => order.deleteOrder(id))
+      .catch((e) => console.error(e))
+  }
+
   return (
     <Container sx={{ p: 2, mx: 'auto', width: 500 }}>
       <Paper
@@ -40,7 +47,12 @@ export const BasketPage: React.FC = observer(() => {
         Orders
       </Typography>
       {order.orders.map((order) => (
-        <OrderCard order={order} addDuty={addDuty} key={order._id} />
+        <OrderCard
+          order={order}
+          addDuty={addDuty}
+          key={order._id}
+          onDelete={deleteOrder}
+        />
       ))}
     </Container>
   )

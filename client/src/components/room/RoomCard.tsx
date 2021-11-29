@@ -6,11 +6,9 @@ import Grid from '@mui/material/Grid'
 import { useTheme } from '@mui/material'
 
 export const RoomCard: React.FC<RoomCardProps> = ({
-  id,
-  address,
-  type,
-  places,
+  room,
   clickHandler,
+  isAdmin,
 }) => {
   const { palette } = useTheme()
 
@@ -22,8 +20,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
       md={4}
       lg={3}
       xl={2}
-      key={id}
-      onClick={() => clickHandler()}
+      onClick={() => clickHandler(room)}
     >
       <Paper variant="outlined" sx={{ p: 2, cursor: 'pointer' }}>
         <Typography
@@ -35,15 +32,20 @@ export const RoomCard: React.FC<RoomCardProps> = ({
             textAlign: 'center',
           }}
         >
-          Type: {type}
+          Type: {room._type.name}
         </Typography>
-        <Typography component="div">Places: {places}</Typography>
+        <Typography component="div">Places: {room._type.places}</Typography>
         <Typography component="div" sx={{ color: palette.text.secondary }}>
           Address:
         </Typography>
         <Typography component="div" sx={{ textDecoration: 'underline' }}>
-          {address}
+          {room._building.address}
         </Typography>
+        {isAdmin && (
+          <Typography component="div">
+            {room.isFree ? 'Free' : 'Booked'}
+          </Typography>
+        )}
       </Paper>
     </Grid>
   )

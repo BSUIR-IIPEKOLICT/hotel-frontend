@@ -18,11 +18,9 @@ export interface SelectProps {
 }
 
 export interface RoomCardProps {
-  id: string
-  address: string
-  type: string
-  places: number
-  clickHandler(): void
+  room: RoomPopulated
+  clickHandler(room: RoomPopulated): void
+  isAdmin: boolean
 }
 
 export interface RoomServiceContainerProps {
@@ -49,4 +47,5 @@ export interface PreloaderProps {
 export interface OrderCardProps {
   order: OrderPopulated
   addDuty(value: number): void
+  onDelete(id: string): void
 }

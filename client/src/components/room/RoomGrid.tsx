@@ -10,8 +10,9 @@ import { RoomPopulated } from '../../interfaces/populatedModels'
 import { Pagination } from '@mui/material'
 
 export const RoomGrid: React.FC = observer(() => {
-  const { room } = useContext(Context)
+  const { room, user } = useContext(Context)
   const { push } = useHistory()
+  const isAdmin = user.isAuth ? user.user.role === 'admin' : false
 
   const cardHandler = (currentRoom: RoomPopulated) => {
     room.setCurrent(currentRoom)
@@ -39,11 +40,9 @@ export const RoomGrid: React.FC = observer(() => {
         {room.rooms.map((currentRoom) => (
           <RoomCard
             key={currentRoom._id}
-            id={currentRoom._id}
-            address={currentRoom._building.address}
-            type={currentRoom._type.name}
-            places={currentRoom._type.places}
-            clickHandler={() => cardHandler(currentRoom)}
+            room={currentRoom}
+            clickHandler={cardHandler}
+            isAdmin={isAdmin}
           />
         ))}
       </Grid>

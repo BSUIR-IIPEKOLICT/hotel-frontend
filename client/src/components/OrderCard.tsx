@@ -5,7 +5,11 @@ import { OrderCardProps } from '../interfaces/props'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import { Context } from '../store'
 
-export const OrderCard: React.FC<OrderCardProps> = ({ order, addDuty }) => {
+export const OrderCard: React.FC<OrderCardProps> = ({
+  order,
+  addDuty,
+  onDelete,
+}) => {
   const { type } = useContext(Context)
   const { palette } = useTheme()
   const price =
@@ -46,7 +50,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order, addDuty }) => {
         <Button
           color="error"
           sx={{ p: 1, alignSelf: 'center' }}
-          onClick={() => {}}
+          onClick={() => onDelete(order._id)}
         >
           <DeleteOutlineOutlinedIcon />
         </Button>
