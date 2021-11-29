@@ -8,4 +8,21 @@ export default class OrderApi extends BaseApi {
     return (await this.api.get<OrderPopulated[]>(`${this.route}/${basketId}`))
       .data
   }
+
+  async create(
+    _basket: string,
+    _room: string,
+    _services: string[],
+    population: number
+  ): Promise<string> {
+    return (
+      await this.api.post<string>(this.route, {
+        _basket,
+        _room,
+        _services,
+        population,
+        date: new Date(),
+      })
+    ).data
+  }
 }

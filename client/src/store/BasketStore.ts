@@ -4,6 +4,7 @@ import { BasketPopulated } from '../interfaces/populatedModels'
 export default class BasketStore {
   @observable private _basket: BasketPopulated = {} as BasketPopulated
   @observable private _baskets: BasketPopulated[] = []
+  @observable private _duty = 0
 
   constructor() {
     makeObservable(this)
@@ -19,6 +20,11 @@ export default class BasketStore {
     this._baskets = value
   }
 
+  @action
+  setDuty(value: number) {
+    this._duty = value
+  }
+
   @computed
   get basket() {
     return this._basket
@@ -27,5 +33,10 @@ export default class BasketStore {
   @computed
   get baskets() {
     return this._baskets
+  }
+
+  @computed
+  get duty() {
+    return this._duty
   }
 }

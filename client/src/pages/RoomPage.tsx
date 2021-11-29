@@ -1,29 +1,27 @@
 import React, { useContext, useEffect, useState } from 'react'
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  Divider,
-  FormControlLabel,
-  FormGroup,
-  Grid,
-  Paper,
-  useTheme,
-} from '@mui/material'
+import { Box, Container, Divider, Grid, Paper, useTheme } from '@mui/material'
 import { Context } from '../store'
 import Typography from '@mui/material/Typography'
-import { AppSelect } from '../components/app/AppSelect'
 import PlaceSelect from '../classes/PlaceSelect'
 import { RoomInfo } from '../components/room/RoomInfo'
-import { serviceApi } from '../api'
+import { orderApi, serviceApi } from '../api'
 import { observer } from 'mobx-react-lite'
+import { useHistory } from 'react-router-dom'
+import { paths } from '../shared/enums'
+import { RoomServiceContainer } from '../components/room/RoomServiceContainer'
+import { Service } from '../interfaces/models'
+import { RoomPriceContainer } from '../components/room/RoomPriceContainer'
+import { RoomBookContainer } from '../components/room/RoomBookContainer'
 
 export const RoomPage: React.FC = observer(() => {
-  const { service, room } = useContext(Context)
+  const { service, room, basket } = useContext(Context)
   const { palette } = useTheme()
+  const { push } = useHistory()
+
   const [price, setPrice] = useState(100)
   const [placesPrice, setPlacesPrice] = useState(50)
+  const [services, setServices] = useState<string[]>([])
+  const [population, setPopulation] = useState(1)
 
   useEffect(() => {
     serviceApi
@@ -43,27 +41,35 @@ export const RoomPage: React.FC = observer(() => {
       : []
   })
 
-  const selectOptions = new PlaceSelect(
+  const select = new PlaceSelect(
     room.current._type ? room.current._type.places : 0
   )
+
+  const serviceHandler = (checked: boolean, service: Service) => {
+    calcServices(checked, service.price)
+    setServices((prev) =>
+      checked ? [...prev, service._id] : prev.filter((v) => v === service._id)
+    )
+  }
+
+  const selectHandler = (value: string) => {
+    setPlacesPrice(parseInt(value) * 50)
+    setPopulation(parseInt(value))
+  }
+
+  const bookHandler = () => {
+    orderApi
+      .create(basket.basket._id, room.current._id, services, population)
+      .then(() => push(paths.main))
+      .catch((e) => console.error(e))
+  }
 
   return (
     <Container maxWidth="sm">
       <Paper component="div" sx={{ flexGrow: 1, p: 2, my: 2 }}>
         <RoomInfo room={room.current} />
         <Divider />
-        <Box component="div" sx={{ p: 1 }}>
-          <Typography component="h6" variant="h6" sx={{ marginBottom: 1 }}>
-            Pricing
-          </Typography>
-          <Typography
-            component="div"
-            variant="button"
-            sx={{ color: palette.success.main }}
-          >
-            {price + placesPrice}$ per day
-          </Typography>
-        </Box>
+        <RoomPriceContainer value={price + placesPrice} />
         <Divider />
         <Box component="form" noValidate autoComplete="off" sx={{ py: 1 }}>
           <Typography
@@ -74,35 +80,17 @@ export const RoomPage: React.FC = observer(() => {
             Book a room
           </Typography>
           <Grid container>
-            <Grid item md={6}>
-              <FormGroup>
-                {availableServices.map(({ _id, name, price }) => (
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    key={_id}
-                    label={name}
-                    onChange={(e, checked) => {
-                      calcServices(checked, price)
-                    }}
-                  />
-                ))}
-              </FormGroup>
-            </Grid>
-            <Grid item md={6}>
-              <Container sx={{ textAlign: 'center' }}>
-                <AppSelect
-                  changeHandler={(value) =>
-                    setPlacesPrice(parseInt(value) * 50)
-                  }
-                  label="places"
-                  options={selectOptions.options}
-                  values={selectOptions.values}
-                />
-                <Button variant="contained" sx={{ m: '0 auto' }}>
-                  Book this room
-                </Button>
-              </Container>
-            </Grid>
+            <RoomServiceContainer
+              services={availableServices}
+              onChange={serviceHandler}
+            />
+            <RoomBookContainer
+              selectOptions={select.options}
+              selectValues={select.values}
+              selectValue={population}
+              selectHandler={selectHandler}
+              bookHandler={bookHandler}
+            />
           </Grid>
         </Box>
       </Paper>

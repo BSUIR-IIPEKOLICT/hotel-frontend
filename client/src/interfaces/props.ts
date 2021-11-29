@@ -1,4 +1,5 @@
-import { RoomPopulated } from './populatedModels'
+import { OrderPopulated, RoomPopulated } from './populatedModels'
+import { Service } from './models'
 
 export interface NavProps {
   toggleTheme(): void
@@ -22,4 +23,30 @@ export interface RoomCardProps {
   type: string
   places: number
   clickHandler(): void
+}
+
+export interface RoomServiceContainerProps {
+  services: Service[]
+  onChange(checked: boolean, service: Service): void
+}
+
+export interface RoomPriceContainerProps {
+  value: number
+}
+
+export interface RoomBookContainerProps {
+  selectOptions: string[]
+  selectValues: number[]
+  selectValue: number
+  selectHandler(value: string): void
+  bookHandler(): void
+}
+
+export interface PreloaderProps {
+  isDark: boolean
+}
+
+export interface OrderCardProps {
+  order: OrderPopulated
+  addDuty(value: number): void
 }

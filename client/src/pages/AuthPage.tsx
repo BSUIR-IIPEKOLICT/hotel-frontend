@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Box, Button, Container, TextField, useTheme } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
-import { userApi } from '../api'
+import { basketApi, userApi } from '../api'
 import { Context } from '../store'
 import { observer } from 'mobx-react-lite'
 import { paths } from '../shared/enums'
@@ -14,7 +14,7 @@ export const AuthPage: React.FC = observer(() => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { push } = useHistory()
-  const { user } = useContext(Context)
+  const { user, basket } = useContext(Context)
 
   const submitHandler = async () => {
     try {
@@ -26,6 +26,11 @@ export const AuthPage: React.FC = observer(() => {
       user.setIsAuth(true)
       user.setId(data.id)
       push(paths.main)
+
+      basketApi
+        .getOne(user.id)
+        .then((response) => basket.setBasket(response))
+        .catch((e) => console.error(e))
     } catch (e) {
       // @ts-ignore
       alert(e.response.data.message || 'Error')

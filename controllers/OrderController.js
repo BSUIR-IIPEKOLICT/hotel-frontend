@@ -32,7 +32,7 @@ class OrderController {
     await Room.updateOne({ _id: _room }, { $set: { isFree: false } })
     await Room.updateOne({ _id: _room }, { $set: { population } })
 
-    return res.json(order)
+    return res.json('Success')
   }
 
   async delete(req, res) {
