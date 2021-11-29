@@ -25,8 +25,6 @@ export const App: React.FC = () => {
     userApi
       .auth()
       .then((response) => {
-        console.log(response)
-
         user.setUser(response.user)
         user.setIsAuth(true)
         user.setId(response.id)
