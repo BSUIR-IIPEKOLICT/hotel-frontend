@@ -10,43 +10,43 @@ import { RoomPopulated } from '../../interfaces/populatedModels'
 import { Pagination } from '@mui/material'
 
 export const RoomGrid: React.FC = observer(() => {
-    const { room } = useContext(Context)
-    const { push } = useHistory()
+  const { room } = useContext(Context)
+  const { push } = useHistory()
 
-    const cardHandler = (currentRoom: RoomPopulated) => {
-        room.setCurrent(currentRoom)
-        push(`${paths.room}/${currentRoom._id}`)
-    }
+  const cardHandler = (currentRoom: RoomPopulated) => {
+    room.setCurrent(currentRoom)
+    push(`${paths.room}/${currentRoom._id}`)
+  }
 
-    const paginationHandler = (
-        event: React.ChangeEvent<unknown>,
-        value: number
-    ) => {
-        room.setPage(value)
-    }
+  const paginationHandler = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    room.setPage(value)
+  }
 
-    return (
-        <Box sx={{ flexGrow: 1 }}>
-            <Pagination
-                count={room.pageAmount}
-                page={room.page}
-                variant="outlined"
-                color="primary"
-                sx={{ p: 1 }}
-                onChange={paginationHandler}
-            />
-            <Grid container spacing={2} columns={12} sx={{ p: 2 }}>
-                {room.rooms.map((currentRoom) => (
-                    <RoomCard
-                        key={currentRoom._id}
-                        id={currentRoom._id}
-                        address={currentRoom._building.address}
-                        type={currentRoom._type.name}
-                        places={currentRoom._type.places}
-                        clickHandler={() => cardHandler(currentRoom)}
-                    />
-                ))}
-            </Grid>
-        </Box>
-    )
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <Pagination
+        count={room.pageAmount}
+        page={room.page}
+        variant="outlined"
+        color="primary"
+        sx={{ p: 1 }}
+        onChange={paginationHandler}
+      />
+      <Grid container spacing={2} columns={12} sx={{ p: 2 }}>
+        {room.rooms.map((currentRoom) => (
+          <RoomCard
+            key={currentRoom._id}
+            id={currentRoom._id}
+            address={currentRoom._building.address}
+            type={currentRoom._type.name}
+            places={currentRoom._type.places}
+            clickHandler={() => cardHandler(currentRoom)}
+          />
+        ))}
+      </Grid>
+    </Box>
+  )
 })

@@ -1,4 +1,4 @@
-const {Router} = require('express')
+const { Router } = require('express')
 const router = Router()
 const controller = require('../controllers/BuildingController')
 const RoleMiddleware = require('../middleware/RoleMiddleware')

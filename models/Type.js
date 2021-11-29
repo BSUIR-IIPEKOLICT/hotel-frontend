@@ -1,19 +1,22 @@
-const {Schema, model, Types} = require('mongoose')
+const { Schema, model, Types } = require('mongoose')
 
-module.exports = model('Type', new Schema({
+module.exports = model(
+  'Type',
+  new Schema({
     _services: [
-        {
-            type: Types.ObjectId,
-            ref: 'Service'
-        }
+      {
+        type: Types.ObjectId,
+        ref: 'Service',
+      },
     ],
     name: {
-        type: String,
-        require: true
+      type: String,
+      require: true,
     },
     places: {
-        type: Number,
-        default: 1,
-        require: true
-    }
-}))
+      type: Number,
+      default: 1,
+      require: true,
+    },
+  })
+)

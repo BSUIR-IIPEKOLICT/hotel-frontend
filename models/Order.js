@@ -1,29 +1,32 @@
-const {Schema, model, Types} = require('mongoose')
+const { Schema, model, Types } = require('mongoose')
 
-module.exports = model('Order', new Schema({
+module.exports = model(
+  'Order',
+  new Schema({
     _basket: {
-        type: Types.ObjectId,
-        require: true,
-        ref: 'Basket'
+      type: Types.ObjectId,
+      require: true,
+      ref: 'Basket',
     },
     _room: {
-        type: Types.ObjectId,
-        require: true,
-        ref: 'Room'
+      type: Types.ObjectId,
+      require: true,
+      ref: 'Room',
     },
     _services: [
-        {
-            type: Types.ObjectId,
-            ref: 'Service'
-        }
+      {
+        type: Types.ObjectId,
+        ref: 'Service',
+      },
     ],
     population: {
-        type: Number,
-        default: 1,
-        require: true
+      type: Number,
+      default: 1,
+      require: true,
     },
     date: {
-        type: String,
-        require: true
-    }
-}))
+      type: String,
+      require: true,
+    },
+  })
+)

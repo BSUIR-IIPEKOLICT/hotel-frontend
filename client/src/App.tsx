@@ -8,63 +8,63 @@ import { Context } from './store'
 import { basketApi, userApi } from './api'
 
 export const App: React.FC = () => {
-    const [isDark, setIsDark] = useState(
-        localStorage.getItem('darkMode') !== 'false'
-    )
-    const currentTheme = theme(isDark)
+  const [isDark, setIsDark] = useState(
+    localStorage.getItem('darkMode') !== 'false'
+  )
+  const currentTheme = theme(isDark)
 
-    const [isLoading, setIsLoading] = useState(true)
-    const { user, basket } = useContext(Context)
+  const [isLoading, setIsLoading] = useState(true)
+  const { user, basket } = useContext(Context)
 
-    useEffect(
-        () => localStorage.setItem('darkMode', JSON.stringify(isDark)),
-        [isDark]
-    )
+  useEffect(
+    () => localStorage.setItem('darkMode', JSON.stringify(isDark)),
+    [isDark]
+  )
 
-    useEffect(() => {
-        userApi
-            .auth()
-            .then((response) => {
-                console.log(response)
+  useEffect(() => {
+    userApi
+      .auth()
+      .then((response) => {
+        console.log(response)
 
-                user.setUser(response.user)
-                user.setIsAuth(true)
-                user.setId(response.id)
+        user.setUser(response.user)
+        user.setIsAuth(true)
+        user.setId(response.id)
 
-                basketApi
-                    .getOne(user.id)
-                    .then((response) => basket.setBasket(response))
-                    .catch((e) => console.error(e))
-            })
-            .catch(() => {})
-            .finally(() => setIsLoading(false))
-    })
+        basketApi
+          .getOne(user.id)
+          .then((response) => basket.setBasket(response))
+          .catch((e) => console.error(e))
+      })
+      .catch(() => {})
+      .finally(() => setIsLoading(false))
+  })
 
-    if (isLoading)
-        return (
-            <div className={isDark ? 'root' : 'root light'}>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        height: '100vh',
-                        width: '100vw',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                >
-                    <CircularProgress />
-                </Box>
-            </div>
-        )
-
+  if (isLoading)
     return (
-        <div className={isDark ? 'root' : 'root light'}>
-            <ThemeProvider theme={currentTheme}>
-                <BrowserRouter>
-                    <Nav toggleTheme={() => setIsDark((prev) => !prev)} />
-                    <AppRouter />
-                </BrowserRouter>
-            </ThemeProvider>
-        </div>
+      <div className={isDark ? 'root' : 'root light'}>
+        <Box
+          sx={{
+            display: 'flex',
+            height: '100vh',
+            width: '100vw',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      </div>
     )
+
+  return (
+    <div className={isDark ? 'root' : 'root light'}>
+      <ThemeProvider theme={currentTheme}>
+        <BrowserRouter>
+          <Nav toggleTheme={() => setIsDark((prev) => !prev)} />
+          <AppRouter />
+        </BrowserRouter>
+      </ThemeProvider>
+    </div>
+  )
 }

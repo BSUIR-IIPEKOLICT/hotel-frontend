@@ -9,13 +9,13 @@ import ServiceStore from './ServiceStore'
 import TypeStore from './TypeStore'
 
 export const store = {
-    user: new UserStore(),
-    basket: new BasketStore(),
-    building: new BuildingStore(),
-    order: new OrderStore(),
-    room: new RoomStore(),
-    service: new ServiceStore(),
-    type: new TypeStore(),
+  user: new UserStore(),
+  basket: new BasketStore(),
+  building: new BuildingStore(),
+  order: new OrderStore(),
+  room: new RoomStore(),
+  service: new ServiceStore(),
+  type: new TypeStore(),
 }
 
 export const Context = createContext<AppStore>({} as AppStore)
