@@ -1,12 +1,12 @@
-import { action, computed, makeAutoObservable } from 'mobx'
+import { action, computed, makeObservable, observable } from 'mobx'
 import { Building } from '../interfaces/models'
 
 export default class BuildingStore {
-    private _buildings: Building[] = []
-    private _active: string = ''
+    @observable private _buildings: Building[] = []
+    @observable private _active: string = ''
 
     constructor() {
-        makeAutoObservable(this)
+        makeObservable(this)
     }
 
     @action

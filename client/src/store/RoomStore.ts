@@ -1,15 +1,15 @@
-import { action, computed, makeAutoObservable } from 'mobx'
+import { action, computed, makeObservable, observable } from 'mobx'
 import { RoomPopulated } from '../interfaces/populatedModels'
 
 export default class RoomStore {
-    private _rooms: RoomPopulated[] = []
-    private _current: RoomPopulated = {} as RoomPopulated
-    private _pageAmount = 1
-    private _page = 1
+    @observable private _rooms: RoomPopulated[] = []
+    @observable private _current: RoomPopulated = {} as RoomPopulated
+    @observable private _pageAmount = 1
+    @observable private _page = 1
     private readonly _limit = 9
 
     constructor() {
-        makeAutoObservable(this)
+        makeObservable(this)
     }
 
     @action

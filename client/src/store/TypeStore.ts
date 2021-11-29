@@ -1,12 +1,12 @@
-import { action, computed, makeAutoObservable } from 'mobx'
+import { action, computed, makeObservable, observable } from 'mobx'
 import { Type } from '../interfaces/models'
 
 export default class TypeStore {
-    private _types: Type[] = []
-    private _active: string = ''
+    @observable private _types: Type[] = []
+    @observable private _active: string = ''
 
     constructor() {
-        makeAutoObservable(this)
+        makeObservable(this)
     }
 
     @action

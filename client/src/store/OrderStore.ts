@@ -1,11 +1,11 @@
-import { action, computed, makeAutoObservable } from 'mobx'
+import { action, computed, makeObservable, observable } from 'mobx'
 import { OrderPopulated } from '../interfaces/populatedModels'
 
 export default class OrderStore {
-    private _orders: OrderPopulated[] = []
+    @observable private _orders: OrderPopulated[] = []
 
     constructor() {
-        makeAutoObservable(this)
+        makeObservable(this)
     }
 
     @action

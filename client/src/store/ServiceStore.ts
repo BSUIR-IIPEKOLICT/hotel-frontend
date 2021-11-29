@@ -1,11 +1,11 @@
-import { action, computed, makeAutoObservable } from 'mobx'
+import { action, computed, makeObservable, observable } from 'mobx'
 import { Service } from '../interfaces/models'
 
 export default class ServiceStore {
-    private _services: Service[] = []
+    @observable private _services: Service[] = []
 
     constructor() {
-        makeAutoObservable(this)
+        makeObservable(this)
     }
 
     @action

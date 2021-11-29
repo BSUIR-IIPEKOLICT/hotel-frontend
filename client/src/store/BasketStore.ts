@@ -1,12 +1,12 @@
-import { action, computed, makeAutoObservable } from 'mobx'
+import { action, computed, makeObservable, observable } from 'mobx'
 import { BasketPopulated } from '../interfaces/populatedModels'
 
 export default class BasketStore {
-    private _basket: BasketPopulated = {} as BasketPopulated
-    private _baskets: BasketPopulated[] = []
+    @observable private _basket: BasketPopulated = {} as BasketPopulated
+    @observable private _baskets: BasketPopulated[] = []
 
     constructor() {
-        makeAutoObservable(this)
+        makeObservable(this)
     }
 
     @action

@@ -22,6 +22,14 @@ export const Nav: React.FC<NavProps> = observer(({ toggleTheme }) => {
     const { palette } = useTheme()
     const { push } = useHistory()
 
+    const logout = () => {
+        push(paths.main)
+        user.setUser({} as User)
+        user.setIsAuth(false)
+        user.setId('')
+        localStorage.removeItem('token')
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -72,12 +80,7 @@ export const Nav: React.FC<NavProps> = observer(({ toggleTheme }) => {
                                 variant="outlined"
                                 color="inherit"
                                 sx={{ mx: 1 }}
-                                onClick={() => {
-                                    push(paths.main)
-                                    user.setUser({} as User)
-                                    user.setIsAuth(false)
-                                    user.setId('')
-                                }}
+                                onClick={logout}
                             >
                                 Logout
                             </Button>

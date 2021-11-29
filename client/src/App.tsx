@@ -5,7 +5,7 @@ import { Nav } from './components/Nav'
 import { Box, CircularProgress, ThemeProvider } from '@mui/material'
 import theme from './shared/theme'
 import { Context } from './store'
-import { userApi } from './api'
+import { basketApi, userApi } from './api'
 
 export const App: React.FC = () => {
     const [isDark, setIsDark] = useState(
@@ -14,7 +14,7 @@ export const App: React.FC = () => {
     const currentTheme = theme(isDark)
 
     const [isLoading, setIsLoading] = useState(true)
-    const { user } = useContext(Context)
+    const { user, basket } = useContext(Context)
 
     useEffect(
         () => localStorage.setItem('darkMode', JSON.stringify(isDark)),
@@ -25,10 +25,18 @@ export const App: React.FC = () => {
         userApi
             .auth()
             .then((response) => {
+                console.log(response)
+
                 user.setUser(response.user)
                 user.setIsAuth(true)
                 user.setId(response.id)
+
+                basketApi
+                    .getOne(user.id)
+                    .then((response) => basket.setBasket(response))
+                    .catch((e) => console.error(e))
             })
+            .catch(() => {})
             .finally(() => setIsLoading(false))
     })
 

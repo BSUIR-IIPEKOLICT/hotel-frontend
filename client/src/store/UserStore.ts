@@ -1,13 +1,13 @@
-import { action, computed, makeAutoObservable } from 'mobx'
+import { action, computed, makeObservable, observable } from 'mobx'
 import { User } from '../interfaces/models'
 
 export default class UserStore {
-    private _isAuth: boolean = false
-    private _user: User = {} as User
-    private _id = ''
+    @observable private _isAuth: boolean = false
+    @observable private _user: User = {} as User
+    @observable private _id = ''
 
     constructor() {
-        makeAutoObservable(this)
+        makeObservable(this)
     }
 
     @action
