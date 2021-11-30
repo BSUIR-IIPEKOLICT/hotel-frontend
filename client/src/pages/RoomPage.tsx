@@ -14,7 +14,7 @@ import { RoomPriceContainer } from '../components/room/RoomPriceContainer'
 import { RoomBookContainer } from '../components/room/RoomBookContainer'
 
 export const RoomPage: React.FC = observer(() => {
-  const { service, room, basket } = useContext(Context)
+  const { service, room, basket, user } = useContext(Context)
   const { palette } = useTheme()
   const { push } = useHistory()
 
@@ -51,10 +51,14 @@ export const RoomPage: React.FC = observer(() => {
   }
 
   const bookHandler = () => {
-    orderApi
-      .create(basket.basket._id, room.current._id, services, population)
-      .then(() => push(paths.main))
-      .catch((e) => console.error(e))
+    if (user.isAuth) {
+      orderApi
+        .create(basket.basket._id, room.current._id, services, population)
+        .then(() => push(paths.main))
+        .catch((e) => console.error(e))
+    } else {
+      alert('Not authorized')
+    }
   }
 
   return (

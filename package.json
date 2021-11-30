@@ -1,33 +1,36 @@
 {
   "name": "hotel",
   "version": "1.0.0",
-  "description": "hotel mern app",
   "private": true,
-  "main": "index.js",
+  "description": "*hotel*\r >Hotel MERN app (task on subject \"Structures and databases\" in BSUIR)",
+  "main": "server/index.js",
   "scripts": {
-    "backend": "nodemon index",
-    "frontend": "cd client && npm run start",
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "start": "node index",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "dev": "concurrently npm:dev:*",
+    "dev:client": "cd client && npm run start",
+    "dev:server": "cd server && npm run dev",
+    "start": "concurrently npm:start:*",
+    "start:client": "cd client && npm run build",
+    "start:server": "cd server && npm run prod",
+    "deploy": "concurrently npm:deploy:*",
+    "deploy:client": "cd client && npm install && npm run build",
+    "deploy:server": "cd server && npm install && npm run prod"
   },
-  "keywords": [],
-  "author": "IIREKOLICT <iipekolict@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IIPEKOLICT/hotel.git"
+  },
+  "keywords": ["MERN", "Express", "React"],
+  "author": "iipekolict<iipekolict@gmail.com>",
   "license": "MIT",
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "concurrently": "^6.3.0",
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.10"
+  "bugs": {
+    "url": "https://github.com/IIPEKOLICT/hotel/issues"
   },
+  "homepage": "https://github.com/IIPEKOLICT/hotel#readme",
   "devDependencies": {
-    "nodemon": "^2.0.13",
+    "concurrently": "^6.4.0",
     "prettier": "2.5.0"
   },
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   }
 }
