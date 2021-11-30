@@ -33,8 +33,3 @@ npm run dev
 ```
 npm run start
 ```
-
-Развертывание на деплой-платформе:
-```
-npm run deploy
-```
