@@ -46,6 +46,5 @@ export interface PreloaderProps {
 
 export interface OrderCardProps {
   order: OrderPopulated
-  addDuty(value: number): void
-  onDelete(id: string): void
+  onDelete(order: OrderPopulated): void
 }

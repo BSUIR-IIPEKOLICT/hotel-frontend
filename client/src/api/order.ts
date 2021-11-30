@@ -1,12 +1,16 @@
 import BaseApi from '../base/baseApi'
 import { OrderPopulated } from '../interfaces/populatedModels'
+import { Order } from '../interfaces/models'
 
 export default class OrderApi extends BaseApi {
   private readonly route = '/order'
 
   async get(basketId: string): Promise<OrderPopulated[]> {
-    return (await this.api.get<OrderPopulated[]>(`${this.route}/${basketId}`))
-      .data
+    return (
+      await this.api.get<OrderPopulated[]>(this.route, {
+        params: { _basket: basketId },
+      })
+    ).data
   }
 
   async create(
@@ -14,9 +18,9 @@ export default class OrderApi extends BaseApi {
     _room: string,
     _services: string[],
     population: number
-  ): Promise<string> {
+  ): Promise<Order> {
     return (
-      await this.api.post<string>(this.route, {
+      await this.api.post<Order>(this.route, {
         _basket,
         _room,
         _services,
@@ -27,6 +31,6 @@ export default class OrderApi extends BaseApi {
   }
 
   async delete(_id: string): Promise<string> {
-    return (await this.api.delete<string>(this.route, { data: { _id } })).data
+    return (await this.api.delete<string>(this.route, { params: { _id } })).data
   }
 }

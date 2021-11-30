@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Box, Container, Divider, Grid, Paper, useTheme } from '@mui/material'
 import { Context } from '../store'
 import Typography from '@mui/material/Typography'
 import PlaceSelect from '../classes/PlaceSelect'
 import { RoomInfo } from '../components/room/RoomInfo'
-import { orderApi, serviceApi } from '../api'
+import { orderApi } from '../api'
 import { observer } from 'mobx-react-lite'
 import { useHistory } from 'react-router-dom'
 import { paths } from '../shared/enums'
@@ -22,13 +22,6 @@ export const RoomPage: React.FC = observer(() => {
   const [placesPrice, setPlacesPrice] = useState(50)
   const [services, setServices] = useState<string[]>([])
   const [population, setPopulation] = useState(1)
-
-  useEffect(() => {
-    serviceApi
-      .getAll()
-      .then((services) => service.setServices(services))
-      .catch((e) => console.error(e))
-  }, [])
 
   const calcServices = (checked: boolean, servicePrice: number) => {
     if (checked) setPrice((prev) => prev + servicePrice)

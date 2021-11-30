@@ -5,8 +5,9 @@ import { Nav } from './components/Nav'
 import { ThemeProvider } from '@mui/material'
 import theme from './shared/theme'
 import { Context } from './store'
-import { basketApi, userApi } from './api'
+import { basketApi, orderApi, userApi } from './api'
 import { Preloader } from './components/Preloader'
+import { BasketPopulated } from './interfaces/populatedModels'
 
 export const App: React.FC = () => {
   const [isDark, setIsDark] = useState(
@@ -15,12 +16,27 @@ export const App: React.FC = () => {
   const currentTheme = theme(isDark)
 
   const [isLoading, setIsLoading] = useState(true)
-  const { user, basket } = useContext(Context)
+  const { user, basket, order } = useContext(Context)
 
-  useEffect(
-    () => localStorage.setItem('darkMode', JSON.stringify(isDark)),
-    [isDark]
-  )
+  const loadBasket = (callBack: (response: BasketPopulated) => void) => {
+    basketApi
+      .getOne(user.id)
+      .then((response) => {
+        basket.setBasket(response)
+        callBack(response)
+      })
+      .catch((e) => console.error(e))
+  }
+
+  const loadOrders = (response: BasketPopulated) => {
+    orderApi
+      .get(response._id)
+      .then((orders) => {
+        order.setOrders(orders)
+        basket.setDuty(0)
+      })
+      .catch((e) => console.error(e))
+  }
 
   useEffect(() => {
     userApi
@@ -30,14 +46,22 @@ export const App: React.FC = () => {
         user.setIsAuth(true)
         user.setId(response.id)
 
-        basketApi
-          .getOne(user.id)
-          .then((response) => basket.setBasket(response))
-          .catch((e) => console.error(e))
+        loadBasket(loadOrders)
       })
       .catch(() => {})
       .finally(() => setIsLoading(false))
-  })
+  }, [])
+
+  useEffect(
+    () => localStorage.setItem('darkMode', JSON.stringify(isDark)),
+    [isDark]
+  )
+
+  useEffect(() => {
+    if (user.isAuth) {
+      loadBasket(loadOrders)
+    }
+  }, [user.isAuth])
 
   if (isLoading) return <Preloader isDark={isDark} />
 

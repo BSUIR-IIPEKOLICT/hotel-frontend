@@ -19,7 +19,7 @@ class TypeController {
     })
     await type.save()
 
-    return res.json('Success')
+    return res.json(type)
   }
 
   async delete(req, res) {
@@ -34,7 +34,7 @@ class TypeController {
 
     await Type.deleteOne(type)
 
-    return res.json('Success')
+    return res.json(_id)
   }
 }
 

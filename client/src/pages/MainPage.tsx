@@ -2,14 +2,14 @@ import React, { useContext, useEffect } from 'react'
 import { Grid, useTheme } from '@mui/material'
 import { FilterBar } from '../components/FilterBar'
 import { RoomGrid } from '../components/room/RoomGrid'
-import { buildingApi, roomApi, typeApi } from '../api'
+import { buildingApi, roomApi, serviceApi, typeApi } from '../api'
 import { Context } from '../store'
 import { roles } from '../shared/enums'
 import { observer } from 'mobx-react-lite'
 
 export const MainPage: React.FC = observer(() => {
   const { palette } = useTheme()
-  const { building, type, room, user } = useContext(Context)
+  const { building, type, room, user, service } = useContext(Context)
 
   useEffect(() => {
     typeApi
@@ -26,6 +26,10 @@ export const MainPage: React.FC = observer(() => {
         room.setRooms(response.rooms)
         room.setPageAmount(response.amount)
       })
+      .catch((e) => console.error(e))
+    serviceApi
+      .getAll()
+      .then((services) => service.setServices(services))
       .catch((e) => console.error(e))
   }, [])
 

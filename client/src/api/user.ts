@@ -1,4 +1,3 @@
-// import { User } from '../interfaces/models'
 import jwtDecode from 'jwt-decode'
 import BaseApi from '../base/baseApi'
 import { ConvertedUserResponse, UserResponse } from '../interfaces/responses'

@@ -10,7 +10,7 @@ class BasketController {
   }
 
   async getOne(req, res) {
-    const { _user } = req.params
+    const { _user } = req.query
     const basket = await Basket.findOne({ _user })
       .populate('_user')
       .populate('_orders')

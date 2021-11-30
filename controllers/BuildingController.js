@@ -10,7 +10,7 @@ class BuildingController {
   }
 
   async create(req, res) {
-    const { address } = req.body
+    const { address } = req.query
 
     const building = await new Building({ address })
     await building.save()
@@ -35,7 +35,7 @@ class BuildingController {
 
     await Building.deleteOne({ _id: building._id })
 
-    return res.json('Success')
+    return res.json(building)
   }
 }
 

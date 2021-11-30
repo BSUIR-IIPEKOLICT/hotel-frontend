@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const Basket = require('../models/Basket')
 const { objectId } = require('../db')
-const secret = process.env.SECRET || ''
 
 const generateToken = (user) => {
   return jwt.sign(
@@ -13,7 +12,7 @@ const generateToken = (user) => {
       email: user.email,
       role: user.role,
     },
-    secret,
+    process.env.JWT_SECRET || '',
     { expiresIn: '24h' }
   )
 }

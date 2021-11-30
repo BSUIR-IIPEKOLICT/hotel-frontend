@@ -18,14 +18,14 @@ class ServiceController {
   }
 
   async delete(req, res) {
-    const { _id } = req.body
+    const { _id } = req.query
     const service = await Service.findById(_id).lean()
 
     await Type.updateMany({}, { $pull: { _services: _id } })
     await Order.updateMany({}, { $pull: { _services: _id } })
     await Service.deleteOne(service)
 
-    return res.json('Success')
+    return res.json(_id)
   }
 }
 

@@ -36,16 +36,6 @@ class RoomController {
     return res.json({ rooms, amount })
   }
 
-  async current(req, res) {
-    const { _id } = req.params
-    const room = await Room.findById(_id)
-      .populate('_type')
-      .populate('_building')
-      .lean()
-
-    return res.json(room)
-  }
-
   async create(req, res) {
     const { _building, _type } = req.body
     const id = objectId()
@@ -65,7 +55,7 @@ class RoomController {
   }
 
   async delete(req, res) {
-    const { _id } = req.body
+    const { _id } = req.query
     const room = await Room.findById(_id).populate('_order').lean()
 
     await Building.updateOne(
@@ -81,7 +71,7 @@ class RoomController {
 
     await Room.deleteOne({ _id })
 
-    return res.json('Success')
+    return res.json(_id)
   }
 }
 
