@@ -13,7 +13,8 @@
     "start:server": "cd server && npm run prod",
     "deploy": "concurrently npm:deploy:*",
     "deploy:client": "cd client && npm install && npm run build",
-    "deploy:server": "cd server && npm install && npm run prod"
+    "deploy:server": "cd server && npm install && npm run prod",
+    "heroku-postbuild": "npm run deploy"
   },
   "repository": {
     "type": "git",
