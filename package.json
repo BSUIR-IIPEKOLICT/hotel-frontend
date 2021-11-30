@@ -3,17 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "description": "*hotel*\r >Hotel MERN app (task on subject \"Structures and databases\" in BSUIR)",
-  "main": "server/index.js",
+  "main": "index.js",
   "scripts": {
     "dev": "concurrently npm:dev:*",
     "dev:client": "cd client && npm run start",
-    "dev:server": "cd server && npm run dev",
+    "dev:server": "nodemon index",
     "start": "concurrently npm:start:*",
     "start:client": "cd client && npm run build",
-    "start:server": "cd server && npm run prod",
+    "start:server": "node index",
     "deploy": "concurrently npm:deploy:*",
     "deploy:client": "cd client && npm install && npm run build",
-    "deploy:server": "cd server && npm install && npm run prod",
+    "deploy:server": "npm install && node index",
     "heroku-postbuild": "npm run deploy"
   },
   "repository": {
@@ -27,11 +27,20 @@
     "url": "https://github.com/IIPEKOLICT/hotel/issues"
   },
   "homepage": "https://github.com/IIPEKOLICT/hotel#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.10"
+  },
   "devDependencies": {
     "concurrently": "^6.4.0",
-    "prettier": "2.5.0"
+    "prettier": "2.5.0",
+    "nodemon": "^2.0.13"
   },
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   }
 }

@@ -1,9 +1,9 @@
 require('dotenv').config()
+const { resolve } = require('path')
 const { connect } = require('./db')
 const express = require('express')
 const cors = require('cors')
 const port = process.env.PORT || 5000
-const { resolve } = require('path')
 
 const app = express()
 
@@ -12,7 +12,7 @@ app.use(express.json())
 app.use('/api', require('./routes/index'))
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(resolve(__dirname, '..', 'client', 'build')))
+  app.use(express.static(resolve(__dirname, 'client', 'build')))
   app.get('*', require('./utils/rootRouter'))
 }
 
