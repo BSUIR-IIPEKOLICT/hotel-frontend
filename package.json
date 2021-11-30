@@ -11,10 +11,7 @@
     "start": "concurrently npm:start:*",
     "start:client": "cd client && npm run build",
     "start:server": "node index",
-    "deploy": "concurrently npm:deploy:*",
-    "deploy:client": "cd client && npm install && npm run build",
-    "deploy:server": "npm install && node index",
-    "heroku-postbuild": "npm run deploy"
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "repository": {
     "type": "git",
