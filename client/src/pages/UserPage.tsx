@@ -6,7 +6,7 @@ import { orderApi } from '../api'
 import { OrderCard } from '../components/OrderCard'
 import { OrderPopulated } from '../interfaces/populatedModels'
 
-export const BasketPage: React.FC = observer(() => {
+export const UserPage: React.FC = observer(() => {
   const { order, basket, user } = useContext(Context)
   const [duty, setDuty] = useState(0)
 

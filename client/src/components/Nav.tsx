@@ -55,9 +55,9 @@ export const Nav: React.FC<NavProps> = observer(({ toggleTheme }) => {
               variant="outlined"
               color="inherit"
               sx={{ mx: 1 }}
-              onClick={() => push(paths.create)}
+              onClick={() => push(paths.admin)}
             >
-              Create
+              Admin
             </Button>
           )}
 
@@ -67,7 +67,7 @@ export const Nav: React.FC<NavProps> = observer(({ toggleTheme }) => {
                 variant="text"
                 color="inherit"
                 sx={{ mx: 1 }}
-                onClick={() => push(paths.basket)}
+                onClick={() => push(paths.user)}
               >
                 <AccountCircleRoundedIcon />
               </Button>

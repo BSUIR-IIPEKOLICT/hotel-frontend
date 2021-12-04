@@ -1,8 +1,8 @@
 export const enum paths {
-  create = '/create',
+  admin = '/admin',
   login = '/login',
   register = '/register',
-  basket = '/basket',
+  user = '/user',
   main = '/',
   room = '/room',
 }
