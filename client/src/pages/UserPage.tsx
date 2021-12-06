@@ -10,25 +10,12 @@ export const UserPage: React.FC = observer(() => {
   const { order, basket, user } = useContext(Context)
   const [duty, setDuty] = useState(0)
 
-  const getDuty = (order: OrderPopulated): number => {
-    const price =
-      order.population * 50 +
-      order._services.reduce((acc, { price }) => acc + price, 0)
-    const dateOffset =
-      Math.floor(
-        (new Date().getTime() - new Date(order.date).getTime()) /
-          (1000 * 60 * 60 * 24)
-      ) || 0
-
-    return dateOffset * price
-  }
-
   useEffect(() => {
     orderApi
       .get(basket.basket._id)
       .then((orders) => {
         order.setOrders(orders)
-        setDuty(orders.reduce((acc, order) => acc + getDuty(order), 0))
+        setDuty(orders.reduce((acc, { duty }) => acc + duty, 0))
       })
       .catch((e) => console.error(e))
   }, [])
@@ -38,7 +25,7 @@ export const UserPage: React.FC = observer(() => {
       .delete(currentOrder._id)
       .then(() => {
         order.deleteOrder(currentOrder._id)
-        setDuty((prev) => prev - getDuty(currentOrder))
+        setDuty((prev) => prev - currentOrder.duty)
       })
       .catch((e) => console.error(e))
   }

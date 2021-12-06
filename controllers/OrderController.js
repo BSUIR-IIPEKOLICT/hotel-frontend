@@ -7,15 +7,12 @@ class OrderController {
   async get(req, res) {
     const { _basket } = req.query
 
-    const order = await Order.find({ _basket })
-      .populate('_room')
-      .populate('_services')
-      .lean()
+    const order = await Order.find({ _basket }).populate('_room').lean()
     return res.json(order)
   }
 
   async create(req, res) {
-    const { _basket, _room, _services, population, date } = req.body
+    const { _basket, _room, _services, duty, population, date } = req.body
     const id = objectId()
 
     const order = await new Order({
@@ -23,6 +20,7 @@ class OrderController {
       _basket,
       _room,
       _services,
+      duty,
       population,
       date,
     })

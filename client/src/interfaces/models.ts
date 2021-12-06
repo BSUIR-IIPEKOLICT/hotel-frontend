@@ -1,7 +1,7 @@
 import { roles } from '../shared/enums'
 
 export interface User {
-  id?: string
+  _id?: string
   email: string
   role: roles
 }
@@ -32,6 +32,7 @@ export interface Order {
   _basket: string
   _room: string
   _services: string[]
+  duty: number
   date: string
   population: number
 }

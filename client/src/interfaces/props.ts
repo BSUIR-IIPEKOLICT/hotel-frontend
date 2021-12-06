@@ -1,5 +1,9 @@
-import { OrderPopulated, RoomPopulated } from './populatedModels'
-import { Service } from './models'
+import {
+  BasketPopulated,
+  OrderPopulated,
+  RoomPopulated,
+} from './populatedModels'
+import { Service, User } from './models'
 
 export interface NavProps {
   toggleTheme(): void
@@ -47,4 +51,9 @@ export interface PreloaderProps {
 export interface OrderCardProps {
   order: OrderPopulated
   onDelete(order: OrderPopulated): void
+}
+
+export interface BasketCardProps {
+  basket: BasketPopulated
+  onChangeRole(user: User): void
 }

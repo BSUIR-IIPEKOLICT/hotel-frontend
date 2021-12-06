@@ -12,4 +12,8 @@ export default class BasketApi extends BaseApi {
       })
     ).data
   }
+
+  async getAll(): Promise<BasketPopulated[]> {
+    return (await this.api.get<BasketPopulated[]>(this.route)).data
+  }
 }

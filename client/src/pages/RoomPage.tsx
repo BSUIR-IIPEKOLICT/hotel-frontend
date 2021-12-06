@@ -53,7 +53,13 @@ export const RoomPage: React.FC = observer(() => {
   const bookHandler = () => {
     if (user.isAuth && room.current.isFree) {
       orderApi
-        .create(basket.basket._id, room.current._id, services, population)
+        .create(
+          basket.basket._id,
+          room.current._id,
+          services,
+          price + placesPrice,
+          population
+        )
         .then(() => push(paths.main))
         .catch((e) => console.error(e))
     } else {

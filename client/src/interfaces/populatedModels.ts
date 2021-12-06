@@ -20,6 +20,7 @@ export interface OrderPopulated {
   _basket: string
   _room: Room
   _services: Service[]
+  duty: number
   date: string
   population: number
 }

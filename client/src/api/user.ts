@@ -1,6 +1,8 @@
 import jwtDecode from 'jwt-decode'
 import BaseApi from '../base/baseApi'
 import { ConvertedUserResponse, UserResponse } from '../interfaces/responses'
+import { User } from '../interfaces/models'
+import { roles } from '../shared/enums'
 
 export default class UserApi extends BaseApi {
   private readonly route = '/user'
@@ -43,5 +45,13 @@ export default class UserApi extends BaseApi {
     )
     localStorage.setItem('token', data.token)
     return { user: jwtDecode(data.token), id: data.id }
+  }
+
+  async getAll(): Promise<User[]> {
+    return (await this.authApi.get<User[]>(this.route)).data
+  }
+
+  async changeRole(_id: string, role: roles): Promise<roles> {
+    return (await this.authApi.patch<roles>(this.route, { _id, role })).data
   }
 }

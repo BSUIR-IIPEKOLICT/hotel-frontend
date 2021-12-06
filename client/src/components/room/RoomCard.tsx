@@ -34,7 +34,14 @@ export const RoomCard: React.FC<RoomCardProps> = ({
         >
           Type: {room._type.name}
         </Typography>
-        <Typography component="div">Places: {room._type.places}</Typography>
+        {isAdmin && (
+          <Typography component="div">
+            Places: {room.population}/{room._type.places}
+          </Typography>
+        )}
+        {!isAdmin && (
+          <Typography component="div">Places: {room._type.places}</Typography>
+        )}
         <Typography component="div" sx={{ color: palette.text.secondary }}>
           Address:
         </Typography>

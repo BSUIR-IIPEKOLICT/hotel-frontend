@@ -4,6 +4,7 @@ import { User } from '../interfaces/models'
 export default class UserStore {
   @observable private _isAuth: boolean = false
   @observable private _user: User = {} as User
+  @observable private _users: User[] = []
   @observable private _id = ''
 
   constructor() {
@@ -25,6 +26,11 @@ export default class UserStore {
     this._id = value
   }
 
+  @action
+  setUsers(value: User[]) {
+    this._users = value
+  }
+
   @computed
   get isAuth() {
     return this._isAuth
@@ -38,5 +44,10 @@ export default class UserStore {
   @computed
   get id() {
     return this._id
+  }
+
+  @computed
+  get users() {
+    return this._users
   }
 }

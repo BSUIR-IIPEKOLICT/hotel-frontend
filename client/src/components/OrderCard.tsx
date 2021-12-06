@@ -6,14 +6,14 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import { Context } from '../store'
 
 export const OrderCard: React.FC<OrderCardProps> = ({ order, onDelete }) => {
-  const { type } = useContext(Context)
+  const { type, service } = useContext(Context)
   const { palette } = useTheme()
 
   const typeName = type.types.filter(({ _id }) => _id === order._room._type)[0]
     .name
-  const price =
-    order.population * 50 +
-    order._services.reduce((acc, { price }) => acc + price, 0)
+  const services = service.services.filter(
+    (serv) => order._services.map(({ _id }) => _id).indexOf(serv._id) !== -1
+  )
 
   return (
     <Paper
@@ -30,10 +30,13 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order, onDelete }) => {
         <Box>
           <Typography component="div">Date: {order.date}</Typography>
           <Typography component="div" sx={{ color: palette.success.main }}>
-            {price}$ per day
+            {order.duty}$ per day
           </Typography>
           <Typography component="div" sx={{ color: palette.text.secondary }}>
             {order.population} persons, {typeName} type
+          </Typography>
+          <Typography component="div" sx={{ color: palette.text.secondary }}>
+            Services: {services.map(({ name }) => name).join(', ')}
           </Typography>
         </Box>
         <Button

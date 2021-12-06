@@ -8,7 +8,7 @@ const { objectId } = require('../db')
 const generateToken = (user) => {
   return jwt.sign(
     {
-      id: user.id,
+      _id: user.id,
       email: user.email,
       role: user.role,
     },
@@ -58,6 +58,17 @@ class UserController {
   async auth(req, res) {
     const user = await User.findOne({ email: req.user.email }).lean()
     return res.json({ token: generateToken(req.user), id: user._id })
+  }
+
+  async getAll(req, res) {
+    const users = await User.find({}).lean()
+    return res.json(users)
+  }
+
+  async changeRole(req, res) {
+    const { _id, role } = req.body
+    await User.findByIdAndUpdate(_id, { $set: { role } })
+    return res.json(role)
   }
 }
 

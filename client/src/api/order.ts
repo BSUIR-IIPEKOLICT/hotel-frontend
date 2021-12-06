@@ -17,6 +17,7 @@ export default class OrderApi extends BaseApi {
     _basket: string,
     _room: string,
     _services: string[],
+    duty: number,
     population: number
   ): Promise<Order> {
     return (
@@ -24,6 +25,7 @@ export default class OrderApi extends BaseApi {
         _basket,
         _room,
         _services,
+        duty,
         population,
         date: new Date().toDateString(),
       })

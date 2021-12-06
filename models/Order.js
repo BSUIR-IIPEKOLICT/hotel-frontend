@@ -19,6 +19,10 @@ module.exports = model(
         ref: 'Service',
       },
     ],
+    duty: {
+      type: Number,
+      require: true,
+    },
     population: {
       type: Number,
       default: 1,

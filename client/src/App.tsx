@@ -31,10 +31,7 @@ export const App: React.FC = () => {
   const loadOrders = (response: BasketPopulated) => {
     orderApi
       .get(response._id)
-      .then((orders) => {
-        order.setOrders(orders)
-        basket.setDuty(0)
-      })
+      .then((orders) => order.setOrders(orders))
       .catch((e) => console.error(e))
   }
 
