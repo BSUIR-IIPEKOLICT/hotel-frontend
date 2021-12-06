@@ -1,14 +1,16 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Context } from '../store'
-import { Container, Typography } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
 import { basketApi, userApi } from '../api'
 import { BasketCard } from '../components/BasketCard'
 import { User } from '../interfaces/models'
 import { roles } from '../shared/enums'
+import { DatePicker } from '../components/DatePicker'
 
 export const AdminPage: React.FC = observer(() => {
   const { user, basket } = useContext(Context)
+  const [sortDate, setSortDate] = useState(new Date())
 
   useEffect(() => {
     userApi
@@ -42,8 +44,16 @@ export const AdminPage: React.FC = observer(() => {
       <Typography component="h4" variant="h4">
         Users
       </Typography>
+      <Box sx={{ py: 1, display: 'flex' }}>
+        <DatePicker onChange={(value) => setSortDate(value || new Date())} />
+      </Box>
       {basket.baskets.map((currentBasket) => (
-        <BasketCard basket={currentBasket} onChangeRole={onChangeRole} />
+        <BasketCard
+          key={currentBasket._id}
+          basket={currentBasket}
+          sortDate={sortDate}
+          onChangeRole={onChangeRole}
+        />
       ))}
       <Typography component="h4" variant="h4">
         Buildings

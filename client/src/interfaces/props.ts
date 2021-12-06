@@ -55,5 +55,10 @@ export interface OrderCardProps {
 
 export interface BasketCardProps {
   basket: BasketPopulated
+  sortDate: Date
   onChangeRole(user: User): void
+}
+
+export interface DatePickerProps {
+  onChange(value: Date | null): void
 }

@@ -4,10 +4,12 @@
   "private": true,
   "description": "client for hotel app",
   "dependencies": {
+    "@date-io/date-fns": "^2.11.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@fontsource/roboto": "^4.5.1",
     "@mui/icons-material": "^5.0.3",
+    "@mui/lab": "^5.0.0-alpha.59",
     "@mui/material": "^5.0.3",
     "axios": "^0.23.0",
     "jwt-decode": "^3.1.2",
