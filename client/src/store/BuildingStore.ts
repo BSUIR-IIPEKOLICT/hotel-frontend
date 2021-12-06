@@ -15,6 +15,16 @@ export default class BuildingStore {
   }
 
   @action
+  addBuilding(building: Building) {
+    this._buildings.push(building)
+  }
+
+  @action
+  deleteBuilding(id: string) {
+    this._buildings = this._buildings.filter(({ _id }) => _id !== id)
+  }
+
+  @action
   setActive(id: string) {
     this._active = id
   }

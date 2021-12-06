@@ -5,11 +5,14 @@ import { Box, Container, Typography } from '@mui/material'
 import { basketApi, userApi } from '../api'
 import { BasketCard } from '../components/BasketCard'
 import { User } from '../interfaces/models'
-import { roles } from '../shared/enums'
+import { paths, roles } from '../shared/enums'
 import { DatePicker } from '../components/DatePicker'
+import Button from '@mui/material/Button'
+import { useHistory } from 'react-router-dom'
 
 export const AdminPage: React.FC = observer(() => {
   const { user, basket } = useContext(Context)
+  const { push } = useHistory()
   const [sortDate, setSortDate] = useState(new Date())
 
   useEffect(() => {
@@ -55,10 +58,23 @@ export const AdminPage: React.FC = observer(() => {
           onChangeRole={onChangeRole}
         />
       ))}
-      <Typography component="h4" variant="h4">
-        Buildings
-      </Typography>
-      {/* TODO: add/delete rooms & buildings */}
+      <Box
+        sx={{
+          py: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignContent: 'center',
+        }}
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{ m: 1 }}
+          onClick={() => push(paths.manageBuildings)}
+        >
+          Buildings
+        </Button>
+      </Box>
     </Container>
   )
 })

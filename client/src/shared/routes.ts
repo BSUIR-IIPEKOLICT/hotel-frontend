@@ -4,6 +4,7 @@ import { RoomPage } from '../pages/RoomPage'
 import { MainPage } from '../pages/MainPage'
 import { AuthPage } from '../pages/AuthPage'
 import { paths } from './enums'
+import { ManageBuildingsPage } from '../pages/ManageBuildingsPage'
 
 export const authRoutes = [
   {
@@ -13,6 +14,10 @@ export const authRoutes = [
   {
     path: paths.user,
     component: UserPage,
+  },
+  {
+    path: paths.manageBuildings,
+    component: ManageBuildingsPage,
   },
 ]
 

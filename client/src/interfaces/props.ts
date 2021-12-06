@@ -3,7 +3,7 @@ import {
   OrderPopulated,
   RoomPopulated,
 } from './populatedModels'
-import { Service, User } from './models'
+import { Building, Service, User } from './models'
 
 export interface NavProps {
   toggleTheme(): void
@@ -61,4 +61,9 @@ export interface BasketCardProps {
 
 export interface DatePickerProps {
   onChange(value: Date | null): void
+}
+
+export interface BuildingCardProps {
+  building: Building
+  onDelete(building: Building): void
 }
