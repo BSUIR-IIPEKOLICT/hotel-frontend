@@ -4,6 +4,7 @@ import {
   RoomPopulated,
 } from './populatedModels'
 import { Building, Service, User } from './models'
+import { selectClasses } from '@mui/material'
 
 export interface NavProps {
   toggleTheme(): void
@@ -65,5 +66,15 @@ export interface DatePickerProps {
 
 export interface BuildingCardProps {
   building: Building
-  onDelete(building: Building): void
+  onDelete(id: string): void
+}
+
+export interface ServiceCardProps {
+  service: Service
+  onDelete(id: string): void
+}
+
+export interface PageButtonProps {
+  title: string
+  path: string
 }

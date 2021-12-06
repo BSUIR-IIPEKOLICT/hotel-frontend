@@ -2,11 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import { Context } from '../store'
 import { BuildingCard } from '../components/BuildingCard'
-import { Building } from '../interfaces/models'
 import { buildingApi } from '../api'
 import { observer } from 'mobx-react-lite'
 
-export const ManageBuildingsPage = observer(() => {
+export const ManageBuildingsPage: React.FC = observer(() => {
   const [address, setAddress] = useState('')
   const { building } = useContext(Context)
 
@@ -27,16 +26,16 @@ export const ManageBuildingsPage = observer(() => {
     }
   }
 
-  const deleteHandler = (currentBuilding: Building) => {
+  const deleteHandler = (id: string) => {
     buildingApi
-      .delete(currentBuilding._id)
-      .then((id) => building.deleteBuilding(id))
+      .delete(id)
+      .then((response) => building.deleteBuilding(response))
       .catch((e) => console.error(e))
   }
 
   return (
     <Container sx={{ p: 2, mx: 'auto', width: 500 }}>
-      <Typography component="h4" variant="h4">
+      <Typography component="h4" variant="h4" align="center">
         Buildings
       </Typography>
       <Box

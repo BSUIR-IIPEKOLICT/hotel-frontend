@@ -5,14 +5,13 @@ import { Box, Container, Typography } from '@mui/material'
 import { basketApi, userApi } from '../api'
 import { BasketCard } from '../components/BasketCard'
 import { User } from '../interfaces/models'
-import { paths, roles } from '../shared/enums'
+import { roles } from '../shared/enums'
 import { DatePicker } from '../components/DatePicker'
-import Button from '@mui/material/Button'
-import { useHistory } from 'react-router-dom'
+import { pageButtonPaths, pageButtonTitles } from '../shared/constants'
+import { PageButton } from '../components/PageButton'
 
 export const AdminPage: React.FC = observer(() => {
   const { user, basket } = useContext(Context)
-  const { push } = useHistory()
   const [sortDate, setSortDate] = useState(new Date())
 
   useEffect(() => {
@@ -44,7 +43,7 @@ export const AdminPage: React.FC = observer(() => {
 
   return (
     <Container sx={{ p: 2, mx: 'auto', width: 500 }}>
-      <Typography component="h4" variant="h4">
+      <Typography component="h4" variant="h4" align="center">
         Users
       </Typography>
       <Box sx={{ py: 1, display: 'flex' }}>
@@ -66,14 +65,9 @@ export const AdminPage: React.FC = observer(() => {
           alignContent: 'center',
         }}
       >
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ m: 1 }}
-          onClick={() => push(paths.manageBuildings)}
-        >
-          Buildings
-        </Button>
+        {pageButtonTitles.map((title, index) => (
+          <PageButton key={title} title={title} path={pageButtonPaths[index]} />
+        ))}
       </Box>
     </Container>
   )

@@ -18,7 +18,7 @@ class ServiceController {
   }
 
   async delete(req, res) {
-    const { _id } = req.query
+    const { _id } = req.body
     const service = await Service.findById(_id).lean()
 
     await Type.updateMany({}, { $pull: { _services: _id } })

@@ -13,6 +13,16 @@ export default class ServiceStore {
     this._services = value
   }
 
+  @action
+  addService(service: Service) {
+    this._services.push(service)
+  }
+
+  @action
+  deleteService(id: string) {
+    this._services = this._services.filter(({ _id }) => _id !== id)
+  }
+
   @computed
   get services() {
     return this._services

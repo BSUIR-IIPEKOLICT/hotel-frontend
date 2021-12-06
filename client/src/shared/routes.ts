@@ -5,6 +5,7 @@ import { MainPage } from '../pages/MainPage'
 import { AuthPage } from '../pages/AuthPage'
 import { paths } from './enums'
 import { ManageBuildingsPage } from '../pages/ManageBuildingsPage'
+import { ManageServicesPage } from '../pages/ManageServicesPage'
 
 export const authRoutes = [
   {
@@ -18,6 +19,10 @@ export const authRoutes = [
   {
     path: paths.manageBuildings,
     component: ManageBuildingsPage,
+  },
+  {
+    path: paths.manageServices,
+    component: ManageServicesPage,
   },
 ]
 
