@@ -24,6 +24,7 @@ export interface SelectProps {
 export interface RoomCardProps {
   room: RoomPopulated
   clickHandler(room: RoomPopulated): void
+  onDelete(id: string): void
   isAdmin: boolean
 }
 
@@ -81,4 +82,8 @@ export interface PageButtonProps {
 export interface TypeCardProps {
   type: Type
   onDelete(id: string): void
+}
+
+export interface RoomCreateFormProps {
+  loadRooms(): void
 }

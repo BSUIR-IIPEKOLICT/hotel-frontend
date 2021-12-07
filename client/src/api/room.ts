@@ -1,6 +1,7 @@
 import BaseApi from '../base/baseApi'
 import { RoomRequestConfig } from '../interfaces/types'
 import { RoomResponse } from '../interfaces/responses'
+import { RoomPopulated } from '../interfaces/populatedModels'
 
 export default class RoomApi extends BaseApi {
   private readonly route = '/room'
@@ -23,5 +24,19 @@ export default class RoomApi extends BaseApi {
     if (isFree) params.isFree = isFree
 
     return (await this.api.get<RoomResponse>(this.route, { params })).data
+  }
+
+  async create(_building: string, _type: string): Promise<RoomPopulated> {
+    return (
+      await this.authApi.put<RoomPopulated>(this.route, {
+        _building,
+        _type,
+      })
+    ).data
+  }
+
+  async delete(_id: string): Promise<string> {
+    return (await this.authApi.delete<string>(this.route, { data: { _id } }))
+      .data
   }
 }

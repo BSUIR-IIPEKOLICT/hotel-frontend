@@ -49,9 +49,13 @@ class RoomController {
     })
 
     await room.save()
+    const response = await Room.findOne(room)
+      .populate('_type')
+      .populate('_building')
+      .lean()
     await Building.updateOne({ _id: _building }, { $push: { _rooms: id } })
 
-    return res.json(room)
+    return res.json(response)
   }
 
   async delete(req, res) {

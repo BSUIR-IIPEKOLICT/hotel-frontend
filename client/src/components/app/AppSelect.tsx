@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -11,7 +11,7 @@ export const AppSelect: React.FC<SelectProps> = (props) => {
   const value = props.value ? props.value.toString() : ''
   const inputId = Math.random().toString()
 
-  const [checked, setChecked] = React.useState(value)
+  const [checked, setChecked] = useState(value)
 
   const handleChange = (event: SelectChangeEvent) => {
     setChecked(event.target.value as string)

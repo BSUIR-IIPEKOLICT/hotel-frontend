@@ -18,6 +18,16 @@ export default class RoomStore {
   }
 
   @action
+  addRoom(room: RoomPopulated) {
+    this._rooms.push(room)
+  }
+
+  @action
+  deleteRoom(id: string) {
+    this._rooms = this._rooms.filter(({ _id }) => _id !== id)
+  }
+
+  @action
   setCurrent(room: RoomPopulated) {
     this._current = room
   }

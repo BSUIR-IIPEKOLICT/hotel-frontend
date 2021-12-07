@@ -8,6 +8,7 @@ import { paths } from '../../shared/enums'
 import { observer } from 'mobx-react-lite'
 import { RoomPopulated } from '../../interfaces/populatedModels'
 import { Pagination } from '@mui/material'
+import { roomApi } from '../../api'
 
 export const RoomGrid: React.FC = observer(() => {
   const { room, user } = useContext(Context)
@@ -26,6 +27,13 @@ export const RoomGrid: React.FC = observer(() => {
     room.setPage(value)
   }
 
+  const deleteHandler = (id: string) => {
+    roomApi
+      .delete(id)
+      .then((response) => room.deleteRoom(response))
+      .catch((e) => console.error(e))
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Pagination
@@ -42,6 +50,7 @@ export const RoomGrid: React.FC = observer(() => {
             key={currentRoom._id}
             room={currentRoom}
             clickHandler={cardHandler}
+            onDelete={deleteHandler}
             isAdmin={isAdmin}
           />
         ))}

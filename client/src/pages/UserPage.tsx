@@ -43,7 +43,7 @@ export const UserPage: React.FC = observer(() => {
           Role: {user.user.role}
         </Typography>
         <Typography component="div" variant="body1">
-          Duty: {duty}$
+          {duty}$ per day
         </Typography>
       </Paper>
       <Typography component="h4" variant="h4">
