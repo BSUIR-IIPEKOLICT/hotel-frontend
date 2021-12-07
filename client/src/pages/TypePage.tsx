@@ -7,7 +7,7 @@ import { RoomServiceContainer } from '../components/room/RoomServiceContainer'
 import { Service } from '../interfaces/models'
 import { TypeCard } from '../components/cards/TypeCard'
 
-export const ManageTypesPage: React.FC = observer(() => {
+export const TypePage: React.FC = observer(() => {
   const { service, type } = useContext(Context)
   const [name, setName] = useState('')
   const [places, setPlaces] = useState(0)

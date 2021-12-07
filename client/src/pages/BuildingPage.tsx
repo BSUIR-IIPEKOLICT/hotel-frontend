@@ -5,7 +5,7 @@ import { BuildingCard } from '../components/cards/BuildingCard'
 import { buildingApi } from '../api'
 import { observer } from 'mobx-react-lite'
 
-export const ManageBuildingsPage: React.FC = observer(() => {
+export const BuildingPage: React.FC = observer(() => {
   const [address, setAddress] = useState('')
   const { building } = useContext(Context)
 

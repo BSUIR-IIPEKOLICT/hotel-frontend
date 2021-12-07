@@ -5,7 +5,7 @@ import { serviceApi } from '../api'
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import { ServiceCard } from '../components/cards/ServiceCard'
 
-export const ManageServicesPage: React.FC = observer(() => {
+export const ServicePage: React.FC = observer(() => {
   const { service } = useContext(Context)
   const [name, setName] = useState('')
   const [price, setPrice] = useState(0)

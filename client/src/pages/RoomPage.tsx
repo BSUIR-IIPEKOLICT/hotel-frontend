@@ -14,7 +14,7 @@ import { RoomPriceContainer } from '../components/room/RoomPriceContainer'
 import { RoomBookContainer } from '../components/room/RoomBookContainer'
 
 export const RoomPage: React.FC = observer(() => {
-  const { service, room, basket, user } = useContext(Context)
+  const { order, service, room, basket, user } = useContext(Context)
   const { palette } = useTheme()
   const { push } = useHistory()
 
@@ -60,7 +60,10 @@ export const RoomPage: React.FC = observer(() => {
           price + placesPrice,
           population
         )
-        .then(() => push(paths.main))
+        .then((response) => {
+          order.addOrder(response)
+          push(paths.main)
+        })
         .catch((e) => console.error(e))
     } else {
       alert('Not allowed')

@@ -5,10 +5,9 @@ export const enum paths {
   user = '/user',
   main = '/',
   room = '/room',
-  manageBuildings = '/buildings',
-  manageRooms = '/rooms',
-  manageServices = '/services',
-  manageTypes = '/types',
+  building = '/buildings',
+  service = '/services',
+  type = '/types',
 }
 
 export const enum roles {

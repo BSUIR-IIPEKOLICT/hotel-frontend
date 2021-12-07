@@ -1,8 +1,4 @@
 import { paths } from './enums'
 
 export const pageButtonTitles = ['Buildings', 'Services', 'Types']
-export const pageButtonPaths = [
-  paths.manageBuildings,
-  paths.manageServices,
-  paths.manageTypes,
-]
+export const pageButtonPaths = [paths.building, paths.service, paths.type]

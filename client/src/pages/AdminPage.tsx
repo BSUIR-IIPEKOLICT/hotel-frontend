@@ -44,9 +44,9 @@ export const AdminPage: React.FC = observer(() => {
   return (
     <Container sx={{ p: 2, mx: 'auto', width: 500 }}>
       <Typography component="h4" variant="h4" align="center">
-        Users
+        Admin panel
       </Typography>
-      <Box sx={{ py: 1, display: 'flex' }}>
+      <Box sx={{ py: 1, display: 'flex', justifyContent: 'center' }}>
         <DatePicker onChange={(value) => setSortDate(value || new Date())} />
       </Box>
       {basket.baskets.map((currentBasket) => (

@@ -6,7 +6,7 @@ import { buildingApi, roomApi, serviceApi, typeApi } from '../api'
 import { Context } from '../store'
 import { roles } from '../shared/enums'
 import { observer } from 'mobx-react-lite'
-import { RoomCreateForm } from '../components/RoomCreateForm'
+import { RoomCreateForm } from '../components/room/RoomCreateForm'
 
 export const MainPage: React.FC = observer(() => {
   const { palette } = useTheme()

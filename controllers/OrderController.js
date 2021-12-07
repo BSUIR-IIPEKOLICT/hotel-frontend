@@ -6,8 +6,11 @@ const { objectId } = require('../db')
 class OrderController {
   async get(req, res) {
     const { _basket } = req.query
-    const order = await Order.find({ _basket }).populate('_room').lean()
-    return res.json(order)
+    const orders = await Order.find({ _basket })
+      .populate('_services')
+      .populate('_room')
+      .lean()
+    return res.json(orders)
   }
 
   async create(req, res) {
@@ -25,11 +28,15 @@ class OrderController {
     })
 
     await order.save()
+    const response = await Order.findOne(order)
+      .populate('_services')
+      .populate('_room')
+      .lean()
     await Basket.updateOne({ _id: _basket }, { $push: { _orders: id } })
     await Room.updateOne({ _id: _room }, { $set: { isFree: false } })
     await Room.updateOne({ _id: _room }, { $set: { population } })
 
-    return res.json(order)
+    return res.json(response)
   }
 
   async delete(req, res) {

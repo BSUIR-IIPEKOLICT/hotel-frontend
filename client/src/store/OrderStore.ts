@@ -14,6 +14,11 @@ export default class OrderStore {
   }
 
   @action
+  addOrder(order: OrderPopulated) {
+    this._orders.push(order)
+  }
+
+  @action
   deleteOrder(id: string) {
     this._orders = this._orders.filter(({ _id }) => _id !== id)
   }

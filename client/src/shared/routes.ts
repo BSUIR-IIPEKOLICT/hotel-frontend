@@ -3,10 +3,10 @@ import { UserPage } from '../pages/UserPage'
 import { RoomPage } from '../pages/RoomPage'
 import { MainPage } from '../pages/MainPage'
 import { AuthPage } from '../pages/AuthPage'
+import { BuildingPage } from '../pages/BuildingPage'
+import { ServicePage } from '../pages/ServicePage'
+import { TypePage } from '../pages/TypePage'
 import { paths } from './enums'
-import { ManageBuildingsPage } from '../pages/ManageBuildingsPage'
-import { ManageServicesPage } from '../pages/ManageServicesPage'
-import { ManageTypesPage } from '../pages/ManageTypesPage'
 
 export const authRoutes = [
   {
@@ -18,16 +18,16 @@ export const authRoutes = [
     component: UserPage,
   },
   {
-    path: paths.manageBuildings,
-    component: ManageBuildingsPage,
+    path: paths.building,
+    component: BuildingPage,
   },
   {
-    path: paths.manageServices,
-    component: ManageServicesPage,
+    path: paths.service,
+    component: ServicePage,
   },
   {
-    path: paths.manageTypes,
-    component: ManageTypesPage,
+    path: paths.type,
+    component: TypePage,
   },
 ]
 

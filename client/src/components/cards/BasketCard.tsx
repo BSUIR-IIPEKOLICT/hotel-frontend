@@ -1,13 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Box, Button, Paper, Typography } from '@mui/material'
 import { BasketCardProps } from '../../interfaces/props'
 import { Context } from '../../store'
 import { observer } from 'mobx-react-lite'
+import { roles } from '../../shared/enums'
 
 export const BasketCard: React.FC<BasketCardProps> = observer(
   ({ basket, sortDate, onChangeRole }) => {
     const { user } = useContext(Context)
-    const [isAdmin, setIsAdmin] = useState(true)
+    const [isAdmin, setIsAdmin] = useState(false)
 
     const basketUser = user.users.find(({ _id }) => _id === basket._user._id)
     const email = basketUser?.email ?? ''
@@ -22,6 +23,12 @@ export const BasketCard: React.FC<BasketCardProps> = observer(
           duty,
       0
     )
+
+    useEffect(() => {
+      if (basketUser) {
+        setIsAdmin(basketUser.role === roles.admin)
+      }
+    }, [])
 
     const changeRoleHandler = () => {
       onChangeRole(basket._user)

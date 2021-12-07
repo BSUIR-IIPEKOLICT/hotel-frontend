@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { Box, Button } from '@mui/material'
-import { roomApi } from '../api'
-import { Context } from '../store'
-import { AppSelect } from './app/AppSelect'
+import { roomApi } from '../../api'
+import { Context } from '../../store'
+import { AppSelect } from '../app/AppSelect'
 import { observer } from 'mobx-react-lite'
-import { RoomCreateFormProps } from '../interfaces/props'
+import { RoomCreateFormProps } from '../../interfaces/props'
 
 export const RoomCreateForm: React.FC<RoomCreateFormProps> = observer(
   ({ loadRooms }) => {
@@ -37,7 +37,7 @@ export const RoomCreateForm: React.FC<RoomCreateFormProps> = observer(
         noValidate
         autoComplete="off"
         sx={{
-          p: 1,
+          px: 1,
           width: '100%',
           display: 'flex',
           gap: 2,

@@ -9,8 +9,8 @@ export const OrderCard: React.FC<OrderCardProps> = ({ order, onDelete }) => {
   const { type, service } = useContext(Context)
   const { palette } = useTheme()
 
-  const typeName = type.types.filter(({ _id }) => _id === order._room._type)[0]
-    .name
+  const orderType = type.types.find(({ _id }) => _id === order._room._type)
+  const typeName = orderType ? orderType.name : ''
   const services = service.services.filter(
     (serv) => order._services.map(({ _id }) => _id).indexOf(serv._id) !== -1
   )
