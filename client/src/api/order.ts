@@ -5,11 +5,9 @@ import { Order } from '../interfaces/models'
 export default class OrderApi extends BaseApi {
   private readonly route = '/order'
 
-  async get(basketId: string): Promise<OrderPopulated[]> {
+  async get(_basket: string): Promise<OrderPopulated[]> {
     return (
-      await this.api.get<OrderPopulated[]>(this.route, {
-        params: { _basket: basketId },
-      })
+      await this.api.get<OrderPopulated[]>(this.route, { params: { _basket } })
     ).data
   }
 
@@ -21,7 +19,7 @@ export default class OrderApi extends BaseApi {
     population: number
   ): Promise<Order> {
     return (
-      await this.api.post<Order>(this.route, {
+      await this.api.put<Order>(this.route, {
         _basket,
         _room,
         _services,
@@ -33,6 +31,6 @@ export default class OrderApi extends BaseApi {
   }
 
   async delete(_id: string): Promise<string> {
-    return (await this.api.delete<string>(this.route, { params: { _id } })).data
+    return (await this.api.delete<string>(this.route, { data: { _id } })).data
   }
 }

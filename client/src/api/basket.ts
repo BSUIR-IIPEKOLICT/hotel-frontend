@@ -5,10 +5,10 @@ export default class BasketApi extends BaseApi {
   private readonly route = '/basket'
   private readonly currentAlias = '/current'
 
-  async getOne(userId: string): Promise<BasketPopulated> {
+  async getOne(_user: string): Promise<BasketPopulated> {
     return (
       await this.api.get<BasketPopulated>(this.route + this.currentAlias, {
-        params: { _user: userId },
+        params: { _user },
       })
     ).data
   }

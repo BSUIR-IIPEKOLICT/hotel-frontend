@@ -55,7 +55,7 @@ class RoomController {
   }
 
   async delete(req, res) {
-    const { _id } = req.query
+    const { _id } = req.body
     const room = await Room.findById(_id).populate('_order').lean()
 
     await Building.updateOne(

@@ -6,7 +6,6 @@ const { objectId } = require('../db')
 class OrderController {
   async get(req, res) {
     const { _basket } = req.query
-
     const order = await Order.find({ _basket }).populate('_room').lean()
     return res.json(order)
   }
@@ -34,7 +33,7 @@ class OrderController {
   }
 
   async delete(req, res) {
-    const { _id } = req.query
+    const { _id } = req.body
     const order = await Order.findById(_id).lean()
 
     await Basket.updateOne({ _id: order._basket }, { $pull: { _orders: _id } })

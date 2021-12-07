@@ -9,7 +9,7 @@ export default class ServiceApi extends BaseApi {
   }
 
   async create(name: string, price: number): Promise<Service> {
-    return (await this.authApi.post<Service>(this.route, { name, price })).data
+    return (await this.authApi.put<Service>(this.route, { name, price })).data
   }
 
   async delete(_id: string): Promise<string> {

@@ -4,7 +4,7 @@ const controller = require('../controllers/RoomController')
 const RoleMiddleware = require('../middleware/RoleMiddleware')
 
 router.get('/', controller.get)
-router.post('/', RoleMiddleware(['admin']), controller.create)
+router.put('/', RoleMiddleware(['admin']), controller.create)
 router.delete('/', RoleMiddleware(['admin']), controller.delete)
 
 module.exports = router
