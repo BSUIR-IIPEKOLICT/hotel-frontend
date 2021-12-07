@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 import { Context } from '../store'
 import { serviceApi } from '../api'
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
-import { ServiceCard } from '../components/ServiceCard'
+import { ServiceCard } from '../components/cards/ServiceCard'
 
 export const ManageServicesPage: React.FC = observer(() => {
   const { service } = useContext(Context)
@@ -18,7 +18,7 @@ export const ManageServicesPage: React.FC = observer(() => {
   }, [])
 
   const createHandler = () => {
-    if (name !== '' && price > 0) {
+    if (name !== '' && price > 0 && !Number.isNaN(price)) {
       serviceApi
         .create(name, price)
         .then((response) => service.addService(response))

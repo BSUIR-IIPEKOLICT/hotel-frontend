@@ -15,6 +15,16 @@ export default class TypeStore {
   }
 
   @action
+  addType(type: Type) {
+    this._types.push(type)
+  }
+
+  @action
+  deleteType(id: string) {
+    this._types = this._types.filter(({ _id }) => _id !== id)
+  }
+
+  @action
   setActive(id: string) {
     this._active = id
   }

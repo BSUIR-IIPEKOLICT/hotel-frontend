@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 import { Container, Paper, Typography } from '@mui/material'
 import { Context } from '../store'
 import { orderApi } from '../api'
-import { OrderCard } from '../components/OrderCard'
+import { OrderCard } from '../components/cards/OrderCard'
 import { OrderPopulated } from '../interfaces/populatedModels'
 
 export const UserPage: React.FC = observer(() => {

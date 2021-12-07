@@ -23,7 +23,7 @@ class TypeController {
   }
 
   async delete(req, res) {
-    const { _id } = req.query
+    const { _id } = req.body
     const type = await Type.findById(_id).lean()
     const rooms = await Room.find({ _type: _id }).lean()
 

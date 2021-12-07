@@ -9,6 +9,7 @@ import { SelectProps } from '../../interfaces/props'
 export const AppSelect: React.FC<SelectProps> = (props) => {
   const values = props.values.map((v) => v.toString())
   const value = props.value ? props.value.toString() : ''
+  const inputId = Math.random().toString()
 
   const [checked, setChecked] = React.useState(value)
 
@@ -20,9 +21,9 @@ export const AppSelect: React.FC<SelectProps> = (props) => {
   return (
     <Box sx={{ minWidth: 120, my: 2 }}>
       <FormControl fullWidth>
-        <InputLabel id="my-select-label">{props.label}</InputLabel>
+        <InputLabel id={inputId}>{props.label}</InputLabel>
         <Select
-          labelId="my-select-label"
+          labelId={inputId}
           value={checked}
           label={props.label}
           onChange={handleChange}

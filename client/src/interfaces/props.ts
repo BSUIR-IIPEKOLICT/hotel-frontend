@@ -3,8 +3,7 @@ import {
   OrderPopulated,
   RoomPopulated,
 } from './populatedModels'
-import { Building, Service, User } from './models'
-import { selectClasses } from '@mui/material'
+import { Building, Service, Type, User } from './models'
 
 export interface NavProps {
   toggleTheme(): void
@@ -77,4 +76,9 @@ export interface ServiceCardProps {
 export interface PageButtonProps {
   title: string
   path: string
+}
+
+export interface TypeCardProps {
+  type: Type
+  onDelete(id: string): void
 }

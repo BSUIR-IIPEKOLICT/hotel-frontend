@@ -41,7 +41,7 @@ export const RoomPage: React.FC = observer(() => {
   const serviceHandler = (checked: boolean, service: Service) => {
     calcServices(checked, service.price)
     setServices((prev) =>
-      checked ? [...prev, service._id] : prev.filter((v) => v === service._id)
+      checked ? [...prev, service._id] : prev.filter((v) => v !== service._id)
     )
   }
 

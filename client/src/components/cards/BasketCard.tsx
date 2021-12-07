@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Box, Button, Paper, Typography } from '@mui/material'
-import { BasketCardProps } from '../interfaces/props'
-import { Context } from '../store'
+import { BasketCardProps } from '../../interfaces/props'
+import { Context } from '../../store'
 import { observer } from 'mobx-react-lite'
 
 export const BasketCard: React.FC<BasketCardProps> = observer(

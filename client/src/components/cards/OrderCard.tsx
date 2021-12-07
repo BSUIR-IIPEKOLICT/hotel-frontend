@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Box, Button, Paper, useTheme } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import { OrderCardProps } from '../interfaces/props'
+import { OrderCardProps } from '../../interfaces/props'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
-import { Context } from '../store'
+import { Context } from '../../store'
 
 export const OrderCard: React.FC<OrderCardProps> = ({ order, onDelete }) => {
   const { type, service } = useContext(Context)

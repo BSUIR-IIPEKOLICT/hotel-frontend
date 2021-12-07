@@ -1,5 +1,5 @@
 import React from 'react'
-import { BuildingCardProps } from '../interfaces/props'
+import { BuildingCardProps } from '../../interfaces/props'
 import { Box, Button, Paper } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'

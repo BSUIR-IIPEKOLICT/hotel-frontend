@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import { Context } from '../store'
-import { BuildingCard } from '../components/BuildingCard'
+import { BuildingCard } from '../components/cards/BuildingCard'
 import { buildingApi } from '../api'
 import { observer } from 'mobx-react-lite'
 
