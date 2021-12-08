@@ -6,12 +6,15 @@ import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import { RoomServiceContainer } from '../components/room/RoomServiceContainer'
 import { Service } from '../interfaces/models'
 import { TypeCard } from '../components/cards/TypeCard'
+import { incorrectHandler } from '../shared/constants'
 
 export const TypePage: React.FC = observer(() => {
   const { service, type } = useContext(Context)
   const [name, setName] = useState('')
   const [places, setPlaces] = useState(0)
   const [services, setServices] = useState<string[]>([])
+  const [editedType, setEditedType] = useState('')
+  const [isEdit, setIsEdit] = useState(false)
 
   useEffect(() => {
     serviceApi
@@ -30,15 +33,39 @@ export const TypePage: React.FC = observer(() => {
     )
   }
 
-  const createHandler = () => {
-    if (places > 0 && !Number.isNaN(places) && name !== '') {
+  const submitCreateHandler = () => {
+    if (places && !Number.isNaN(places) && name) {
       typeApi
         .create(services, name, places)
         .then((response) => type.addType(response))
         .catch((e) => console.error(e))
       setName('')
       setPlaces(0)
+    } else {
+      incorrectHandler()
     }
+  }
+
+  const submitChangeHandler = () => {
+    if (editedType && places && !Number.isNaN(places) && name) {
+      typeApi
+        .change(editedType, services, name, places)
+        .then((response) => {
+          type.changeType(editedType, response)
+          setEditedType('')
+          setIsEdit(false)
+          setName('')
+          setPlaces(0)
+        })
+        .catch((e) => console.error(e))
+    } else {
+      incorrectHandler()
+    }
+  }
+
+  const changeHandler = (id: string) => {
+    setEditedType(id)
+    setIsEdit(true)
   }
 
   const deleteHandler = (id: string) => {
@@ -72,7 +99,7 @@ export const TypePage: React.FC = observer(() => {
           label="Places"
           value={places}
           type="number"
-          onChange={(e) => setPlaces(parseInt(e.target.value, 10))}
+          onChange={(e) => setPlaces(parseInt(e.target.value as string, 10))}
         />
       </Box>
       <Box
@@ -87,8 +114,11 @@ export const TypePage: React.FC = observer(() => {
           services={service.services}
           onChange={serviceHandler}
         />
-        <Button variant="contained" onClick={createHandler}>
-          Add type
+        <Button
+          variant="contained"
+          onClick={isEdit ? submitChangeHandler : submitCreateHandler}
+        >
+          {isEdit ? 'Edit type' : 'Add type'}
         </Button>
       </Box>
       <Box sx={{ py: 1 }}>
@@ -97,6 +127,7 @@ export const TypePage: React.FC = observer(() => {
             <TypeCard
               key={currentType._id}
               type={currentType}
+              onChange={changeHandler}
               onDelete={deleteHandler}
             />
           ))

@@ -4,6 +4,7 @@ import { Context } from '../store'
 import { BuildingCard } from '../components/cards/BuildingCard'
 import { buildingApi } from '../api'
 import { observer } from 'mobx-react-lite'
+import { incorrectHandler } from '../shared/constants'
 
 export const BuildingPage: React.FC = observer(() => {
   const { building } = useContext(Context)
@@ -27,6 +28,8 @@ export const BuildingPage: React.FC = observer(() => {
           setAddress('')
         })
         .catch((e) => console.error(e))
+    } else {
+      incorrectHandler()
     }
   }
 
@@ -41,6 +44,8 @@ export const BuildingPage: React.FC = observer(() => {
           setAddress('')
         })
         .catch((e) => console.error(e))
+    } else {
+      incorrectHandler()
     }
   }
 

@@ -20,6 +20,13 @@ export default class TypeStore {
   }
 
   @action
+  changeType(id: string, updatedType: Type) {
+    this._types = this._types.map((type) =>
+      type._id === id ? updatedType : type
+    )
+  }
+
+  @action
   deleteType(id: string) {
     this._types = this._types.filter(({ _id }) => _id !== id)
   }

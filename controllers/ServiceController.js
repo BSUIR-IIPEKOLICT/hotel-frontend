@@ -23,6 +23,7 @@ class ServiceController {
     const service = await Service.findByIdAndUpdate(_id, {
       $set: { name, price },
     }).lean()
+
     service.name = name
     service.price = price
 
@@ -31,6 +32,7 @@ class ServiceController {
 
   async delete(req, res) {
     const { _id } = req.body
+
     const service = await Service.findById(_id).lean()
 
     await Type.updateMany({}, { $pull: { _services: _id } })

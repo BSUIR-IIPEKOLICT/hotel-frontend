@@ -84,6 +84,7 @@ export interface PageButtonProps {
 
 export interface TypeCardProps {
   type: Type
+  onChange(id: string): void
   onDelete(id: string): void
 }
 

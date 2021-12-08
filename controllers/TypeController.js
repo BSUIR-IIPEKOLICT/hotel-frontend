@@ -22,6 +22,20 @@ class TypeController {
     return res.json(type)
   }
 
+  async change(req, res) {
+    const { _id, _services, name, places } = req.body
+
+    const type = await Type.findByIdAndUpdate(_id, {
+      $set: { _services, name, places },
+    }).lean()
+
+    type._services = _services
+    type.name = name
+    type.places = places
+
+    return res.json(type)
+  }
+
   async delete(req, res) {
     const { _id } = req.body
     const type = await Type.findById(_id).lean()

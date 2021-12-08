@@ -4,6 +4,7 @@ import { Context } from '../store'
 import { serviceApi } from '../api'
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import { ServiceCard } from '../components/cards/ServiceCard'
+import { incorrectHandler } from '../shared/constants'
 
 export const ServicePage: React.FC = observer(() => {
   const { service } = useContext(Context)
@@ -27,6 +28,8 @@ export const ServicePage: React.FC = observer(() => {
         .catch((e) => console.error(e))
       setName('')
       setPrice(0)
+    } else {
+      incorrectHandler()
     }
   }
 
@@ -42,6 +45,8 @@ export const ServicePage: React.FC = observer(() => {
           setPrice(0)
         })
         .catch((e) => console.error(e))
+    } else {
+      incorrectHandler()
     }
   }
 

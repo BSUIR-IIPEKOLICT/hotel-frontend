@@ -5,6 +5,7 @@ import { Context } from '../../store'
 import { AppSelect } from '../app/AppSelect'
 import { observer } from 'mobx-react-lite'
 import { RoomCreateFormProps } from '../../interfaces/props'
+import { incorrectHandler } from '../../shared/constants'
 
 export const RoomCreateForm: React.FC<RoomCreateFormProps> = observer(
   ({ loadRooms }) => {
@@ -26,6 +27,8 @@ export const RoomCreateForm: React.FC<RoomCreateFormProps> = observer(
           .create(checkedBuilding, checkedType)
           .then(() => loadRooms())
           .catch((e) => console.error(e))
+      } else {
+        incorrectHandler()
       }
     }
 
@@ -39,6 +42,8 @@ export const RoomCreateForm: React.FC<RoomCreateFormProps> = observer(
             room.toggleIsEdit()
           })
           .catch((e) => console.error(e))
+      } else {
+        incorrectHandler()
       }
     }
 
