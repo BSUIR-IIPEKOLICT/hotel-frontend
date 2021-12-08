@@ -7,6 +7,7 @@ module.exports = model(
       type: String,
       require: true,
       unique: true,
+      index: true,
     },
     password: {
       type: String,
@@ -16,6 +17,7 @@ module.exports = model(
       type: String,
       default: 'client',
       require: true,
+      index: true,
     },
   })
 )

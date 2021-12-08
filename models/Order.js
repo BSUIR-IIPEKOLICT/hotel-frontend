@@ -7,11 +7,14 @@ module.exports = model(
       type: Types.ObjectId,
       require: true,
       ref: 'Basket',
+      index: true,
     },
     _room: {
       type: Types.ObjectId,
       require: true,
       ref: 'Room',
+      unique: true,
+      index: true,
     },
     _services: [
       {

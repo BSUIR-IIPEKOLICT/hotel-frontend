@@ -12,6 +12,8 @@ module.exports = model(
     name: {
       type: String,
       require: true,
+      unique: true,
+      index: true,
     },
     places: {
       type: Number,

@@ -12,6 +12,8 @@ module.exports = model(
     address: {
       type: String,
       require: true,
+      unique: true,
+      index: true,
     },
   })
 )

@@ -6,6 +6,8 @@ module.exports = model(
     name: {
       type: String,
       require: true,
+      unique: true,
+      index: true,
     },
     price: {
       type: Number,

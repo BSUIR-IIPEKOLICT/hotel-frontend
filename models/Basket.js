@@ -7,6 +7,8 @@ module.exports = model(
       type: Types.ObjectId,
       require: true,
       ref: 'User',
+      unique: true,
+      index: true,
     },
     _orders: [
       {
