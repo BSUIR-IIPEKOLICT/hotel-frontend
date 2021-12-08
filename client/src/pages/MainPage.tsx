@@ -55,7 +55,7 @@ export const MainPage: React.FC = observer(() => {
   }, [building.active, type.active, room.page])
 
   return (
-    <Grid container sx={{ flexGrow: 1 }}>
+    <Grid container sx={{ bgcolor: 'background.paper', flexGrow: 1 }}>
       <Grid
         item
         xs={3}
@@ -65,7 +65,13 @@ export const MainPage: React.FC = observer(() => {
       >
         <FilterBar />
       </Grid>
-      <Grid item xs={9} sm={9} md={9}>
+      <Grid
+        item
+        xs={9}
+        sm={9}
+        md={9}
+        sx={{ bgcolor: palette.background.default }}
+      >
         {user.isAuth && user.user.role === roles.admin && (
           <RoomCreateForm loadRooms={loadRooms} />
         )}
