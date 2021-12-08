@@ -73,6 +73,7 @@ export interface BuildingCardProps {
 
 export interface ServiceCardProps {
   service: Service
+  onChange(id: string): void
   onDelete(id: string): void
 }
 

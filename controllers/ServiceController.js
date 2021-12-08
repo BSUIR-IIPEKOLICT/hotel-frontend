@@ -17,6 +17,18 @@ class ServiceController {
     return res.json(service)
   }
 
+  async change(req, res) {
+    const { _id, name, price } = req.body
+
+    const service = await Service.findByIdAndUpdate(_id, {
+      $set: { name, price },
+    }).lean()
+    service.name = name
+    service.price = price
+
+    return res.json(service)
+  }
+
   async delete(req, res) {
     const { _id } = req.body
     const service = await Service.findById(_id).lean()

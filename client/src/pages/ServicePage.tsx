@@ -9,6 +9,8 @@ export const ServicePage: React.FC = observer(() => {
   const { service } = useContext(Context)
   const [name, setName] = useState('')
   const [price, setPrice] = useState(0)
+  const [editedService, setEditedService] = useState('')
+  const [isEdit, setIsEdit] = useState(false)
 
   useEffect(() => {
     serviceApi
@@ -17,8 +19,8 @@ export const ServicePage: React.FC = observer(() => {
       .catch((e) => console.error(e))
   }, [])
 
-  const createHandler = () => {
-    if (name !== '' && price > 0 && !Number.isNaN(price)) {
+  const submitCreateHandler = () => {
+    if (name && price && !Number.isNaN(price)) {
       serviceApi
         .create(name, price)
         .then((response) => service.addService(response))
@@ -26,6 +28,26 @@ export const ServicePage: React.FC = observer(() => {
       setName('')
       setPrice(0)
     }
+  }
+
+  const submitChangeHandler = () => {
+    if (editedService && name && price && !Number.isNaN(price)) {
+      serviceApi
+        .change(editedService, name, price)
+        .then((response) => {
+          service.changeService(editedService, response)
+          setEditedService('')
+          setIsEdit(false)
+          setName('')
+          setPrice(0)
+        })
+        .catch((e) => console.error(e))
+    }
+  }
+
+  const changeHandler = (id: string) => {
+    setEditedService(id)
+    setIsEdit(true)
   }
 
   const deleteHandler = (id: string) => {
@@ -59,12 +81,15 @@ export const ServicePage: React.FC = observer(() => {
           label="Service price"
           value={price}
           type="number"
-          onChange={(e) => setPrice(parseInt(e.target.value, 10))}
+          onChange={(e) => setPrice(parseInt(e.target.value as string, 10))}
         />
       </Box>
       <Box sx={{ py: 1, display: 'flex', justifyContent: 'center' }}>
-        <Button variant="contained" onClick={createHandler}>
-          Add service
+        <Button
+          variant="contained"
+          onClick={isEdit ? submitChangeHandler : submitCreateHandler}
+        >
+          {isEdit ? 'Edit service' : 'Add service'}
         </Button>
       </Box>
       <Box sx={{ py: 1 }}>
@@ -73,6 +98,7 @@ export const ServicePage: React.FC = observer(() => {
             <ServiceCard
               key={currentService._id}
               service={currentService}
+              onChange={changeHandler}
               onDelete={deleteHandler}
             />
           ))

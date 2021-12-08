@@ -19,6 +19,13 @@ export default class ServiceStore {
   }
 
   @action
+  changeService(id: string, updatedService: Service) {
+    this._services = this._services.map((service) =>
+      service._id === id ? updatedService : service
+    )
+  }
+
+  @action
   deleteService(id: string) {
     this._services = this._services.filter(({ _id }) => _id !== id)
   }

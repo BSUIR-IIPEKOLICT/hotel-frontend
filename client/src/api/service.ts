@@ -12,6 +12,11 @@ export default class ServiceApi extends BaseApi {
     return (await this.authApi.put<Service>(this.route, { name, price })).data
   }
 
+  async change(_id: string, name: string, price: number): Promise<Service> {
+    return (await this.authApi.patch<Service>(this.route, { _id, name, price }))
+      .data
+  }
+
   async delete(_id: string): Promise<string> {
     return (await this.authApi.delete<string>(this.route, { data: { _id } }))
       .data

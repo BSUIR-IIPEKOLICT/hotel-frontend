@@ -60,8 +60,8 @@ class RoomController {
 
   async change(req, res) {
     const { _id, _building, _type } = req.body
-    await Room.findByIdAndUpdate(_id, { $set: { _building } })
-    await Room.findByIdAndUpdate(_id, { $set: { _type } })
+
+    await Room.findByIdAndUpdate(_id, { $set: { _building, _type } })
     const room = await Room.findById(_id)
       .populate('_type')
       .populate('_building')
