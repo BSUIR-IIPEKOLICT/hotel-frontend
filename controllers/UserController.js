@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const Basket = require('../models/Basket')
-const { objectId } = require('../db')
+const { objectId } = require('../helpers/db')
 
 const generateToken = (user) => {
   return jwt.sign(

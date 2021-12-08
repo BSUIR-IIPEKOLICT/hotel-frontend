@@ -1,7 +1,7 @@
 const Order = require('../models/Order')
 const Basket = require('../models/Basket')
 const Room = require('../models/Room')
-const { objectId } = require('../db')
+const { objectId } = require('../helpers/db')
 
 class OrderController {
   async get(req, res) {
