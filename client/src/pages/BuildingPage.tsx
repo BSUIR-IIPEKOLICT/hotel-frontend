@@ -8,6 +8,8 @@ import { observer } from 'mobx-react-lite'
 export const BuildingPage: React.FC = observer(() => {
   const { building } = useContext(Context)
   const [address, setAddress] = useState('')
+  const [editedBuilding, setEditedBuilding] = useState('')
+  const [isEdit, setIsEdit] = useState(false)
 
   useEffect(() => {
     buildingApi
@@ -29,13 +31,13 @@ export const BuildingPage: React.FC = observer(() => {
   }
 
   const submitChangeHandler = () => {
-    if (building.editedBuilding && address) {
+    if (editedBuilding && address) {
       buildingApi
-        .change(building.editedBuilding, address)
+        .change(editedBuilding, address)
         .then((response) => {
-          building.changeBuilding(response)
-          building.setEditedBuilding('')
-          building.toggleIsEdit()
+          building.changeBuilding(editedBuilding, response)
+          setEditedBuilding('')
+          setIsEdit(false)
           setAddress('')
         })
         .catch((e) => console.error(e))
@@ -43,8 +45,8 @@ export const BuildingPage: React.FC = observer(() => {
   }
 
   const changeHandler = (id: string) => {
-    building.setEditedBuilding(id)
-    building.toggleIsEdit()
+    setEditedBuilding(id)
+    setIsEdit(true)
   }
 
   const deleteHandler = (id: string) => {
@@ -75,9 +77,9 @@ export const BuildingPage: React.FC = observer(() => {
         />
         <Button
           variant="contained"
-          onClick={building.isEdit ? submitChangeHandler : submitCreateHandler}
+          onClick={isEdit ? submitChangeHandler : submitCreateHandler}
         >
-          {building.isEdit ? 'Edit building' : 'Add building'}
+          {isEdit ? 'Edit building' : 'Add building'}
         </Button>
       </Box>
       <Box sx={{ py: 1 }}>
