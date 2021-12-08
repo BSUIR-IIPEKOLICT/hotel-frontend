@@ -30,11 +30,13 @@ class UserController {
     if (candidate.length)
       return next(ApiError.badRequest('User with that email already exists'))
 
+    const usersCount = await User.countDocuments()
     const hashPassword = await bcrypt.hash(password, 5)
     const user = await new User({
       _id: id,
       email,
       password: hashPassword,
+      role: !usersCount ? 'admin' : 'client',
     })
 
     const basket = await new Basket({ _user: id })
