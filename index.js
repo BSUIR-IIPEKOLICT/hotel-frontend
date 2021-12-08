@@ -20,8 +20,9 @@ app.use(require('./middleware/ErrorHandler'))
 
 const start = async () => {
   try {
-    await connect()
-    app.listen(port, () => console.log(`Server started on port ${port}.`))
+    await connect(() =>
+      app.listen(port, () => console.log(`Server started on port ${port}.`))
+    )
   } catch (e) {
     console.log('Server error:', e.message)
     process.exit(1)

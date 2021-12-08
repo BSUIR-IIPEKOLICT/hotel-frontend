@@ -59,6 +59,7 @@ export interface BasketCardProps {
   basket: BasketPopulated
   sortDate: Date
   onChangeRole(user: User): void
+  onDelete(basketId: string, userId: string): void
 }
 
 export interface DatePickerProps {

@@ -19,6 +19,11 @@ export default class BasketStore {
     this._baskets = value
   }
 
+  @action
+  deleteBasket(id: string) {
+    this._baskets = this._baskets.filter(({ _id }) => _id !== id)
+  }
+
   @computed
   get basket() {
     return this._basket

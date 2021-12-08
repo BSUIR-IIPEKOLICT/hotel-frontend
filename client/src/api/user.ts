@@ -12,6 +12,10 @@ export default class UserApi extends BaseApi {
     auth: '/auth',
   }
 
+  async getAll(): Promise<User[]> {
+    return (await this.authApi.get<User[]>(this.route)).data
+  }
+
   async register(
     email: string,
     password: string
@@ -47,11 +51,12 @@ export default class UserApi extends BaseApi {
     return { user: jwtDecode(data.token), id: data.id }
   }
 
-  async getAll(): Promise<User[]> {
-    return (await this.authApi.get<User[]>(this.route)).data
-  }
-
   async changeRole(_id: string, role: roles): Promise<roles> {
     return (await this.authApi.patch<roles>(this.route, { _id, role })).data
+  }
+
+  async delete(_id: string): Promise<string> {
+    return (await this.authApi.delete<string>(this.route, { data: { _id } }))
+      .data
   }
 }

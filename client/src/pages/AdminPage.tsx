@@ -41,6 +41,18 @@ export const AdminPage: React.FC = observer(() => {
     }
   }
 
+  const deleteHandler = (basketId: string, userId: string) => {
+    if (userId) {
+      userApi
+        .delete(userId)
+        .then((id) => {
+          user.deleteUser(id)
+          basket.deleteBasket(basketId)
+        })
+        .catch((e) => console.error(e))
+    }
+  }
+
   return (
     <Container sx={{ p: 2, mx: 'auto', width: 500 }}>
       <Typography component="h4" variant="h4" align="center">
@@ -55,6 +67,7 @@ export const AdminPage: React.FC = observer(() => {
           basket={currentBasket}
           sortDate={sortDate}
           onChangeRole={onChangeRole}
+          onDelete={deleteHandler}
         />
       ))}
       <Box

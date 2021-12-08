@@ -70,6 +70,13 @@ class UserController {
     await User.findByIdAndUpdate(_id, { $set: { role } })
     return res.json(role)
   }
+
+  async delete(req, res) {
+    const { _id } = req.body
+    await User.findByIdAndRemove(_id)
+    await Basket.deleteOne({ _user: _id })
+    return res.json(_id)
+  }
 }
 
 module.exports = new UserController()

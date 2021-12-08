@@ -31,6 +31,11 @@ export default class UserStore {
     this._users = value
   }
 
+  @action
+  deleteUser(id: string) {
+    this._users = this._users.filter(({ _id }) => _id !== id)
+  }
+
   @computed
   get isAuth() {
     return this._isAuth

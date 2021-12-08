@@ -4,9 +4,10 @@ import { BasketCardProps } from '../../interfaces/props'
 import { Context } from '../../store'
 import { observer } from 'mobx-react-lite'
 import { roles } from '../../shared/enums'
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 
 export const BasketCard: React.FC<BasketCardProps> = observer(
-  ({ basket, sortDate, onChangeRole }) => {
+  ({ basket, sortDate, onChangeRole, onDelete }) => {
     const { user } = useContext(Context)
     const [isAdmin, setIsAdmin] = useState(false)
 
@@ -56,13 +57,20 @@ export const BasketCard: React.FC<BasketCardProps> = observer(
             </Typography>
             <Typography component="div">Total duty: {totalDuty}$</Typography>
           </Box>
-          <Button
-            color="info"
-            sx={{ p: 1, alignSelf: 'center' }}
-            onClick={changeRoleHandler}
-          >
-            {isAdmin ? 'admin' : 'client'}
-          </Button>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Button color="info" sx={{ p: 1 }} onClick={changeRoleHandler}>
+              {isAdmin ? 'admin' : 'client'}
+            </Button>
+            {!basket._orders.length && (
+              <Button
+                color="error"
+                sx={{ p: 1 }}
+                onClick={() => onDelete(basket._id, basket._user._id || '')}
+              >
+                <DeleteOutlineOutlinedIcon />
+              </Button>
+            )}
+          </Box>
         </Box>
       </Paper>
     )
