@@ -35,6 +35,20 @@ export default class RoomApi extends BaseApi {
     ).data
   }
 
+  async change(
+    _id: string,
+    _building: string,
+    _type: string
+  ): Promise<RoomPopulated> {
+    return (
+      await this.authApi.patch<RoomPopulated>(this.route, {
+        _id,
+        _building,
+        _type,
+      })
+    ).data
+  }
+
   async delete(_id: string): Promise<string> {
     return (await this.authApi.delete<string>(this.route, { data: { _id } }))
       .data

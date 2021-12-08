@@ -8,6 +8,7 @@ import { Box, Button, useTheme } from '@mui/material'
 export const RoomCard: React.FC<RoomCardProps> = ({
   room,
   clickHandler,
+  onChange,
   onDelete,
   isAdmin,
 }) => {
@@ -57,8 +58,21 @@ export const RoomCard: React.FC<RoomCardProps> = ({
               {room.isFree ? 'Free' : 'Booked'}
             </Typography>
             <Box
-              sx={{ paddingTop: 1, display: 'flex', justifyContent: 'center' }}
+              sx={{
+                paddingTop: 1,
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
             >
+              {room.isFree && (
+                <Button
+                  variant="contained"
+                  color="warning"
+                  onClick={() => onChange(room._id)}
+                >
+                  Edit
+                </Button>
+              )}
               <Button
                 variant="contained"
                 color="error"

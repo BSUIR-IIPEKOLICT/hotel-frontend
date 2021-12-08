@@ -27,6 +27,11 @@ export const RoomGrid: React.FC = observer(() => {
     room.setPage(value)
   }
 
+  const changeHandler = (id: string) => {
+    room.setEditedRoom(id)
+    room.toggleIsEdit()
+  }
+
   const deleteHandler = (id: string) => {
     roomApi
       .delete(id)
@@ -50,6 +55,7 @@ export const RoomGrid: React.FC = observer(() => {
             key={currentRoom._id}
             room={currentRoom}
             clickHandler={cardHandler}
+            onChange={changeHandler}
             onDelete={deleteHandler}
             isAdmin={isAdmin}
           />

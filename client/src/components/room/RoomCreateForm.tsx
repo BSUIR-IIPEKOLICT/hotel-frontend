@@ -8,7 +8,7 @@ import { RoomCreateFormProps } from '../../interfaces/props'
 
 export const RoomCreateForm: React.FC<RoomCreateFormProps> = observer(
   ({ loadRooms }) => {
-    const { type, building } = useContext(Context)
+    const { room, type, building } = useContext(Context)
     const [checkedBuilding, setCheckedBuilding] = useState('')
     const [checkedType, setCheckedType] = useState('')
 
@@ -26,8 +26,19 @@ export const RoomCreateForm: React.FC<RoomCreateFormProps> = observer(
           .create(checkedBuilding, checkedType)
           .then(() => loadRooms())
           .catch((e) => console.error(e))
-        setCheckedBuilding('')
-        setCheckedType('')
+      }
+    }
+
+    const changeHandler = () => {
+      if (room.editedRoom && checkedBuilding && checkedType) {
+        roomApi
+          .change(room.editedRoom, checkedBuilding, checkedType)
+          .then((response) => {
+            room.changeRoom(response)
+            room.setEditedRoom('')
+            room.toggleIsEdit()
+          })
+          .catch((e) => console.error(e))
       }
     }
 
@@ -58,8 +69,11 @@ export const RoomCreateForm: React.FC<RoomCreateFormProps> = observer(
           value={checkedBuilding}
           changeHandler={(b: string) => setCheckedBuilding(b)}
         />
-        <Button variant="contained" onClick={createHandler}>
-          Add room
+        <Button
+          variant="contained"
+          onClick={room.isEdit ? changeHandler : createHandler}
+        >
+          {room.isEdit ? 'Edit room' : 'Add room'}
         </Button>
       </Box>
     )

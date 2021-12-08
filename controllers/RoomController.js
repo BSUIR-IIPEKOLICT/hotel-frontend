@@ -58,6 +58,18 @@ class RoomController {
     return res.json(response)
   }
 
+  async change(req, res) {
+    const { _id, _building, _type } = req.body
+    await Room.findByIdAndUpdate(_id, { $set: { _building } })
+    await Room.findByIdAndUpdate(_id, { $set: { _type } })
+    const room = await Room.findById(_id)
+      .populate('_type')
+      .populate('_building')
+      .lean()
+
+    return res.json(room)
+  }
+
   async delete(req, res) {
     const { _id } = req.body
     const room = await Room.findById(_id).populate('_order').lean()

@@ -24,6 +24,7 @@ export interface SelectProps {
 export interface RoomCardProps {
   room: RoomPopulated
   clickHandler(room: RoomPopulated): void
+  onChange(id: string): void
   onDelete(id: string): void
   isAdmin: boolean
 }

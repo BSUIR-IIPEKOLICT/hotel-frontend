@@ -6,6 +6,8 @@ export default class RoomStore {
   @observable private _current: RoomPopulated = {} as RoomPopulated
   @observable private _pageAmount = 1
   @observable private _page = 1
+  @observable private _isEdit = false
+  @observable private _editedRoom = ''
   private readonly _limit = 9
 
   constructor() {
@@ -20,6 +22,23 @@ export default class RoomStore {
   @action
   addRoom(room: RoomPopulated) {
     this._rooms.push(room)
+  }
+
+  @action
+  changeRoom(updatedRoom: RoomPopulated) {
+    this._rooms = this._rooms.map((r) =>
+      r._id === this._editedRoom ? updatedRoom : r
+    )
+  }
+
+  @action
+  toggleIsEdit() {
+    this._isEdit = !this._isEdit
+  }
+
+  @action
+  setEditedRoom(id: string) {
+    this._editedRoom = id
   }
 
   @action
@@ -60,6 +79,16 @@ export default class RoomStore {
   @computed
   get page() {
     return this._page
+  }
+
+  @computed
+  get isEdit() {
+    return this._isEdit
+  }
+
+  @computed
+  get editedRoom() {
+    return this._editedRoom
   }
 
   get limit() {
