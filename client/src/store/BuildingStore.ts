@@ -3,7 +3,9 @@ import { Building } from '../interfaces/models'
 
 export default class BuildingStore {
   @observable private _buildings: Building[] = []
-  @observable private _active: string = ''
+  @observable private _active = ''
+  @observable private _editedBuilding = ''
+  @observable private _isEdit = false
 
   constructor() {
     makeObservable(this)
@@ -17,6 +19,23 @@ export default class BuildingStore {
   @action
   addBuilding(building: Building) {
     this._buildings.push(building)
+  }
+
+  @action
+  setEditedBuilding(id: string) {
+    this._editedBuilding = id
+  }
+
+  @action
+  toggleIsEdit() {
+    this._isEdit = !this._isEdit
+  }
+
+  @action
+  changeBuilding(updatedBuilding: Building) {
+    this._buildings = this._buildings.map((building) =>
+      building._id === this._editedBuilding ? updatedBuilding : building
+    )
   }
 
   @action
@@ -37,5 +56,15 @@ export default class BuildingStore {
   @computed
   get active() {
     return this._active
+  }
+
+  @computed
+  get isEdit() {
+    return this._isEdit
+  }
+
+  @computed
+  get editedBuilding() {
+    return this._editedBuilding
   }
 }

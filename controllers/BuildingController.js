@@ -18,6 +18,15 @@ class BuildingController {
     return res.json(building)
   }
 
+  async change(req, res) {
+    const { _id, address } = req.body
+    const building = await Building.findByIdAndUpdate(_id, {
+      $set: { address },
+    }).lean()
+    building.address = address
+    return res.json(building)
+  }
+
   async delete(req, res) {
     const { _id } = req.body
     const building = await Building.findById(_id).populate('_rooms').lean()

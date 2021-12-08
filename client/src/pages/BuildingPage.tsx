@@ -6,8 +6,8 @@ import { buildingApi } from '../api'
 import { observer } from 'mobx-react-lite'
 
 export const BuildingPage: React.FC = observer(() => {
-  const [address, setAddress] = useState('')
   const { building } = useContext(Context)
+  const [address, setAddress] = useState('')
 
   useEffect(() => {
     buildingApi
@@ -16,14 +16,35 @@ export const BuildingPage: React.FC = observer(() => {
       .catch((e) => console.error(e))
   }, [])
 
-  const createHandler = () => {
-    if (address !== '') {
+  const submitCreateHandler = () => {
+    if (address) {
       buildingApi
         .create(address)
-        .then((response) => building.addBuilding(response))
+        .then((response) => {
+          building.addBuilding(response)
+          setAddress('')
+        })
         .catch((e) => console.error(e))
-      setAddress('')
     }
+  }
+
+  const submitChangeHandler = () => {
+    if (building.editedBuilding && address) {
+      buildingApi
+        .change(building.editedBuilding, address)
+        .then((response) => {
+          building.changeBuilding(response)
+          building.setEditedBuilding('')
+          building.toggleIsEdit()
+          setAddress('')
+        })
+        .catch((e) => console.error(e))
+    }
+  }
+
+  const changeHandler = (id: string) => {
+    building.setEditedBuilding(id)
+    building.toggleIsEdit()
   }
 
   const deleteHandler = (id: string) => {
@@ -52,8 +73,11 @@ export const BuildingPage: React.FC = observer(() => {
           type="text"
           onChange={(e) => setAddress(e.target.value)}
         />
-        <Button variant="contained" onClick={createHandler}>
-          Add building
+        <Button
+          variant="contained"
+          onClick={building.isEdit ? submitChangeHandler : submitCreateHandler}
+        >
+          {building.isEdit ? 'Edit building' : 'Add building'}
         </Button>
       </Box>
       <Box sx={{ py: 1 }}>
@@ -62,6 +86,7 @@ export const BuildingPage: React.FC = observer(() => {
             <BuildingCard
               key={currentBuilding._id}
               building={currentBuilding}
+              onChange={changeHandler}
               onDelete={deleteHandler}
             />
           ))

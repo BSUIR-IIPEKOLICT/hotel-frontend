@@ -12,6 +12,11 @@ export default class BuildingApi extends BaseApi {
     return (await this.authApi.put<Building>(this.route, { address })).data
   }
 
+  async change(_id: string, address: string): Promise<Building> {
+    return (await this.authApi.patch<Building>(this.route, { _id, address }))
+      .data
+  }
+
   async delete(_id: string): Promise<string> {
     return (await this.authApi.delete<string>(this.route, { data: { _id } }))
       .data

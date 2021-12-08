@@ -67,6 +67,7 @@ export interface DatePickerProps {
 
 export interface BuildingCardProps {
   building: Building
+  onChange(id: string): void
   onDelete(id: string): void
 }
 
