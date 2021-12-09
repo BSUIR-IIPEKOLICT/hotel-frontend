@@ -13,8 +13,6 @@ module.exports = model(
       type: Types.ObjectId,
       require: true,
       ref: 'Room',
-      unique: true,
-      index: true,
     },
     _services: [
       {

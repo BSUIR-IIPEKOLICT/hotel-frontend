@@ -28,7 +28,7 @@ export default class RoomApi extends BaseApi {
 
   async create(_building: string, _type: string): Promise<RoomPopulated> {
     return (
-      await this.authApi.put<RoomPopulated>(this.route, {
+      await this.authApi.post<RoomPopulated>(this.route, {
         _building,
         _type,
       })

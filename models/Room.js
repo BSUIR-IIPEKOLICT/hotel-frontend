@@ -17,8 +17,6 @@ module.exports = model(
     _order: {
       type: Types.ObjectId,
       ref: 'Order',
-      unique: true,
-      index: true,
     },
     isFree: {
       type: Boolean,

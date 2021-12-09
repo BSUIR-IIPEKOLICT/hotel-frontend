@@ -26,7 +26,7 @@ export const BuildingCard: React.FC<BuildingCardProps> = ({
           <Button
             color="warning"
             sx={{ p: 1 }}
-            onClick={() => onChange(building._id)}
+            onClick={() => onChange(building)}
           >
             <EditIcon />
           </Button>

@@ -68,13 +68,13 @@ export interface DatePickerProps {
 
 export interface BuildingCardProps {
   building: Building
-  onChange(id: string): void
+  onChange(building: Building): void
   onDelete(id: string): void
 }
 
 export interface ServiceCardProps {
   service: Service
-  onChange(id: string): void
+  onChange(service: Service): void
   onDelete(id: string): void
 }
 
@@ -85,7 +85,7 @@ export interface PageButtonProps {
 
 export interface TypeCardProps {
   type: Type
-  onChange(id: string): void
+  onChange(type: Type): void
   onDelete(id: string): void
 }
 

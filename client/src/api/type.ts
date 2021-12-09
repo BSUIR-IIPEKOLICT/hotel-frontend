@@ -14,7 +14,7 @@ export default class TypeApi extends BaseApi {
     places: number
   ): Promise<Type> {
     return (
-      await this.authApi.put<Type>(this.route, { _services, name, places })
+      await this.authApi.post<Type>(this.route, { _services, name, places })
     ).data
   }
 

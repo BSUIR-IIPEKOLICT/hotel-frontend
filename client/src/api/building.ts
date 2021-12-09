@@ -9,7 +9,7 @@ export default class BuildingApi extends BaseApi {
   }
 
   async create(address: string): Promise<Building> {
-    return (await this.authApi.put<Building>(this.route, { address })).data
+    return (await this.authApi.post<Building>(this.route, { address })).data
   }
 
   async change(_id: string, address: string): Promise<Building> {

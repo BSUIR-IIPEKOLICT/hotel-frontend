@@ -19,7 +19,7 @@ export default class OrderApi extends BaseApi {
     population: number
   ): Promise<OrderPopulated> {
     return (
-      await this.api.put<OrderPopulated>(this.route, {
+      await this.api.post<OrderPopulated>(this.route, {
         _basket,
         _room,
         _services,

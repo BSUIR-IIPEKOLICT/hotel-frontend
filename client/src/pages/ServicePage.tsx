@@ -5,6 +5,7 @@ import { serviceApi } from '../api'
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import { ServiceCard } from '../components/cards/ServiceCard'
 import { incorrectHandler } from '../shared/constants'
+import { Service } from '../interfaces/models'
 
 export const ServicePage: React.FC = observer(() => {
   const { service } = useContext(Context)
@@ -50,8 +51,10 @@ export const ServicePage: React.FC = observer(() => {
     }
   }
 
-  const changeHandler = (id: string) => {
-    setEditedService(id)
+  const changeHandler = (s: Service) => {
+    setName(s.name)
+    setPrice(s.price)
+    setEditedService(s._id)
     setIsEdit(true)
   }
 

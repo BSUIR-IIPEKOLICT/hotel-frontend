@@ -29,7 +29,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
           <Button
             color="warning"
             sx={{ p: 1 }}
-            onClick={() => onChange(service._id)}
+            onClick={() => onChange(service)}
           >
             <EditIcon />
           </Button>

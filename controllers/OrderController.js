@@ -44,8 +44,10 @@ class OrderController {
     const order = await Order.findById(_id).lean()
 
     await Basket.updateOne({ _id: order._basket }, { $pull: { _orders: _id } })
-    await Room.updateOne({ _id: order._room }, { $set: { isFree: true } })
-    await Room.updateOne({ _id: order._room }, { $set: { population: 0 } })
+    await Room.updateOne(
+      { _id: order._room },
+      { $set: { isFree: true, population: 0 } }
+    )
     await Order.deleteOne(order)
 
     return res.json(_id)

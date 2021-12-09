@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const Basket = require('../models/Basket')
+const Order = require('../models/Order')
+const Room = require('../models/Room')
 const { objectId } = require('../helpers/db')
 
 const generateToken = (user) => {
@@ -76,7 +78,19 @@ class UserController {
   async delete(req, res) {
     const { _id } = req.body
     await User.findByIdAndRemove(_id)
-    await Basket.deleteOne({ _user: _id })
+    const basket = await Basket.findOne({ _user: _id }).lean()
+    const orders = await Order.find({ _basket: basket._id }).lean()
+
+    orders.map(async ({ _room }) => {
+      await Room.findByIdAndUpdate(_room, { $unset: { _order: '' } })
+      await Room.findByIdAndUpdate(_room, {
+        $set: { isFree: true, population: 0 },
+      })
+    })
+
+    await Order.deleteMany({ _basket: basket._id })
+    await Basket.deleteOne(basket)
+
     return res.json(_id)
   }
 }

@@ -37,12 +37,15 @@ class BuildingController {
     building._rooms.map(async ({ _id }) => {
       const order = await Order.findOne({ _room: _id }).lean()
 
-      await Basket.updateOne(
-        { _id: order._basket },
-        { $pull: { _orders: order._id } }
-      )
-      await Order.deleteOne(order)
-      await Room.deleteOne({ _id })
+      if (order) {
+        await Basket.updateOne(
+          { _id: order._basket },
+          { $pull: { _orders: order._id } }
+        )
+        await Order.deleteOne(order)
+      }
+
+      await Room.findByIdAndRemove(_id)
     })
 
     await Building.deleteOne({ _id: building._id })

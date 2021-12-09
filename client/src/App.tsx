@@ -8,8 +8,9 @@ import { Context } from './store'
 import { basketApi, orderApi, userApi } from './api'
 import { Preloader } from './components/Preloader'
 import { BasketPopulated } from './interfaces/populatedModels'
+import { observer } from 'mobx-react-lite'
 
-export const App: React.FC = () => {
+export const App: React.FC = observer(() => {
   const [isDark, setIsDark] = useState(
     localStorage.getItem('darkMode') !== 'false'
   )
@@ -72,4 +73,4 @@ export const App: React.FC = () => {
       </ThemeProvider>
     </div>
   )
-}
+})

@@ -5,6 +5,7 @@ import { BuildingCard } from '../components/cards/BuildingCard'
 import { buildingApi } from '../api'
 import { observer } from 'mobx-react-lite'
 import { incorrectHandler } from '../shared/constants'
+import { Building } from '../interfaces/models'
 
 export const BuildingPage: React.FC = observer(() => {
   const { building } = useContext(Context)
@@ -49,8 +50,9 @@ export const BuildingPage: React.FC = observer(() => {
     }
   }
 
-  const changeHandler = (id: string) => {
-    setEditedBuilding(id)
+  const changeHandler = (b: Building) => {
+    setAddress(b.address)
+    setEditedBuilding(b._id)
     setIsEdit(true)
   }
 

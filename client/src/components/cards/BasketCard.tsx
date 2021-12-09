@@ -55,21 +55,21 @@ export const BasketCard: React.FC<BasketCardProps> = observer(
             <Typography component="div" color="secondary">
               Price: {price}$ per day
             </Typography>
-            <Typography component="div">Total duty: {totalDuty}$</Typography>
+            <Typography component="div">
+              Total duty: {totalDuty > 0 ? totalDuty : 0}$
+            </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Button color="info" sx={{ p: 1 }} onClick={changeRoleHandler}>
               {isAdmin ? 'admin' : 'client'}
             </Button>
-            {!basket._orders.length && (
-              <Button
-                color="error"
-                sx={{ p: 1 }}
-                onClick={() => onDelete(basket._id, basket._user._id || '')}
-              >
-                <DeleteOutlineOutlinedIcon />
-              </Button>
-            )}
+            <Button
+              color="error"
+              sx={{ p: 1 }}
+              onClick={() => onDelete(basket._id, basket._user._id || '')}
+            >
+              <DeleteOutlineOutlinedIcon />
+            </Button>
           </Box>
         </Box>
       </Paper>

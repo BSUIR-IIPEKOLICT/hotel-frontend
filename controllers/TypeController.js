@@ -2,6 +2,7 @@ const Type = require('../models/Type')
 const Room = require('../models/Room')
 const Building = require('../models/Building')
 const Order = require('../models/Order')
+const Basket = require('../models/Basket')
 
 class TypeController {
   async get(req, res) {
@@ -38,15 +39,22 @@ class TypeController {
 
   async delete(req, res) {
     const { _id } = req.body
-    const type = await Type.findById(_id).lean()
     const rooms = await Room.find({ _type: _id }).lean()
 
-    await rooms.map(({ _id }) => {
-      Building.updateMany({}, { $pull: { _rooms: _id } })
-      Order.deleteOne({ _room: _id })
+    rooms.map(async ({ _id }) => {
+      await Room.findByIdAndRemove(_id)
+      await Building.updateMany({}, { $pull: { _rooms: _id } })
+      const order = await Order.findOne({ _room: _id }).lean()
+
+      if (order) {
+        await Basket.findByIdAndUpdate(order._basket, {
+          $pull: { _orders: order._id },
+        })
+        await Order.deleteOne(order)
+      }
     })
 
-    await Type.deleteOne(type)
+    await Type.findByIdAndRemove(_id)
 
     return res.json(_id)
   }

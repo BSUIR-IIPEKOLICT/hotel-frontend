@@ -28,10 +28,11 @@ export const AuthPage: React.FC = observer(() => {
 
       basketApi
         .getOne(data.id)
-        .then((response) => basket.setBasket(response))
+        .then((response) => {
+          basket.setBasket(response)
+          push(paths.main)
+        })
         .catch((e) => console.error(e))
-
-      push(paths.main)
     } catch (e) {
       // @ts-ignore
       alert(e.response.data.message || 'Error')

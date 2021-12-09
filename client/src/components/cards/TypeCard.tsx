@@ -36,11 +36,7 @@ export const TypeCard: React.FC<TypeCardProps> = ({
           </Typography>
         </Box>
         <Box>
-          <Button
-            color="warning"
-            sx={{ p: 1 }}
-            onClick={() => onChange(type._id)}
-          >
+          <Button color="warning" sx={{ p: 1 }} onClick={() => onChange(type)}>
             <EditIcon />
           </Button>
           <Button

@@ -4,7 +4,7 @@ import { Context } from '../store'
 import { serviceApi, typeApi } from '../api'
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import { RoomServiceContainer } from '../components/room/RoomServiceContainer'
-import { Service } from '../interfaces/models'
+import { Service, Type } from '../interfaces/models'
 import { TypeCard } from '../components/cards/TypeCard'
 import { incorrectHandler } from '../shared/constants'
 
@@ -63,8 +63,10 @@ export const TypePage: React.FC = observer(() => {
     }
   }
 
-  const changeHandler = (id: string) => {
-    setEditedType(id)
+  const changeHandler = (t: Type) => {
+    setName(t.name)
+    setPlaces(t.places)
+    setEditedType(t._id)
     setIsEdit(true)
   }
 
