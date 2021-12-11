@@ -65,6 +65,7 @@ export const TypePage: React.FC = observer(() => {
 
   const changeHandler = (t: Type) => {
     setName(t.name)
+    setServices(t._services)
     setPlaces(t.places)
     setEditedType(t._id)
     setIsEdit(true)
@@ -114,6 +115,7 @@ export const TypePage: React.FC = observer(() => {
       >
         <RoomServiceContainer
           services={service.services}
+          checked={services}
           onChange={serviceHandler}
         />
         <Button

@@ -88,6 +88,7 @@ export const RoomPage: React.FC = observer(() => {
           <Grid container>
             <RoomServiceContainer
               services={availableServices}
+              checked={services}
               onChange={serviceHandler}
             />
             <RoomBookContainer

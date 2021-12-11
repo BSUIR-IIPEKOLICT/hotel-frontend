@@ -31,6 +31,7 @@ export interface RoomCardProps {
 
 export interface RoomServiceContainerProps {
   services: Service[]
+  checked: string[]
   onChange(checked: boolean, service: Service): void
 }
 

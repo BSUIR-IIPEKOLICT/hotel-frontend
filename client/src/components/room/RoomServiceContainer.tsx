@@ -4,6 +4,7 @@ import { RoomServiceContainerProps } from '../../interfaces/props'
 
 export const RoomServiceContainer: React.FC<RoomServiceContainerProps> = ({
   services,
+  checked,
   onChange,
 }) => {
   return (
@@ -14,6 +15,7 @@ export const RoomServiceContainer: React.FC<RoomServiceContainerProps> = ({
             control={<Checkbox />}
             key={service._id}
             label={service.name}
+            checked={checked.includes(service._id)}
             onChange={(e, checked) => onChange(checked, service)}
           />
         ))}

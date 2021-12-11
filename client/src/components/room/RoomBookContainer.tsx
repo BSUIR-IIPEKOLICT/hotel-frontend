@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button, Container, Grid } from '@mui/material'
 import { AppSelect } from '../app/AppSelect'
 import { RoomBookContainerProps } from '../../interfaces/props'
+import { Context } from '../../store'
 
 export const RoomBookContainer: React.FC<RoomBookContainerProps> = ({
   selectOptions,
@@ -10,6 +11,8 @@ export const RoomBookContainer: React.FC<RoomBookContainerProps> = ({
   selectHandler,
   bookHandler,
 }) => {
+  const { user, room } = useContext(Context)
+
   return (
     <Grid item md={6}>
       <Container sx={{ textAlign: 'center' }}>
@@ -20,7 +23,12 @@ export const RoomBookContainer: React.FC<RoomBookContainerProps> = ({
           values={selectValues}
           value={selectValue}
         />
-        <Button variant="contained" sx={{ m: '0 auto' }} onClick={bookHandler}>
+        <Button
+          variant="contained"
+          sx={{ m: '0 auto' }}
+          onClick={bookHandler}
+          disabled={!user.isAuth || !room.current.isFree}
+        >
           Book this room
         </Button>
       </Container>
