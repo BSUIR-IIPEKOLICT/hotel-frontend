@@ -4,6 +4,7 @@
   "private": true,
   "description": "*hotel*\r >Hotel MERN app (task on subject \"Structures and databases\" in BSUIR)",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "concurrently npm:dev:*",
     "dev:client": "cd client && npm run start",

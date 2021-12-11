@@ -13,6 +13,14 @@ export const FilterBar: React.FC = observer(() => {
   const { building, type } = useContext(Context)
   const { palette } = useTheme()
 
+  const buildingHandler = (id: string) => {
+    building.setActive(id !== building.active ? id : '')
+  }
+
+  const typeHandler = (id: string) => {
+    type.setActive(id !== type.active ? id : '')
+  }
+
   return (
     <Box
       component="div"
@@ -41,7 +49,7 @@ export const FilterBar: React.FC = observer(() => {
           <ListItem disablePadding key={_id}>
             <ListItemButton
               selected={_id === building.active}
-              onClick={() => building.setActive(_id)}
+              onClick={() => buildingHandler(_id)}
             >
               <ListItemText primary={address} />
             </ListItemButton>
@@ -67,7 +75,7 @@ export const FilterBar: React.FC = observer(() => {
           <ListItem disablePadding key={_id}>
             <ListItemButton
               selected={_id === type.active}
-              onClick={() => type.setActive(_id)}
+              onClick={() => typeHandler(_id)}
             >
               <ListItemText primary={name} />
             </ListItemButton>

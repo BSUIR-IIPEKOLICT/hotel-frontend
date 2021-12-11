@@ -4,17 +4,18 @@ import { Context } from '../store'
 import Typography from '@mui/material/Typography'
 import PlaceSelect from '../classes/PlaceSelect'
 import { RoomInfo } from '../components/room/RoomInfo'
-import { orderApi } from '../api'
+import { orderApi, roomApi } from '../api'
 import { observer } from 'mobx-react-lite'
 import { useHistory } from 'react-router-dom'
-import { paths } from '../shared/enums'
+import { paths, roles } from '../shared/enums'
 import { RoomServiceContainer } from '../components/room/RoomServiceContainer'
 import { Service } from '../interfaces/models'
 import { RoomPriceContainer } from '../components/room/RoomPriceContainer'
 import { RoomBookContainer } from '../components/room/RoomBookContainer'
 
 export const RoomPage: React.FC = observer(() => {
-  const { order, service, room, basket, user } = useContext(Context)
+  const { order, service, room, basket, user, type, building } =
+    useContext(Context)
   const { palette } = useTheme()
   const { push } = useHistory()
 
@@ -62,7 +63,20 @@ export const RoomPage: React.FC = observer(() => {
         )
         .then((response) => {
           order.addOrder(response)
-          push(paths.main)
+          roomApi
+            .get(
+              1,
+              room.limit,
+              building.active,
+              type.active,
+              user.user.role === roles.client ? true : undefined
+            )
+            .then((response) => {
+              room.setRooms(response.rooms)
+              room.setPageAmount(response.amount)
+              push(paths.main)
+            })
+            .catch((e) => console.error(e))
         })
         .catch((e) => console.error(e))
     } else {
