@@ -1,5 +1,5 @@
-import InternalMiddleware from './internal.middleware.js'
+import internalMiddleware from './internal.middleware.js'
 
-export default function (req, res, next) {
-  return InternalMiddleware(req, res, next)
+export default function authMiddleware(req, res, next) {
+  return internalMiddleware(req, res, next)
 }

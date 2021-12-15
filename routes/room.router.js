@@ -1,11 +1,12 @@
 import { Router } from 'express'
 import { roomController } from '../controllers/index.js'
-import RoleMiddleware from '../middleware/role.middleware.js'
-const RoomRouter = Router()
+import { roleMiddleware } from '../middleware/index.js'
 
-RoomRouter.get('/', roomController.get)
-RoomRouter.post('/', RoleMiddleware(['admin']), roomController.create)
-RoomRouter.patch('/', RoleMiddleware(['admin']), roomController.change)
-RoomRouter.delete('/', RoleMiddleware(['admin']), roomController.delete)
+const roomRouter = Router()
 
-export default RoomRouter
+roomRouter.get('/', roomController.get)
+roomRouter.post('/', roleMiddleware(['admin']), roomController.create)
+roomRouter.patch('/', roleMiddleware(['admin']), roomController.change)
+roomRouter.delete('/', roleMiddleware(['admin']), roomController.delete)
+
+export default roomRouter

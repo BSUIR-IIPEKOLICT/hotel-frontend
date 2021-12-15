@@ -1,14 +1,14 @@
 import { Router } from 'express'
 import { userController } from '../controllers/index.js'
-import RoleMiddleware from '../middleware/role.middleware.js'
-import AuthMiddleware from '../middleware/auth.middleware.js'
-const UserRouter = Router()
+import { authMiddleware, roleMiddleware } from '../middleware/index.js'
 
-UserRouter.get('/', RoleMiddleware(['admin']), userController.getAll)
-UserRouter.post('/register', userController.register)
-UserRouter.post('/login', userController.login)
-UserRouter.post('/auth', AuthMiddleware, userController.auth)
-UserRouter.patch('/', RoleMiddleware(['admin']), userController.changeRole)
-UserRouter.delete('/', RoleMiddleware(['admin']), userController.delete)
+const userRouter = Router()
 
-export default UserRouter
+userRouter.get('/', roleMiddleware(['admin']), userController.getAll)
+userRouter.post('/register', userController.register)
+userRouter.post('/login', userController.login)
+userRouter.post('/auth', authMiddleware, userController.auth)
+userRouter.patch('/', roleMiddleware(['admin']), userController.changeRole)
+userRouter.delete('/', roleMiddleware(['admin']), userController.delete)
+
+export default userRouter

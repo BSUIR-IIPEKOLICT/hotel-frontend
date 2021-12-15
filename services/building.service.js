@@ -1,6 +1,6 @@
 import BuildingModel from '../models/building.model.js'
 
-class BuildingService {
+export default class BuildingService {
   async get() {
     return BuildingModel.find({}).lean()
   }
@@ -38,5 +38,3 @@ class BuildingService {
     return _id
   }
 }
-
-export default new BuildingService()

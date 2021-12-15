@@ -1,6 +1,6 @@
 import OrderModel from '../models/order.model.js'
 
-class OrderService {
+export default class OrderService {
   async get(_basket) {
     return OrderModel.find({ _basket })
       .populate('_services')
@@ -34,5 +34,3 @@ class OrderService {
     await OrderModel.deleteMany({ _basket })
   }
 }
-
-export default new OrderService()

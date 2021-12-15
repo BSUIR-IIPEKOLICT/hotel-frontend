@@ -1,19 +1,20 @@
 import { Router } from 'express'
-import BuildingRouter from './building.router.js'
-import ServiceRouter from './service.router.js'
-import TypeRouter from './type.router.js'
-import RoomRouter from './room.router.js'
-import OrderRouter from './order.router.js'
-import BasketRouter from './basket.router.js'
-import UserRouter from './user.router.js'
-const ApiRouter = Router()
+import buildingRouter from './building.router.js'
+import serviceRouter from './service.router.js'
+import typeRouter from './type.router.js'
+import roomRouter from './room.router.js'
+import orderRouter from './order.router.js'
+import basketRouter from './basket.router.js'
+import userRouter from './user.router.js'
 
-ApiRouter.use('/user', UserRouter)
-ApiRouter.use('/building', BuildingRouter)
-ApiRouter.use('/type', TypeRouter)
-ApiRouter.use('/service', ServiceRouter)
-ApiRouter.use('/room', RoomRouter)
-ApiRouter.use('/basket', BasketRouter)
-ApiRouter.use('/order', OrderRouter)
+const apiRouter = Router()
 
-export default ApiRouter
+apiRouter.use('/user', userRouter)
+apiRouter.use('/building', buildingRouter)
+apiRouter.use('/type', typeRouter)
+apiRouter.use('/service', serviceRouter)
+apiRouter.use('/room', roomRouter)
+apiRouter.use('/basket', basketRouter)
+apiRouter.use('/order', orderRouter)
+
+export default apiRouter

@@ -1,6 +1,6 @@
 import ServiceModel from '../models/service.model.js'
 
-class ServiceService {
+export default class ServiceService {
   async get() {
     return ServiceModel.find({}).lean()
   }
@@ -23,5 +23,3 @@ class ServiceService {
     return _id
   }
 }
-
-export default new ServiceService()

@@ -2,22 +2,22 @@ import { resolve } from 'path'
 import express from 'express'
 import cors from 'cors'
 import { config } from 'dotenv'
-import serve from './helpers/serve.helper.js'
-import { connect } from './helpers/db.helper.js'
-import errorMiddleware from './middleware/error.middleware.js'
-import ApiRouter from './routes/index.js'
+import { connect, serveHelper } from './helpers/index.js'
+import { errorMiddleware } from './middleware/index.js'
+import apiRouter from './routes/index.js'
+import { LOCAL_PORT } from './shared/constants.js'
 
 config()
-const port = process.env.PORT || 5000
+const port = process.env.PORT || LOCAL_PORT
 const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use('/api', ApiRouter)
+app.use('/api', apiRouter)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(resolve('client', 'build')))
-  app.get('*', serve)
+  app.get('*', serveHelper)
 }
 
 app.use(errorMiddleware)

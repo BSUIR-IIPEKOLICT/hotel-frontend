@@ -1,6 +1,6 @@
 import BasketModel from '../models/basket.model.js'
 
-class BasketService {
+export default class BasketService {
   async get() {
     return BasketModel.find({}).populate('_user').populate('_orders').lean()
   }
@@ -36,5 +36,3 @@ class BasketService {
     return _id
   }
 }
-
-export default new BasketService()

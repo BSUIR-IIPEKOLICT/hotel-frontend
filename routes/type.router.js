@@ -1,11 +1,12 @@
 import { Router } from 'express'
 import { typeController } from '../controllers/index.js'
-import RoleMiddleware from '../middleware/role.middleware.js'
-const TypeRouter = Router()
+import { roleMiddleware } from '../middleware/index.js'
 
-TypeRouter.get('/', typeController.get)
-TypeRouter.post('/', RoleMiddleware(['admin']), typeController.create)
-TypeRouter.patch('/', RoleMiddleware(['admin']), typeController.change)
-TypeRouter.delete('/', RoleMiddleware(['admin']), typeController.delete)
+const typeRouter = Router()
 
-export default TypeRouter
+typeRouter.get('/', typeController.get)
+typeRouter.post('/', roleMiddleware(['admin']), typeController.create)
+typeRouter.patch('/', roleMiddleware(['admin']), typeController.change)
+typeRouter.delete('/', roleMiddleware(['admin']), typeController.delete)
+
+export default typeRouter

@@ -1,11 +1,12 @@
 import { Router } from 'express'
 import { buildingController } from '../controllers/index.js'
-import RoleMiddleware from '../middleware/role.middleware.js'
-const BuildingRouter = Router()
+import { roleMiddleware } from '../middleware/index.js'
 
-BuildingRouter.get('/', buildingController.get)
-BuildingRouter.post('/', RoleMiddleware(['admin']), buildingController.create)
-BuildingRouter.patch('/', RoleMiddleware(['admin']), buildingController.change)
-BuildingRouter.delete('/', RoleMiddleware(['admin']), buildingController.delete)
+const buildingRouter = Router()
 
-export default BuildingRouter
+buildingRouter.get('/', buildingController.get)
+buildingRouter.post('/', roleMiddleware(['admin']), buildingController.create)
+buildingRouter.patch('/', roleMiddleware(['admin']), buildingController.change)
+buildingRouter.delete('/', roleMiddleware(['admin']), buildingController.delete)
+
+export default buildingRouter

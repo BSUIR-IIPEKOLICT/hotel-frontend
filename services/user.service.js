@@ -1,6 +1,6 @@
 import UserModel from '../models/user.model.js'
 
-class UserService {
+export default class UserService {
   async get() {
     return UserModel.find({}).lean()
   }
@@ -35,5 +35,3 @@ class UserService {
     return _id
   }
 }
-
-export default new UserService()

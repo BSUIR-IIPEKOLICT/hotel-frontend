@@ -1,6 +1,6 @@
 import RoomModel from '../models/room.model.js'
 
-class RoomService {
+export default class RoomService {
   async get(query, limit = Number.MAX_SAFE_INTEGER, offset = 0) {
     return RoomModel.find(query)
       .skip(offset)
@@ -65,5 +65,3 @@ class RoomService {
     await RoomModel.deleteMany({ _type })
   }
 }
-
-export default new RoomService()

@@ -1,6 +1,6 @@
 import TypeModel from '../models/type.model.js'
 
-class TypeService {
+export default class TypeService {
   async get() {
     return TypeModel.find({}).lean()
   }
@@ -31,5 +31,3 @@ class TypeService {
     return _id
   }
 }
-
-export default new TypeService()
