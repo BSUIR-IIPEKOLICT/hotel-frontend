@@ -7,10 +7,10 @@
   "scripts": {
     "dev": "concurrently npm:dev:*",
     "dev:client": "cd client && npm run start",
-    "dev:server": "node clean && tsc && nodemon dist/index",
+    "dev:server": "nodemon",
     "start": "concurrently npm:start:*",
     "start:client": "cd client && npm run build",
-    "start:server": "tsc && node dist/index",
+    "start:server": "ts-node index.ts",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "repository": {
