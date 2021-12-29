@@ -8,17 +8,21 @@
   "scripts": {
     "dev": "concurrently npm:dev:*",
     "dev:client": "cd client && npm run start",
-    "dev:server": "nodemon index",
+    "dev:server": "tsc && nodemon dist/index",
     "start": "concurrently npm:start:*",
     "start:client": "cd client && npm run build",
-    "start:server": "node index",
+    "start:server": "tsc && node dist/index",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/IIPEKOLICT/hotel.git"
   },
-  "keywords": ["MERN", "Express", "React"],
+  "keywords": [
+    "MERN",
+    "Express",
+    "React"
+  ],
   "author": "iipekolict<iipekolict@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -34,9 +38,12 @@
     "mongoose": "^6.1.1"
   },
   "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/mongoose": "^5.11.97",
     "concurrently": "^6.4.0",
+    "nodemon": "^2.0.15",
     "prettier": "2.5.1",
-    "nodemon": "^2.0.15"
+    "typescript": "^4.5.4"
   },
   "engines": {
     "node": "16.13.0"
