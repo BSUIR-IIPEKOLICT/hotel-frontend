@@ -5,9 +5,8 @@
     "target": "es6",
     "moduleResolution": "node",
     "outDir": "dist",
-    "allowJs": true,
-//    "skipDefaultLibCheck": true
+    "allowJs": true
   },
   "lib": ["es2015"],
-  "exclude": ["node_modules", "client"]
+  "exclude": ["node_modules", "client", "clean.js", "copy.js"]
 }

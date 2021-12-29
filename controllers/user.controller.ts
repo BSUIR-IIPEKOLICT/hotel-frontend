@@ -1,0 +1,99 @@
+import jwt from 'jsonwebtoken'
+import ApiError from '../errors/api.error'
+import { hash, compareSync } from 'bcrypt'
+import {
+  basketService,
+  orderService,
+  roomService,
+  userService,
+} from '../services'
+import { LOCAL_JWT_SECRET } from '../shared/constants'
+import { ModifiedRequest, UserToken } from '../shared/types'
+import { Response } from 'express'
+import { ErrorMessage } from '../shared/enums'
+
+const generateToken = (user: UserToken) => {
+  return jwt.sign(
+    {
+      _id: user.id,
+      email: user.email,
+      role: user.role,
+    },
+    process.env.JWT_SECRET || LOCAL_JWT_SECRET,
+    { expiresIn: '24h' }
+  )
+}
+
+export default class UserController {
+  async register(req: ModifiedRequest, res: Response, next) {
+    const { email, password } = req.body
+
+    if (!email || !password) {
+      return next(ApiError.badRequest(ErrorMessage.LoginData))
+    }
+
+    const candidate = await userService.getByEmail(email)
+
+    if (candidate) {
+      return next(ApiError.badRequest(ErrorMessage.UserExists))
+    }
+
+    const usersCount = await userService.count()
+    const hashPassword = await hash(password, 5)
+
+    const user = await userService.create(
+      email,
+      hashPassword,
+      !usersCount ? 'admin' : 'client'
+    )
+
+    await basketService.create(user._id)
+
+    return res.json({
+      token: generateToken(user),
+      id: user._id,
+    })
+  }
+
+  async login(req: ModifiedRequest, res: Response, next) {
+    const { email, password } = req.body
+    const user = await userService.getByEmail(email)
+
+    if (!user) return next(ApiError.internal(ErrorMessage.UserNotExists))
+    if (!compareSync(password, user.password)) {
+      return next(ApiError.internal(ErrorMessage.Password))
+    }
+
+    return res.json({ token: generateToken(user), id: user._id })
+  }
+
+  async auth(req: ModifiedRequest, res: Response) {
+    const user = await userService.getByEmail(req.user.email)
+    return res.json({ token: generateToken(req.user), id: user._id })
+  }
+
+  async getAll(req: ModifiedRequest, res: Response) {
+    const users = await userService.get()
+    return res.json(users)
+  }
+
+  async changeRole(req: ModifiedRequest, res: Response) {
+    const { _id, role } = req.body
+    await userService.change(_id, role)
+    return res.json(role)
+  }
+
+  async delete(req: ModifiedRequest, res: Response) {
+    const user = await userService.getOne(req.body._id)
+    const id = await userService.delete(req.body._id)
+    const basket = await basketService.getOne(user._id)
+    const orders = await orderService.get(basket._id)
+
+    orders.map(async ({ _room }) => await roomService.unBookRoom(_room._id))
+
+    await orderService.deleteWithBasket(basket._id)
+    await basketService.delete(basket._id)
+
+    return res.json(id)
+  }
+}
