@@ -2,7 +2,7 @@ import { ServiceRepository } from '../shared/repositories'
 import { Service } from '../shared/models'
 
 export default class ServiceService extends ServiceRepository {
-  async get(): Promise<Service> {
+  async get(): Promise<Service[]> {
     return this.model.find({}).lean()
   }
 

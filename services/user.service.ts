@@ -10,7 +10,7 @@ export default class UserService extends UserRepository {
     return this.model.findById(_id).lean()
   }
 
-  async getByEmail(email: string): Promise<User> {
+  async getByEmail(email: string): Promise<User> | undefined {
     return this.model.findOne({ email }).lean()
   }
 

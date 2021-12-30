@@ -8,6 +8,7 @@ import { ModifiedRequest } from '../shared/types'
 import { Response } from 'express'
 import { GetRoomsDto } from '../shared/dtos'
 import { IQuery } from '../shared/interfaces'
+import { OrderPopulated, RoomPopulated } from '../shared/models'
 
 export default class RoomController {
   async get(req: ModifiedRequest & GetRoomsDto, res: Response) {
@@ -21,7 +22,7 @@ export default class RoomController {
       limit = parseInt(limit) || 20
     }
 
-    const offset = page * limit - limit
+    const offset: number = page * limit - limit
     const query: IQuery = {}
 
     if (isFree) {
@@ -35,22 +36,25 @@ export default class RoomController {
       query._type = _type
     }
 
-    const amount = await roomService.getAmount(query)
-    const rooms = await roomService.get(query, limit, offset)
+    const amount: number = await roomService.getAmount(query)
+    const rooms: RoomPopulated[] = await roomService.get(query, limit, offset)
 
     return res.json({ rooms, amount })
   }
 
   async create(req: ModifiedRequest, res: Response) {
-    const room = await roomService.create(req.body._building, req.body._type)
+    const room: RoomPopulated = await roomService.create(
+      req.body._building,
+      req.body._type
+    )
     await buildingService.addRoom(req.body._building, room._id)
     return res.json(room)
   }
 
   async change(req: ModifiedRequest, res: Response) {
     const { _id, _building, _type } = req.body
-    const stock = await roomService.getOne(_id)
-    const room = await roomService.change(_id, _building, _type)
+    const stock: RoomPopulated = await roomService.getOne(_id)
+    const room: RoomPopulated = await roomService.change(_id, _building, _type)
 
     if (_building !== stock._building._id) {
       await buildingService.removeRoom(_id)
@@ -61,12 +65,12 @@ export default class RoomController {
   }
 
   async delete(req: ModifiedRequest, res: Response) {
-    const room = await roomService.getOne(req.body._id)
+    const room: RoomPopulated = await roomService.getOne(req.body._id)
     await roomService.delete(room._id)
     await buildingService.removeRoom(room._id)
 
     if (room._order) {
-      const order = await orderService.getOne(room._order)
+      const order: OrderPopulated = await orderService.getOne(room._order)
       await orderService.delete(room._order)
       await basketService.removeOrder(order._id)
     }

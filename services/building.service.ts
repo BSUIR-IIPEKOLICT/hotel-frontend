@@ -16,13 +16,14 @@ export default class BuildingService extends BuildingRepository {
     return building
   }
 
-  async change(_id: string, address: string): Promise<BuildingPopulated> {
-    await this.model
+  async change(_id: string, address: string): Promise<Building> {
+    const building: Building = await this.model
       .findByIdAndUpdate(_id, {
         $set: { address },
       })
       .lean()
-    return this.getOne(_id)
+    building.address = address
+    return building
   }
 
   async addRoom(buildingId: string, roomId: string) {

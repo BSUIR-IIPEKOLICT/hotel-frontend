@@ -11,6 +11,7 @@ import { LOCAL_JWT_SECRET } from '../shared/constants'
 import { ModifiedRequest, UserToken } from '../shared/types'
 import { Response } from 'express'
 import { ErrorMessage } from '../shared/enums'
+import { BasketPopulated, OrderPopulated, User } from '../shared/models'
 
 const generateToken = (user: UserToken) => {
   return jwt.sign(
@@ -32,16 +33,16 @@ export default class UserController {
       return next(ApiError.badRequest(ErrorMessage.LoginData))
     }
 
-    const candidate = await userService.getByEmail(email)
+    const candidate: User | undefined = await userService.getByEmail(email)
 
     if (candidate) {
       return next(ApiError.badRequest(ErrorMessage.UserExists))
     }
 
-    const usersCount = await userService.count()
-    const hashPassword = await hash(password, 5)
+    const usersCount: number = await userService.count()
+    const hashPassword: string = await hash(password, 5)
 
-    const user = await userService.create(
+    const user: User = await userService.create(
       email,
       hashPassword,
       !usersCount ? 'admin' : 'client'
@@ -57,7 +58,7 @@ export default class UserController {
 
   async login(req: ModifiedRequest, res: Response, next) {
     const { email, password } = req.body
-    const user = await userService.getByEmail(email)
+    const user: User | undefined = await userService.getByEmail(email)
 
     if (!user) return next(ApiError.internal(ErrorMessage.UserNotExists))
     if (!compareSync(password, user.password)) {
@@ -68,12 +69,13 @@ export default class UserController {
   }
 
   async auth(req: ModifiedRequest, res: Response) {
-    const user = await userService.getByEmail(req.user.email)
+    const user: User | undefined = await userService.getByEmail(req.user.email)
+    if (!user) return
     return res.json({ token: generateToken(req.user), id: user._id })
   }
 
   async getAll(req: ModifiedRequest, res: Response) {
-    const users = await userService.get()
+    const users: User[] = await userService.get()
     return res.json(users)
   }
 
@@ -84,10 +86,10 @@ export default class UserController {
   }
 
   async delete(req: ModifiedRequest, res: Response) {
-    const user = await userService.getOne(req.body._id)
-    const id = await userService.delete(req.body._id)
-    const basket = await basketService.getOne(user._id)
-    const orders = await orderService.get(basket._id)
+    const user: User = await userService.getOne(req.body._id)
+    const id: string = await userService.delete(req.body._id)
+    const basket: BasketPopulated = await basketService.getOne(user._id)
+    const orders: OrderPopulated[] = await orderService.get(basket._id)
 
     orders.map(async ({ _room }) => await roomService.unBookRoom(_room._id))
 

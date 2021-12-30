@@ -2,17 +2,18 @@ import { basketService, orderService, roomService } from '../services'
 import { ModifiedRequest } from '../shared/types'
 import { Response } from 'express'
 import { GetOrdersDto } from '../shared/dtos'
+import { OrderPopulated } from '../shared/models'
 
 export default class OrderController {
   async get(req: ModifiedRequest & GetOrdersDto, res: Response) {
-    const orders = await orderService.get(req.query._basket)
+    const orders: OrderPopulated[] = await orderService.get(req.query._basket)
     return res.json(orders)
   }
 
   async create(req: ModifiedRequest, res: Response) {
     const { _basket, _room, _services, duty, population, date } = req.body
 
-    const order = await orderService.create({
+    const order: OrderPopulated = await orderService.create({
       _basket,
       _room,
       _services,
@@ -28,7 +29,7 @@ export default class OrderController {
   }
 
   async delete(req: ModifiedRequest, res: Response) {
-    const order = await orderService.getOne(req.body._id)
+    const order: OrderPopulated = await orderService.getOne(req.body._id)
     await orderService.delete(req.body._id)
     await basketService.removeOrder(order)
     await roomService.unBookRoom(order._room._id)
