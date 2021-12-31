@@ -22,7 +22,7 @@ export default function internalMiddleware(
 
     const decoded: UserToken = jwt.verify<UserToken>(token, secret)
 
-    if (roles && roles.includes(decoded.role)) {
+    if (roles && !roles.includes(decoded.role)) {
       return next(ApiError.forbidden(ErrorMessage.Access))
     }
 

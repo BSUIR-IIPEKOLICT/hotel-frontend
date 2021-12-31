@@ -37,17 +37,21 @@ export const App: React.FC = observer(() => {
   }
 
   useEffect(() => {
-    userApi
-      .auth()
-      .then((response) => {
-        user.setUser(response.user)
-        user.setIsAuth(true)
-        user.setId(response.id)
+    if (localStorage.getItem('token')) {
+      userApi
+        .auth()
+        .then((response) => {
+          user.setUser(response.user)
+          user.setIsAuth(true)
+          user.setId(response.id)
 
-        loadBasket(loadOrders)
-      })
-      .catch(() => {})
-      .finally(() => setIsLoading(false))
+          loadBasket(loadOrders)
+        })
+        .catch(() => {})
+        .finally(() => setIsLoading(false))
+    } else {
+      setIsLoading(false)
+    }
   }, [])
 
   useEffect(
@@ -56,9 +60,7 @@ export const App: React.FC = observer(() => {
   )
 
   useEffect(() => {
-    if (user.isAuth) {
-      loadBasket(loadOrders)
-    }
+    if (user.isAuth) loadBasket(loadOrders)
   }, [user.isAuth])
 
   if (isLoading) return <Preloader isDark={isDark} />
