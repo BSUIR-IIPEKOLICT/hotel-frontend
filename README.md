@@ -43,3 +43,5 @@ npm run dev
 ```
 npm run start
 ```
+
+[Ссылка на деплой](https://iipekolict--hotel.herokuapp.com/)
