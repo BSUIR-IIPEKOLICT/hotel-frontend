@@ -100,3 +100,7 @@ export interface ReviewCardProps {
   onChange(review: Review): void
   onDelete(id: string): void
 }
+
+export interface SpoilerProps {
+  title: string
+}

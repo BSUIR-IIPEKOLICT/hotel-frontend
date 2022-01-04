@@ -9,6 +9,7 @@ import { roles } from '../shared/enums'
 import { DatePicker } from '../components/DatePicker'
 import { pageButtonPaths, pageButtonTitles } from '../shared/constants'
 import { PageButton } from '../components/PageButton'
+import { Spoiler } from '../components/Spoiler'
 
 export const AdminPage: React.FC = observer(() => {
   const { user, basket } = useContext(Context)
@@ -58,18 +59,20 @@ export const AdminPage: React.FC = observer(() => {
       <Typography component="h4" variant="h4" align="center">
         Admin panel
       </Typography>
-      <Box sx={{ py: 1, display: 'flex', justifyContent: 'center' }}>
-        <DatePicker onChange={(value) => setSortDate(value || new Date())} />
-      </Box>
-      {basket.baskets.map((currentBasket) => (
-        <BasketCard
-          key={currentBasket._id}
-          basket={currentBasket}
-          sortDate={sortDate}
-          onChangeRole={onChangeRole}
-          onDelete={deleteHandler}
-        />
-      ))}
+      <Spoiler title="Users">
+        <Box sx={{ py: 1, display: 'flex', justifyContent: 'center' }}>
+          <DatePicker onChange={(value) => setSortDate(value || new Date())} />
+        </Box>
+        {basket.baskets.map((currentBasket) => (
+          <BasketCard
+            key={currentBasket._id}
+            basket={currentBasket}
+            sortDate={sortDate}
+            onChangeRole={onChangeRole}
+            onDelete={deleteHandler}
+          />
+        ))}
+      </Spoiler>
       <Box
         sx={{
           py: 1,

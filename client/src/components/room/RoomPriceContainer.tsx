@@ -9,7 +9,7 @@ export const RoomPriceContainer: React.FC<RoomPriceContainerProps> = ({
   const { palette } = useTheme()
 
   return (
-    <Box component="div" sx={{ p: 1 }}>
+    <Box component="div" sx={{ marginBottom: 2 }}>
       <Typography component="h6" variant="h6" sx={{ marginBottom: 1 }}>
         Pricing
       </Typography>

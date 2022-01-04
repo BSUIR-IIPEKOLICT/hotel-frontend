@@ -1,15 +1,5 @@
 import React, { useContext, useState } from 'react'
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Container,
-  Divider,
-  Grid,
-  Paper,
-  useTheme,
-} from '@mui/material'
+import { Box, Container, Grid, Paper, useTheme } from '@mui/material'
 import { Context } from '../store'
 import Typography from '@mui/material/Typography'
 import PlaceSelect from '../shared/PlaceSelect'
@@ -23,6 +13,7 @@ import { Service } from '../interfaces/models'
 import { RoomPriceContainer } from '../components/room/RoomPriceContainer'
 import { RoomBookContainer } from '../components/room/RoomBookContainer'
 import { ReviewContainer } from '../components/ReviewContainer'
+import { Spoiler } from '../components/Spoiler'
 
 export const RoomPage: React.FC = observer(() => {
   const { order, service, room, basket, user, type, building } =
@@ -97,44 +88,41 @@ export const RoomPage: React.FC = observer(() => {
 
   return (
     <Container maxWidth="sm">
-      <Paper component="div" sx={{ flexGrow: 1, p: 2, my: 2 }}>
+      <Paper
+        variant="outlined"
+        component="div"
+        sx={{ flexGrow: 1, p: 2, marginTop: 2 }}
+      >
         <RoomInfo room={room.current} />
-        <Divider />
-        <RoomPriceContainer value={price + placesPrice} />
-        <Divider />
-        <Accordion sx={{ my: 1 }}>
-          <AccordionSummary>
-            <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-              Book room
+        <Spoiler title="Book room">
+          <RoomPriceContainer value={price + placesPrice} />
+          <Box component="form" noValidate autoComplete="off" sx={{ py: 1 }}>
+            <Typography
+              component="h6"
+              variant="h6"
+              sx={{ color: palette.primary.main }}
+            >
+              Book a room
             </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box component="form" noValidate autoComplete="off" sx={{ py: 1 }}>
-              <Typography
-                component="h6"
-                variant="h6"
-                sx={{ color: palette.primary.main }}
-              >
-                Book a room
-              </Typography>
-              <Grid container>
-                <RoomServiceContainer
-                  services={availableServices}
-                  checked={services}
-                  onChange={serviceHandler}
-                />
-                <RoomBookContainer
-                  selectOptions={select.options}
-                  selectValues={select.values}
-                  selectValue={population}
-                  selectHandler={selectHandler}
-                  bookHandler={bookHandler}
-                />
-              </Grid>
-            </Box>
-          </AccordionDetails>
-        </Accordion>
-        <ReviewContainer />
+            <Grid container>
+              <RoomServiceContainer
+                services={availableServices}
+                checked={services}
+                onChange={serviceHandler}
+              />
+              <RoomBookContainer
+                selectOptions={select.options}
+                selectValues={select.values}
+                selectValue={population}
+                selectHandler={selectHandler}
+                bookHandler={bookHandler}
+              />
+            </Grid>
+          </Box>
+        </Spoiler>
+        <Spoiler title="Reviews">
+          <ReviewContainer />
+        </Spoiler>
       </Paper>
     </Container>
   )

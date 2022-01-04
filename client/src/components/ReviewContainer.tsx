@@ -1,14 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Button,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Box, Button, TextField } from '@mui/material'
 import { ReviewCard } from './cards/ReviewCard'
 import { Review } from '../interfaces/models'
 import { reviewApi } from '../api'
@@ -72,54 +64,45 @@ export const ReviewContainer = observer(() => {
   }
 
   return (
-    <Box>
-      <Accordion sx={{ my: 1 }}>
-        <AccordionSummary>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-            Reviews
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-            {review.reviews.map((r) => (
-              <ReviewCard
-                key={r._id}
-                review={r}
-                isOwner={user.isAuth && r.author === user.user.email}
-                onChange={changeHandler}
-                onDelete={deleteHandler}
-              />
-            ))}
-          </Box>
-          <Box
-            component="form"
-            noValidate
-            autoComplete="off"
-            sx={{
-              py: 1,
-              width: '100%',
-              display: 'flex',
-              gap: 2,
-              alignItems: 'center',
-            }}
-          >
-            <TextField
-              label="Review content"
-              value={content}
-              type="text"
-              onChange={(e) => setContent(e.target.value)}
-            />
-            <Button
-              variant="contained"
-              sx={{ m: '0 auto', height: '80%' }}
-              onClick={isEdit ? submitChangeHandler : submitCreateHandler}
-              disabled={!user.isAuth}
-            >
-              {isEdit ? 'Edit review' : 'Add review'}
-            </Button>
-          </Box>
-        </AccordionDetails>
-      </Accordion>
-    </Box>
+    <>
+      <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+        {review.reviews.map((r) => (
+          <ReviewCard
+            key={r._id}
+            review={r}
+            isOwner={user.isAuth && r.author === user.user.email}
+            onChange={changeHandler}
+            onDelete={deleteHandler}
+          />
+        ))}
+      </Box>
+      <Box
+        component="form"
+        noValidate
+        autoComplete="off"
+        sx={{
+          py: 1,
+          width: '100%',
+          display: 'flex',
+          gap: 2,
+          alignItems: 'center',
+        }}
+      >
+        <TextField
+          label="Review content"
+          value={content}
+          type="text"
+          onChange={(e) => setContent(e.target.value)}
+        />
+        <Button
+          variant="contained"
+          sx={{ m: '0 auto', height: '80%' }}
+          onClick={isEdit ? submitChangeHandler : submitCreateHandler}
+          disabled={!user.isAuth}
+        >
+          {isEdit ? 'Edit review' : 'Add review'}
+        </Button>
+      </Box>
+    </>
   )
 })
