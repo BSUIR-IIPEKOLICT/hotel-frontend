@@ -19,9 +19,9 @@ export default class ServiceStore {
   }
 
   @action
-  changeService(id: string, updatedService: Service) {
+  changeService(updatedService: Service) {
     this._services = this._services.map((service) =>
-      service._id === id ? updatedService : service
+      service._id === updatedService._id ? updatedService : service
     )
   }
 

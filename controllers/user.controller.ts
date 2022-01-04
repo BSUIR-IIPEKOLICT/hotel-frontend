@@ -7,7 +7,11 @@ import {
   roomService,
   userService,
 } from '../services'
-import { LOCAL_JWT_SECRET } from '../shared/constants'
+import {
+  LOCAL_JWT_SECRET,
+  MIN_EMAIL_CHUNKS_AMOUNT,
+  MIN_PASSWORD_LENGTH,
+} from '../shared/constants'
 import { ModifiedRequest, UserToken } from '../shared/types'
 import { Response } from 'express'
 import { ErrorMessage } from '../shared/enums'
@@ -31,6 +35,14 @@ export default class UserController {
 
     if (!email || !password) {
       return next(ApiError.badRequest(ErrorMessage.LoginData))
+    }
+
+    if (email.split(/[@.]/g).length < MIN_EMAIL_CHUNKS_AMOUNT) {
+      return next(ApiError.badRequest(ErrorMessage.BadEmail))
+    }
+
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      return next(ApiError.badRequest(ErrorMessage.BadPassword))
     }
 
     const candidate: User | undefined = await userService.getByEmail(email)

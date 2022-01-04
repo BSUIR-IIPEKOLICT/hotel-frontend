@@ -39,7 +39,7 @@ export const ServicePage: React.FC = observer(() => {
       serviceApi
         .change(editedService, name, price)
         .then((response) => {
-          service.changeService(editedService, response)
+          service.changeService(response)
           setEditedService('')
           setIsEdit(false)
           setName('')

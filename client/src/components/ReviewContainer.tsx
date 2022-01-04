@@ -5,6 +5,7 @@ import { ReviewCard } from './cards/ReviewCard'
 import { Review } from '../interfaces/models'
 import { reviewApi } from '../api'
 import { Context } from '../store'
+import { incorrectHandler } from '../shared/constants'
 
 export const ReviewContainer = observer(() => {
   const { room, user, review } = useContext(Context)
@@ -32,7 +33,7 @@ export const ReviewContainer = observer(() => {
         })
         .catch((e) => console.error(e))
     } else {
-      alert('Invalid data')
+      incorrectHandler()
     }
   }
 
@@ -46,7 +47,7 @@ export const ReviewContainer = observer(() => {
         })
         .catch((e) => console.error(e))
     } else {
-      alert('Invalid data')
+      incorrectHandler()
     }
   }
 

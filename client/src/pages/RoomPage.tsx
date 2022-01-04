@@ -14,6 +14,7 @@ import { RoomPriceContainer } from '../components/room/RoomPriceContainer'
 import { RoomBookContainer } from '../components/room/RoomBookContainer'
 import { ReviewContainer } from '../components/ReviewContainer'
 import { Spoiler } from '../components/Spoiler'
+import { incorrectHandler } from '../shared/constants'
 
 export const RoomPage: React.FC = observer(() => {
   const { order, service, room, basket, user, type, building } =
@@ -82,7 +83,7 @@ export const RoomPage: React.FC = observer(() => {
         })
         .catch((e) => console.error(e))
     } else {
-      alert('Not allowed')
+      incorrectHandler()
     }
   }
 

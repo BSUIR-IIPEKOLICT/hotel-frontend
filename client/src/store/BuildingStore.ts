@@ -20,9 +20,9 @@ export default class BuildingStore {
   }
 
   @action
-  changeBuilding(id: string, updatedBuilding: Building) {
+  changeBuilding(updatedBuilding: Building) {
     this._buildings = this._buildings.map((building) =>
-      building._id === id ? updatedBuilding : building
+      building._id === updatedBuilding._id ? updatedBuilding : building
     )
   }
 

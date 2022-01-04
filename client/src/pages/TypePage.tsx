@@ -33,11 +33,20 @@ export const TypePage: React.FC = observer(() => {
     )
   }
 
+  const resetForm = () => {
+    setName('')
+    setPlaces(0)
+    setServices(() => [])
+  }
+
   const submitCreateHandler = () => {
     if (places && !Number.isNaN(places) && name) {
       typeApi
         .create(services, name, places)
-        .then((response) => type.addType(response))
+        .then((response) => {
+          type.addType(response)
+          resetForm()
+        })
         .catch((e) => console.error(e))
       setName('')
       setPlaces(0)
@@ -51,11 +60,10 @@ export const TypePage: React.FC = observer(() => {
       typeApi
         .change(editedType, services, name, places)
         .then((response) => {
-          type.changeType(editedType, response)
+          type.changeType(response)
           setEditedType('')
           setIsEdit(false)
-          setName('')
-          setPlaces(0)
+          resetForm()
         })
         .catch((e) => console.error(e))
     } else {

@@ -6,11 +6,13 @@ export enum ErrorCode {
 }
 
 export enum ErrorMessage {
-  Unknown = 'Oh sheet!',
+  Unknown = 'Oh sheet',
   Access = 'No access',
   Auth = 'Not authorized',
   LoginData = 'Invalid login data',
   UserExists = 'User with that email already exists',
   UserNotExists = 'User not exists',
   Password = 'Invalid password',
+  BadPassword = 'Bad password, use at least 5 any symbols',
+  BadEmail = 'Incorrect E-mail',
 }

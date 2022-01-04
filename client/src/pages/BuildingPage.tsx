@@ -39,7 +39,7 @@ export const BuildingPage: React.FC = observer(() => {
       buildingApi
         .change(editedBuilding, address)
         .then((response) => {
-          building.changeBuilding(editedBuilding, response)
+          building.changeBuilding(response)
           setEditedBuilding('')
           setIsEdit(false)
           setAddress('')

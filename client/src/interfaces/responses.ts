@@ -15,3 +15,11 @@ export interface ConvertedUserResponse {
   user: User
   id: string
 }
+
+export interface ErrorResponse {
+  response?: {
+    data?: {
+      message?: string
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { basketApi, userApi } from '../api'
 import { Context } from '../store'
 import { observer } from 'mobx-react-lite'
 import { paths } from '../shared/enums'
+import { ErrorResponse } from '../interfaces/responses'
 
 export const AuthPage: React.FC = observer(() => {
   const location = useLocation()
@@ -34,8 +35,9 @@ export const AuthPage: React.FC = observer(() => {
         })
         .catch((e) => console.error(e))
     } catch (e) {
-      // @ts-ignore
-      alert(e.response.data.message || 'Error')
+      if ((e as ErrorResponse).response?.data?.message) {
+        alert((e as ErrorResponse).response?.data?.message || 'Error')
+      }
     }
   }
 

@@ -4,6 +4,7 @@ import { Type } from '../interfaces/models'
 export default class TypeStore {
   @observable private _types: Type[] = []
   @observable private _active: string = ''
+  @observable private _checked: string = ''
 
   constructor() {
     makeObservable(this)
@@ -20,9 +21,9 @@ export default class TypeStore {
   }
 
   @action
-  changeType(id: string, updatedType: Type) {
+  changeType(updatedType: Type) {
     this._types = this._types.map((type) =>
-      type._id === id ? updatedType : type
+      type._id === updatedType._id ? updatedType : type
     )
   }
 
@@ -36,6 +37,11 @@ export default class TypeStore {
     this._active = id
   }
 
+  @action
+  setChecked(value: string) {
+    this._checked = value
+  }
+
   @computed
   get types() {
     return this._types
@@ -44,5 +50,10 @@ export default class TypeStore {
   @computed
   get active() {
     return this._active
+  }
+
+  @computed
+  get checked() {
+    return this._checked
   }
 }
