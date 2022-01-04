@@ -5,14 +5,14 @@ export default mongoose.model(
   new mongoose.Schema({
     _basket: {
       type: mongoose.Types.ObjectId,
-      require: true,
+      required: true,
       ref: 'Basket',
       index: true,
     },
-    _room: { type: mongoose.Types.ObjectId, require: true, ref: 'Room' },
+    _room: { type: mongoose.Types.ObjectId, required: true, ref: 'Room' },
     _services: [{ type: mongoose.Types.ObjectId, ref: 'Service' }],
-    duty: { type: Number, require: true },
-    population: { type: Number, default: 1, require: true },
-    date: { type: String, require: true },
+    duty: { type: Number, required: true },
+    population: { type: Number, default: 1, required: true },
+    date: { type: String, required: true },
   })
 )

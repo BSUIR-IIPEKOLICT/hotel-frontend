@@ -5,6 +5,7 @@ import roomModel from './room.model'
 import serviceModel from './service.model'
 import typeModel from './type.model'
 import userModel from './user.model'
+import reviewModel from './review.model'
 
 export {
   basketModel,
@@ -14,4 +15,5 @@ export {
   roomModel,
   typeModel,
   userModel,
+  reviewModel,
 }

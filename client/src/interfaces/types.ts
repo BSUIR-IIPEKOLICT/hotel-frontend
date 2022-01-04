@@ -5,6 +5,7 @@ import RoomStore from '../store/RoomStore'
 import ServiceStore from '../store/ServiceStore'
 import TypeStore from '../store/TypeStore'
 import OrderStore from '../store/OrderStore'
+import ReviewStore from '../store/ReviewStore'
 
 export interface AppStore {
   user: UserStore
@@ -14,6 +15,7 @@ export interface AppStore {
   service: ServiceStore
   type: TypeStore
   order: OrderStore
+  review: ReviewStore
 }
 
 export interface RoomRequestConfig {

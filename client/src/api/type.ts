@@ -1,4 +1,4 @@
-import BaseApi from '../base/baseApi'
+import BaseApi from '../shared/BaseApi'
 import { Type } from '../interfaces/models'
 
 export default class TypeApi extends BaseApi {

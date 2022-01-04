@@ -7,6 +7,7 @@ import OrderStore from './OrderStore'
 import RoomStore from './RoomStore'
 import ServiceStore from './ServiceStore'
 import TypeStore from './TypeStore'
+import ReviewStore from './ReviewStore'
 
 export const store = {
   user: new UserStore(),
@@ -16,6 +17,7 @@ export const store = {
   room: new RoomStore(),
   service: new ServiceStore(),
   type: new TypeStore(),
+  review: new ReviewStore(),
 }
 
 export const Context = createContext<AppStore>({} as AppStore)

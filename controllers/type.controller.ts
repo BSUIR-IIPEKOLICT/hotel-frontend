@@ -2,6 +2,7 @@ import {
   basketService,
   buildingService,
   orderService,
+  reviewService,
   roomService,
   typeService,
 } from '../services'
@@ -33,6 +34,7 @@ export default class TypeController {
     await roomService.deleteWithType(id)
 
     rooms.map(async (room: RoomPopulated) => {
+      await reviewService.deleteWithRoom(room._id)
       await buildingService.removeRoom(room._id)
 
       if (room._order) {

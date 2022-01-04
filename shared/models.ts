@@ -44,6 +44,12 @@ export type User = Document & {
   role: string
 }
 
+export type Review = Document & {
+  _room: Types.ObjectId
+  author: string
+  content: string
+}
+
 export type BasketModel = Model<Basket>
 
 export type BuildingModel = Model<Building>
@@ -57,6 +63,8 @@ export type ServiceModel = Model<Service>
 export type TypeModel = Model<Type>
 
 export type UserModel = Model<User>
+
+export type ReviewModel = Model<Review>
 
 export type BasketPopulated = Document & {
   _user: User

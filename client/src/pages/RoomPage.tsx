@@ -1,8 +1,18 @@
 import React, { useContext, useState } from 'react'
-import { Box, Container, Divider, Grid, Paper, useTheme } from '@mui/material'
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Container,
+  Divider,
+  Grid,
+  Paper,
+  useTheme,
+} from '@mui/material'
 import { Context } from '../store'
 import Typography from '@mui/material/Typography'
-import PlaceSelect from '../classes/PlaceSelect'
+import PlaceSelect from '../shared/PlaceSelect'
 import { RoomInfo } from '../components/room/RoomInfo'
 import { orderApi, roomApi } from '../api'
 import { observer } from 'mobx-react-lite'
@@ -12,6 +22,7 @@ import { RoomServiceContainer } from '../components/room/RoomServiceContainer'
 import { Service } from '../interfaces/models'
 import { RoomPriceContainer } from '../components/room/RoomPriceContainer'
 import { RoomBookContainer } from '../components/room/RoomBookContainer'
+import { ReviewContainer } from '../components/ReviewContainer'
 
 export const RoomPage: React.FC = observer(() => {
   const { order, service, room, basket, user, type, building } =
@@ -91,29 +102,39 @@ export const RoomPage: React.FC = observer(() => {
         <Divider />
         <RoomPriceContainer value={price + placesPrice} />
         <Divider />
-        <Box component="form" noValidate autoComplete="off" sx={{ py: 1 }}>
-          <Typography
-            component="h6"
-            variant="h6"
-            sx={{ color: palette.primary.main }}
-          >
-            Book a room
-          </Typography>
-          <Grid container>
-            <RoomServiceContainer
-              services={availableServices}
-              checked={services}
-              onChange={serviceHandler}
-            />
-            <RoomBookContainer
-              selectOptions={select.options}
-              selectValues={select.values}
-              selectValue={population}
-              selectHandler={selectHandler}
-              bookHandler={bookHandler}
-            />
-          </Grid>
-        </Box>
+        <Accordion sx={{ my: 1 }}>
+          <AccordionSummary>
+            <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+              Book room
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Box component="form" noValidate autoComplete="off" sx={{ py: 1 }}>
+              <Typography
+                component="h6"
+                variant="h6"
+                sx={{ color: palette.primary.main }}
+              >
+                Book a room
+              </Typography>
+              <Grid container>
+                <RoomServiceContainer
+                  services={availableServices}
+                  checked={services}
+                  onChange={serviceHandler}
+                />
+                <RoomBookContainer
+                  selectOptions={select.options}
+                  selectValues={select.values}
+                  selectValue={population}
+                  selectHandler={selectHandler}
+                  bookHandler={bookHandler}
+                />
+              </Grid>
+            </Box>
+          </AccordionDetails>
+        </Accordion>
+        <ReviewContainer />
       </Paper>
     </Container>
   )

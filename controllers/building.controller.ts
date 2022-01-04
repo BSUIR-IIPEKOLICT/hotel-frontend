@@ -2,6 +2,7 @@ import {
   basketService,
   buildingService,
   orderService,
+  reviewService,
   roomService,
 } from '../services'
 import { ModifiedRequest } from '../shared/types'
@@ -35,6 +36,8 @@ export default class BuildingController {
         await orderService.delete(room._order)
         await basketService.removeOrder(order)
       }
+
+      await reviewService.deleteWithRoom(room._id)
     })
 
     await roomService.deleteWithBuilding(id)

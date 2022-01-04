@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode'
-import BaseApi from '../base/baseApi'
+import BaseApi from '../shared/BaseApi'
 import { ConvertedUserResponse, UserResponse } from '../interfaces/responses'
 import { User } from '../interfaces/models'
 import { roles } from '../shared/enums'

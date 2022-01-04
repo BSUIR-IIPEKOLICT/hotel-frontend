@@ -2,6 +2,7 @@ import {
   basketService,
   buildingService,
   orderService,
+  reviewService,
   roomService,
 } from '../services'
 import { ModifiedRequest } from '../shared/types'
@@ -68,6 +69,7 @@ export default class RoomController {
     const room: RoomPopulated = await roomService.getOne(req.body._id)
     await roomService.delete(room._id)
     await buildingService.removeRoom(room._id)
+    await reviewService.deleteWithRoom(room._id)
 
     if (room._order) {
       const order: OrderPopulated = await orderService.getOne(room._order)

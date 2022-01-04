@@ -1,4 +1,4 @@
-import BaseApi from '../base/baseApi'
+import BaseApi from '../shared/BaseApi'
 import { RoomRequestConfig } from '../interfaces/types'
 import { RoomResponse } from '../interfaces/responses'
 import { RoomPopulated } from '../interfaces/populatedModels'

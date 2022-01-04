@@ -6,6 +6,7 @@ import roomRouter from './room.router'
 import orderRouter from './order.router'
 import basketRouter from './basket.router'
 import userRouter from './user.router'
+import reviewRouter from './review.router'
 
 const apiRouter: Router = Router()
 
@@ -16,5 +17,6 @@ apiRouter.use('/service', serviceRouter)
 apiRouter.use('/room', roomRouter)
 apiRouter.use('/basket', basketRouter)
 apiRouter.use('/order', orderRouter)
+apiRouter.use('/review', reviewRouter)
 
 export default apiRouter

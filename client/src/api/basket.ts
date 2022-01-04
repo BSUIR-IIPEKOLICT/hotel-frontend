@@ -1,4 +1,4 @@
-import BaseApi from '../base/baseApi'
+import BaseApi from '../shared/BaseApi'
 import { BasketPopulated } from '../interfaces/populatedModels'
 
 export default class BasketApi extends BaseApi {

@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios'
-import ApiConfig from '../shared/apiConfig'
+import ApiConfig from './ApiConfig'
 
 export default abstract class BaseApi {
   protected readonly api: AxiosInstance

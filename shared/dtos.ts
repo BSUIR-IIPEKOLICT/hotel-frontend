@@ -19,3 +19,9 @@ export interface GetRoomsDto {
     isFree?: string
   }
 }
+
+export interface GetBookReviewDto {
+  query: {
+    _room: string
+  }
+}

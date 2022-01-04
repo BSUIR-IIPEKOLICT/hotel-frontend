@@ -5,13 +5,13 @@ export default mongoose.model(
   new mongoose.Schema({
     _building: {
       type: mongoose.Types.ObjectId,
-      require: true,
+      required: true,
       ref: 'Building',
       index: true,
     },
-    _type: { type: mongoose.Types.ObjectId, require: true, ref: 'Type' },
+    _type: { type: mongoose.Types.ObjectId, required: true, ref: 'Type' },
     _order: { type: mongoose.Types.ObjectId, ref: 'Order' },
-    isFree: { type: Boolean, require: true, default: true },
-    population: { type: Number, default: 0, require: true },
+    isFree: { type: Boolean, required: true, default: true },
+    population: { type: Number, default: 0, required: true },
   })
 )

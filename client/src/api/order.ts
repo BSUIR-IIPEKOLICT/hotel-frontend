@@ -1,4 +1,4 @@
-import BaseApi from '../base/baseApi'
+import BaseApi from '../shared/BaseApi'
 import { OrderPopulated } from '../interfaces/populatedModels'
 import { Order } from '../interfaces/models'
 

@@ -49,3 +49,10 @@ export interface Type {
   name: string
   places: number
 }
+
+export interface Review {
+  _id: string
+  _room: string
+  author: string
+  content: string
+}

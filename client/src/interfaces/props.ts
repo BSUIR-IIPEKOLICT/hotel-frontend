@@ -3,7 +3,7 @@ import {
   OrderPopulated,
   RoomPopulated,
 } from './populatedModels'
-import { Building, Service, Type, User } from './models'
+import { Building, Review, Service, Type, User } from './models'
 
 export interface NavProps {
   toggleTheme(): void
@@ -92,4 +92,11 @@ export interface TypeCardProps {
 
 export interface RoomCreateFormProps {
   loadRooms(): void
+}
+
+export interface ReviewCardProps {
+  review: Review
+  isOwner: boolean
+  onChange(review: Review): void
+  onDelete(id: string): void
 }

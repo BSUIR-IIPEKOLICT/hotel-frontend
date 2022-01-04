@@ -13,7 +13,9 @@ import {
   userModel,
   serviceModel,
   typeModel,
+  reviewModel,
 } from '../models'
+import ReviewService from './review.service'
 
 export const basketService = new BasketService(basketModel)
 export const buildingService = new BuildingService(buildingModel)
@@ -22,3 +24,4 @@ export const roomService = new RoomService(roomModel)
 export const serviceService = new ServiceService(serviceModel)
 export const typeService = new TypeService(typeModel)
 export const userService = new UserService(userModel)
+export const reviewService = new ReviewService(reviewModel)

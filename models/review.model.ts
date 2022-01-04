@@ -1,15 +1,14 @@
 import mongoose from 'mongoose'
 
 export default mongoose.model(
-  'Basket',
+  'Review',
   new mongoose.Schema({
-    _user: {
+    _room: {
       type: mongoose.Types.ObjectId,
       required: true,
-      ref: 'User',
-      unique: true,
-      index: true,
+      ref: 'Room',
     },
-    _orders: [{ type: mongoose.Types.ObjectId, ref: 'Order' }],
+    author: { type: String, required: true },
+    content: { type: String, required: true },
   })
 )

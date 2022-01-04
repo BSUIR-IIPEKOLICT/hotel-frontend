@@ -2,6 +2,7 @@ import {
   BasketModel,
   BuildingModel,
   OrderModel,
+  ReviewModel,
   RoomModel,
   ServiceModel,
   TypeModel,
@@ -27,3 +28,5 @@ export class ServiceRepository extends Repository<ServiceModel> {}
 export class TypeRepository extends Repository<TypeModel> {}
 
 export class UserRepository extends Repository<UserModel> {}
+
+export class ReviewRepository extends Repository<ReviewModel> {}
