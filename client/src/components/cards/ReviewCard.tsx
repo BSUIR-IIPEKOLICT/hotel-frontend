@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { ReviewCardProps } from '../../interfaces/props'
-import { Box, Button, Paper } from '@mui/material'
-import Typography from '@mui/material/Typography'
+import { Box, Button, Paper, Typography } from '@mui/material'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import EditIcon from '@mui/icons-material/Edit'
+import { Context } from '../../store'
+import { roles } from '../../shared/enums'
 
 export const ReviewCard: React.FC<ReviewCardProps> = ({
   review,
@@ -11,6 +12,9 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
   onChange,
   onDelete,
 }) => {
+  const { user } = useContext(Context)
+  const isAdmin = user.isAuth && user.user.role === roles.admin
+
   return (
     <Paper variant="outlined" sx={{ my: 1, p: 2 }}>
       <Box
@@ -36,6 +40,7 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
             color="error"
             sx={{ p: 1 }}
             onClick={() => onDelete(review._id)}
+            disabled={!isOwner && !isAdmin}
           >
             <DeleteOutlineOutlinedIcon />
           </Button>
