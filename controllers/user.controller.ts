@@ -16,6 +16,7 @@ import { ModifiedRequest, UserToken } from '../shared/types'
 import { Response } from 'express'
 import { ErrorMessage } from '../shared/enums'
 import { BasketPopulated, OrderPopulated, User } from '../shared/models'
+import { errorHandler } from '../shared/decorators'
 
 const generateToken = (user: UserToken) => {
   return jwt.sign(
@@ -91,12 +92,14 @@ export default class UserController {
     return res.json(users)
   }
 
+  @errorHandler
   async changeRole(req: ModifiedRequest, res: Response) {
     const { _id, role } = req.body
     await userService.change(_id, role)
     return res.json(role)
   }
 
+  @errorHandler
   async delete(req: ModifiedRequest, res: Response) {
     const user: User = await userService.getOne(req.body._id)
     const id: string = await userService.delete(req.body._id)

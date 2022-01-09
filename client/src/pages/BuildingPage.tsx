@@ -2,10 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import { Context } from '../store'
 import { BuildingCard } from '../components/cards/BuildingCard'
-import { buildingApi } from '../api'
 import { observer } from 'mobx-react-lite'
-import { incorrectHandler } from '../shared/constants'
 import { Building } from '../interfaces/models'
+import { buildingClient } from '../clients'
 
 export const BuildingPage: React.FC = observer(() => {
   const { building } = useContext(Context)
@@ -13,54 +12,22 @@ export const BuildingPage: React.FC = observer(() => {
   const [editedBuilding, setEditedBuilding] = useState('')
   const [isEdit, setIsEdit] = useState(false)
 
-  useEffect(() => {
-    buildingApi
-      .getAll()
-      .then((buildings) => building.setBuildings(buildings))
-      .catch((e) => console.error(e))
-  }, [])
+  useEffect(() => buildingClient.loadAll(building), [])
 
-  const submitCreateHandler = () => {
-    if (address) {
-      buildingApi
-        .create(address)
-        .then((response) => {
-          building.addBuilding(response)
-          setAddress('')
-        })
-        .catch((e) => console.error(e))
-    } else {
-      incorrectHandler()
-    }
-  }
+  const submitCreateHandler = () =>
+    buildingClient.create(address, building, () => setAddress(''))
 
-  const submitChangeHandler = () => {
-    if (editedBuilding && address) {
-      buildingApi
-        .change(editedBuilding, address)
-        .then((response) => {
-          building.changeBuilding(response)
-          setEditedBuilding('')
-          setIsEdit(false)
-          setAddress('')
-        })
-        .catch((e) => console.error(e))
-    } else {
-      incorrectHandler()
-    }
-  }
+  const submitChangeHandler = () =>
+    buildingClient.change(editedBuilding, address, building, () => {
+      setEditedBuilding('')
+      setIsEdit(false)
+      setAddress('')
+    })
 
   const changeHandler = (b: Building) => {
     setAddress(b.address)
     setEditedBuilding(b._id)
     setIsEdit(true)
-  }
-
-  const deleteHandler = (id: string) => {
-    buildingApi
-      .delete(id)
-      .then((response) => building.deleteBuilding(response))
-      .catch((e) => console.error(e))
   }
 
   return (
@@ -96,7 +63,7 @@ export const BuildingPage: React.FC = observer(() => {
               key={currentBuilding._id}
               building={currentBuilding}
               onChange={changeHandler}
-              onDelete={deleteHandler}
+              onDelete={(id: string) => buildingClient.delete(id, building)}
             />
           ))
         ) : (

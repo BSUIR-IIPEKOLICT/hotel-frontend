@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Context } from '../store'
-import { serviceApi } from '../api'
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import { ServiceCard } from '../components/cards/ServiceCard'
-import { incorrectHandler } from '../shared/constants'
 import { Service } from '../interfaces/models'
+import { serviceClient } from '../clients'
 
 export const ServicePage: React.FC = observer(() => {
   const { service } = useContext(Context)
@@ -14,55 +13,30 @@ export const ServicePage: React.FC = observer(() => {
   const [editedService, setEditedService] = useState('')
   const [isEdit, setIsEdit] = useState(false)
 
-  useEffect(() => {
-    serviceApi
-      .getAll()
-      .then((services) => service.setServices(services))
-      .catch((e) => console.error(e))
-  }, [])
+  useEffect(() => serviceClient.loadAll(service), [])
 
-  const submitCreateHandler = () => {
-    if (name && price && !Number.isNaN(price)) {
-      serviceApi
-        .create(name, price)
-        .then((response) => service.addService(response))
-        .catch((e) => console.error(e))
-      setName('')
-      setPrice(0)
-    } else {
-      incorrectHandler()
-    }
+  const resetForm = () => {
+    setName('')
+    setPrice(0)
   }
 
-  const submitChangeHandler = () => {
-    if (editedService && name && price && !Number.isNaN(price)) {
-      serviceApi
-        .change(editedService, name, price)
-        .then((response) => {
-          service.changeService(response)
-          setEditedService('')
-          setIsEdit(false)
-          setName('')
-          setPrice(0)
-        })
-        .catch((e) => console.error(e))
-    } else {
-      incorrectHandler()
-    }
+  const resetEdit = () => {
+    setEditedService('')
+    setIsEdit(false)
+    resetForm()
   }
+
+  const submitCreateHandler = () =>
+    serviceClient.create(name, price, service, resetForm)
+
+  const submitChangeHandler = () =>
+    serviceClient.change(editedService, name, price, service, resetEdit)
 
   const changeHandler = (s: Service) => {
     setName(s.name)
     setPrice(s.price)
     setEditedService(s._id)
     setIsEdit(true)
-  }
-
-  const deleteHandler = (id: string) => {
-    serviceApi
-      .delete(id)
-      .then((response) => service.deleteService(response))
-      .catch((e) => console.error(e))
   }
 
   return (
@@ -107,7 +81,7 @@ export const ServicePage: React.FC = observer(() => {
               key={currentService._id}
               service={currentService}
               onChange={changeHandler}
-              onDelete={deleteHandler}
+              onDelete={(id: string) => serviceClient.delete(id, service)}
             />
           ))
         ) : (

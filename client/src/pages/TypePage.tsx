@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Context } from '../store'
-import { serviceApi, typeApi } from '../api'
 import { Box, Button, Container, TextField, Typography } from '@mui/material'
 import { RoomServiceContainer } from '../components/room/RoomServiceContainer'
 import { Service, Type } from '../interfaces/models'
 import { TypeCard } from '../components/cards/TypeCard'
-import { incorrectHandler } from '../shared/constants'
+import { serviceClient, typeClient } from '../clients'
 
 export const TypePage: React.FC = observer(() => {
   const { service, type } = useContext(Context)
@@ -17,14 +16,8 @@ export const TypePage: React.FC = observer(() => {
   const [isEdit, setIsEdit] = useState(false)
 
   useEffect(() => {
-    serviceApi
-      .getAll()
-      .then((services) => service.setServices(services))
-      .catch((e) => console.error(e))
-    typeApi
-      .getAll()
-      .then((types) => type.setTypes(types))
-      .catch((e) => console.error(e))
+    serviceClient.loadAll(service)
+    typeClient.loadAll(type)
   }, [])
 
   const serviceHandler = (checked: boolean, service: Service) => {
@@ -39,37 +32,17 @@ export const TypePage: React.FC = observer(() => {
     setServices(() => [])
   }
 
-  const submitCreateHandler = () => {
-    if (places && !Number.isNaN(places) && name) {
-      typeApi
-        .create(services, name, places)
-        .then((response) => {
-          type.addType(response)
-          resetForm()
-        })
-        .catch((e) => console.error(e))
-      setName('')
-      setPlaces(0)
-    } else {
-      incorrectHandler()
-    }
+  const resetEdit = () => {
+    setEditedType('')
+    setIsEdit(false)
+    resetForm()
   }
 
-  const submitChangeHandler = () => {
-    if (editedType && places && !Number.isNaN(places) && name) {
-      typeApi
-        .change(editedType, services, name, places)
-        .then((response) => {
-          type.changeType(response)
-          setEditedType('')
-          setIsEdit(false)
-          resetForm()
-        })
-        .catch((e) => console.error(e))
-    } else {
-      incorrectHandler()
-    }
-  }
+  const submitCreateHandler = () =>
+    typeClient.create(places, name, services, type, resetForm)
+
+  const submitChangeHandler = () =>
+    typeClient.change(editedType, places, name, services, type, resetEdit)
 
   const changeHandler = (t: Type) => {
     setName(t.name)
@@ -77,13 +50,6 @@ export const TypePage: React.FC = observer(() => {
     setPlaces(t.places)
     setEditedType(t._id)
     setIsEdit(true)
-  }
-
-  const deleteHandler = (id: string) => {
-    typeApi
-      .delete(id)
-      .then((response) => type.deleteType(response))
-      .catch((e) => console.error(e))
   }
 
   return (
@@ -140,7 +106,7 @@ export const TypePage: React.FC = observer(() => {
               key={currentType._id}
               type={currentType}
               onChange={changeHandler}
-              onDelete={deleteHandler}
+              onDelete={(id: string) => typeClient.delete(id, type)}
             />
           ))
         ) : (

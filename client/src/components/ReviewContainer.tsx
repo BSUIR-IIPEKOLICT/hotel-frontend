@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { Box, Button, TextField } from '@mui/material'
+import { Box, Button, Divider, TextField, Typography } from '@mui/material'
 import { ReviewCard } from './cards/ReviewCard'
 import { Review } from '../interfaces/models'
-import { reviewApi } from '../api'
 import { Context } from '../store'
-import { incorrectHandler } from '../shared/constants'
+import { reviewClient } from '../clients'
 
 export const ReviewContainer = observer(() => {
   const { room, user, review } = useContext(Context)
@@ -14,42 +13,19 @@ export const ReviewContainer = observer(() => {
   const [current, setCurrent] = useState('')
   const [content, setContent] = useState('')
 
-  useEffect(() => {
-    reviewApi
-      .getAll(room.current._id)
-      .then((response) => review.setReviews(response))
-      .catch((e) => console.error(e))
-  }, [])
+  useEffect(() => reviewClient.loadAll(review, room), [])
 
-  const submitChangeHandler = () => {
-    if (user.isAuth && content) {
-      reviewApi
-        .change(current, content)
-        .then((response) => {
-          review.changeReview(response)
-          setContent('')
-          setCurrent('')
-          setIsEdit(false)
-        })
-        .catch((e) => console.error(e))
-    } else {
-      incorrectHandler()
-    }
+  const resetEdit = () => {
+    setContent('')
+    setCurrent('')
+    setIsEdit(false)
   }
 
-  const submitCreateHandler = () => {
-    if (user.isAuth && content) {
-      reviewApi
-        .create(room.current._id, user.user.email, content)
-        .then((response) => {
-          review.addReview(response)
-          setContent('')
-        })
-        .catch((e) => console.error(e))
-    } else {
-      incorrectHandler()
-    }
-  }
+  const submitChangeHandler = () =>
+    reviewClient.change(content, current, review, user, resetEdit)
+
+  const submitCreateHandler = () =>
+    reviewClient.create(content, review, room, user, () => setContent(''))
 
   const changeHandler = (currentReview: Review) => {
     setIsEdit(true)
@@ -57,26 +33,30 @@ export const ReviewContainer = observer(() => {
     setContent(currentReview.content)
   }
 
-  const deleteHandler = (id: string) => {
-    reviewApi
-      .delete(id)
-      .then((response) => review.deleteReview(response))
-      .catch((e) => console.error(e))
-  }
-
   return (
     <>
       <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-        {review.reviews.map((r) => (
-          <ReviewCard
-            key={r._id}
-            review={r}
-            isOwner={user.isAuth && r.author === user.user.email}
-            onChange={changeHandler}
-            onDelete={deleteHandler}
-          />
-        ))}
+        {review.reviews.length ? (
+          review.reviews.map((r) => (
+            <ReviewCard
+              key={r._id}
+              review={r}
+              isOwner={user.isAuth && r.author === user.user.email}
+              onChange={changeHandler}
+              onDelete={(id: string) => reviewClient.delete(id, review)}
+            />
+          ))
+        ) : (
+          <Typography
+            component="h5"
+            variant="h5"
+            sx={{ paddingBottom: 2, textAlign: 'center' }}
+          >
+            No reviews
+          </Typography>
+        )}
       </Box>
+      <Divider />
       <Box
         component="form"
         noValidate

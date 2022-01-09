@@ -2,57 +2,32 @@ import React, { useContext, useEffect } from 'react'
 import { Grid, useTheme } from '@mui/material'
 import { FilterBar } from '../components/FilterBar'
 import { RoomGrid } from '../components/room/RoomGrid'
-import { buildingApi, roomApi, serviceApi, typeApi } from '../api'
 import { Context } from '../store'
 import { roles } from '../shared/enums'
 import { observer } from 'mobx-react-lite'
 import { RoomCreateForm } from '../components/room/RoomCreateForm'
+import {
+  typeClient,
+  roomClient,
+  buildingClient,
+  serviceClient,
+} from '../clients'
 
 export const MainPage: React.FC = observer(() => {
   const { palette } = useTheme()
   const { building, type, room, user, service } = useContext(Context)
 
-  const loadRooms = () => {
-    roomApi
-      .get(room.page, room.limit)
-      .then((response) => {
-        room.setRooms(response.rooms)
-        room.setPageAmount(response.amount)
-      })
-      .catch((e) => console.error(e))
-  }
-
   useEffect(() => {
-    typeApi
-      .getAll()
-      .then((types) => type.setTypes(types))
-      .catch((e) => console.error(e))
-    buildingApi
-      .getAll()
-      .then((buildings) => building.setBuildings(buildings))
-      .catch((e) => console.error(e))
-    loadRooms()
-    serviceApi
-      .getAll()
-      .then((services) => service.setServices(services))
-      .catch((e) => console.error(e))
+    typeClient.loadAll(type)
+    buildingClient.loadAll(building)
+    roomClient.loadAll(room)
+    serviceClient.loadAll(service)
   }, [])
 
-  useEffect(() => {
-    roomApi
-      .get(
-        room.page,
-        room.limit,
-        building.active,
-        type.active,
-        user.user.role === roles.client ? true : undefined
-      )
-      .then((response) => {
-        room.setRooms(response.rooms)
-        room.setPageAmount(response.amount)
-      })
-      .catch((e) => console.error(e))
-  }, [building.active, type.active, room.page])
+  useEffect(
+    () => roomClient.updateAll(room.page, room, building, type, user),
+    [building.active, type.active, room.page]
+  )
 
   return (
     <Grid container sx={{ backgroundColor: 'background.paper', flexGrow: 1 }}>
@@ -73,7 +48,7 @@ export const MainPage: React.FC = observer(() => {
         sx={{ backgroundColor: palette.background.default }}
       >
         {user.isAuth && user.user.role === roles.admin && (
-          <RoomCreateForm loadRooms={loadRooms} />
+          <RoomCreateForm loadRooms={() => roomClient.loadAll(room)} />
         )}
         <RoomGrid />
       </Grid>

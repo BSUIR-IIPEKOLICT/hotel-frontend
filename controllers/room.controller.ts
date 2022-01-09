@@ -10,6 +10,7 @@ import { Response } from 'express'
 import { GetRoomsDto } from '../shared/dtos'
 import { IQuery } from '../shared/interfaces'
 import { OrderPopulated, RoomPopulated } from '../shared/models'
+import { errorHandler } from '../shared/decorators'
 
 export default class RoomController {
   async get(req: ModifiedRequest & GetRoomsDto, res: Response) {
@@ -43,6 +44,7 @@ export default class RoomController {
     return res.json({ rooms, amount })
   }
 
+  @errorHandler
   async create(req: ModifiedRequest, res: Response) {
     const room: RoomPopulated = await roomService.create(
       req.body._building,
@@ -52,6 +54,7 @@ export default class RoomController {
     return res.json(room)
   }
 
+  @errorHandler
   async change(req: ModifiedRequest, res: Response) {
     const { _id, _building, _type } = req.body
     const stock: RoomPopulated = await roomService.getOne(_id)
@@ -65,6 +68,7 @@ export default class RoomController {
     return res.json(room)
   }
 
+  @errorHandler
   async delete(req: ModifiedRequest, res: Response) {
     const room: RoomPopulated = await roomService.getOne(req.body._id)
     await roomService.delete(room._id)

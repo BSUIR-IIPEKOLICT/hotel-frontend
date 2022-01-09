@@ -1,11 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { Box, Button } from '@mui/material'
-import { roomApi } from '../../api'
 import { Context } from '../../store'
 import { AppSelect } from '../app/AppSelect'
 import { observer } from 'mobx-react-lite'
 import { RoomCreateFormProps } from '../../interfaces/props'
-import { incorrectHandler } from '../../shared/constants'
+import { roomClient } from '../../clients'
 
 export const RoomCreateForm: React.FC<RoomCreateFormProps> = observer(
   ({ loadRooms }) => {
@@ -21,31 +20,11 @@ export const RoomCreateForm: React.FC<RoomCreateFormProps> = observer(
     ]
     const buildingValues = ['', ...building.buildings.map(({ _id }) => _id)]
 
-    const createHandler = () => {
-      if (checkedBuilding && checkedType) {
-        roomApi
-          .create(checkedBuilding, checkedType)
-          .then(() => loadRooms())
-          .catch((e) => console.error(e))
-      } else {
-        incorrectHandler()
-      }
-    }
+    const createHandler = () =>
+      roomClient.create(checkedBuilding, checkedType, loadRooms)
 
-    const changeHandler = () => {
-      if (room.editedRoom && checkedBuilding && checkedType) {
-        roomApi
-          .change(room.editedRoom, checkedBuilding, checkedType)
-          .then((response) => {
-            room.changeRoom(response)
-            room.setEditedRoom('')
-            room.toggleIsEdit()
-          })
-          .catch((e) => console.error(e))
-      } else {
-        incorrectHandler()
-      }
-    }
+    const changeHandler = () =>
+      roomClient.change(checkedBuilding, checkedType, room)
 
     return (
       <Box

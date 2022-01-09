@@ -2,11 +2,13 @@ import React, { useContext, useState } from 'react'
 import { Box, Button, Container, TextField, useTheme } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { NavLink, useHistory, useLocation } from 'react-router-dom'
-import { basketApi, userApi } from '../api'
+import { userApi } from '../api'
 import { Context } from '../store'
 import { observer } from 'mobx-react-lite'
 import { paths } from '../shared/enums'
 import { ErrorResponse } from '../interfaces/responses'
+import { basketClient } from '../clients'
+import { errorViewer } from '../shared/constants'
 
 export const AuthPage: React.FC = observer(() => {
   const location = useLocation()
@@ -27,17 +29,9 @@ export const AuthPage: React.FC = observer(() => {
       user.setIsAuth(true)
       user.setId(data.id)
 
-      basketApi
-        .getOne(data.id)
-        .then((response) => {
-          basket.setBasket(response)
-          push(paths.main)
-        })
-        .catch((e) => console.error(e))
+      basketClient.loadOne(data.id, basket, () => push(paths.main))
     } catch (e) {
-      if ((e as ErrorResponse).response?.data?.message) {
-        alert((e as ErrorResponse).response?.data?.message || 'Error')
-      }
+      errorViewer(e)
     }
   }
 

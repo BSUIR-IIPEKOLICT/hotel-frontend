@@ -1,20 +1,19 @@
 import React, { useContext, useState } from 'react'
-import { Box, Container, Grid, Paper, useTheme } from '@mui/material'
+import { Box, Container, Divider, Grid, Paper, useTheme } from '@mui/material'
 import { Context } from '../store'
 import Typography from '@mui/material/Typography'
 import PlaceSelect from '../shared/PlaceSelect'
 import { RoomInfo } from '../components/room/RoomInfo'
-import { orderApi, roomApi } from '../api'
 import { observer } from 'mobx-react-lite'
 import { useHistory } from 'react-router-dom'
-import { paths, roles } from '../shared/enums'
+import { paths } from '../shared/enums'
 import { RoomServiceContainer } from '../components/room/RoomServiceContainer'
 import { Service } from '../interfaces/models'
 import { RoomPriceContainer } from '../components/room/RoomPriceContainer'
 import { RoomBookContainer } from '../components/room/RoomBookContainer'
 import { ReviewContainer } from '../components/ReviewContainer'
 import { Spoiler } from '../components/Spoiler'
-import { incorrectHandler } from '../shared/constants'
+import { orderClient, roomClient } from '../clients'
 
 export const RoomPage: React.FC = observer(() => {
   const { order, service, room, basket, user, type, building } =
@@ -54,38 +53,21 @@ export const RoomPage: React.FC = observer(() => {
     setPopulation(parseInt(value))
   }
 
-  const bookHandler = () => {
-    if (user.isAuth && room.current.isFree) {
-      orderApi
-        .create(
-          basket.basket._id,
-          room.current._id,
-          services,
-          price + placesPrice,
-          population
+  const bookHandler = () =>
+    orderClient.create(
+      services,
+      price + placesPrice,
+      population,
+      order,
+      basket,
+      user,
+      room,
+      () => {
+        roomClient.updateAll(1, room, building, type, user, () =>
+          push(paths.main)
         )
-        .then((response) => {
-          order.addOrder(response)
-          roomApi
-            .get(
-              1,
-              room.limit,
-              building.active,
-              type.active,
-              user.user.role === roles.client ? true : undefined
-            )
-            .then((response) => {
-              room.setRooms(response.rooms)
-              room.setPageAmount(response.amount)
-              push(paths.main)
-            })
-            .catch((e) => console.error(e))
-        })
-        .catch((e) => console.error(e))
-    } else {
-      incorrectHandler()
-    }
-  }
+      }
+    )
 
   return (
     <Container maxWidth="sm">
@@ -97,6 +79,7 @@ export const RoomPage: React.FC = observer(() => {
         <RoomInfo room={room.current} />
         <Spoiler title="Book room">
           <RoomPriceContainer value={price + placesPrice} />
+          <Divider />
           <Box component="form" noValidate autoComplete="off" sx={{ py: 1 }}>
             <Typography
               component="h6"

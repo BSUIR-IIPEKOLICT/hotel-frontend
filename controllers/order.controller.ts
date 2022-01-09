@@ -3,6 +3,7 @@ import { ModifiedRequest } from '../shared/types'
 import { Response } from 'express'
 import { GetOrdersDto } from '../shared/dtos'
 import { OrderPopulated } from '../shared/models'
+import { errorHandler } from '../shared/decorators'
 
 export default class OrderController {
   async get(req: ModifiedRequest & GetOrdersDto, res: Response) {
@@ -10,6 +11,7 @@ export default class OrderController {
     return res.json(orders)
   }
 
+  @errorHandler
   async create(req: ModifiedRequest, res: Response) {
     const { _basket, _room, _services, duty, population, date } = req.body
 
@@ -28,6 +30,7 @@ export default class OrderController {
     return res.json(order)
   }
 
+  @errorHandler
   async delete(req: ModifiedRequest, res: Response) {
     const order: OrderPopulated = await orderService.getOne(req.body._id)
     await orderService.delete(req.body._id)
