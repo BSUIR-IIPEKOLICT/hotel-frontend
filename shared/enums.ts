@@ -6,7 +6,7 @@ export enum ErrorCode {
 }
 
 export enum ErrorMessage {
-  Unknown = 'Oh sheet',
+  Unknown = 'Unknown error',
   Access = 'No access',
   Auth = 'Not authorized',
   LoginData = 'Invalid login data',

@@ -25,6 +25,8 @@ export const BasketCard: React.FC<BasketCardProps> = observer(
       0
     )
 
+    const isThat = user.id === basket._user._id
+
     useEffect(() => {
       if (basketUser) {
         setIsAdmin(basketUser.role === roles.admin)
@@ -60,13 +62,19 @@ export const BasketCard: React.FC<BasketCardProps> = observer(
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Button color="info" sx={{ p: 1 }} onClick={changeRoleHandler}>
+            <Button
+              color="info"
+              sx={{ p: 1 }}
+              onClick={changeRoleHandler}
+              disabled={isThat}
+            >
               {isAdmin ? 'admin' : 'client'}
             </Button>
             <Button
               color="error"
               sx={{ p: 1 }}
               onClick={() => onDelete(basket._id, basket._user._id || '')}
+              disabled={isThat}
             >
               <DeleteOutlineOutlinedIcon />
             </Button>
