@@ -11,11 +11,13 @@ import { ContainedButton } from '../src/styles/buttons';
 import { FormContainer } from '../src/styles/containers';
 import { PrimaryText, FormHeader } from '../src/styles/typography';
 import { errorViewer } from '../src/shared/utils';
+import { useRouter } from 'next/router';
 
 const Register: NextPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { userStore } = useContext(StoreContext);
+  const { push } = useRouter();
 
   const submitHandler = async () => {
     try {
@@ -23,7 +25,7 @@ const Register: NextPage = () => {
 
       userStore.setUser(user);
       userStore.setIsAuth(true);
-      // basketClient.loadOne(data.id, basket, () => push(paths.main));
+      await push(EndPoint.Main);
     } catch (e) {
       errorViewer(e);
     }

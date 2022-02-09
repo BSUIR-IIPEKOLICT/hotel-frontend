@@ -7,20 +7,26 @@ import Document, {
   NextScript,
 } from 'next/document';
 import React from 'react';
+import { ServerStyleSheets } from '@mui/styles';
 import { ServerStyleSheet } from 'styled-components';
+
+const __webpack_nonce__ = process.env.nonce || '';
 
 export default class MainDocument extends Document {
   static async getInitialProps(
     context: DocumentContext
   ): Promise<DocumentInitialProps> {
-    const sheet = new ServerStyleSheet();
+    const styledComponentsSheet = new ServerStyleSheet();
+    const materialSheets = new ServerStyleSheets();
     const originalRenderPage = context.renderPage;
 
     try {
       context.renderPage = () =>
         originalRenderPage({
           enhanceApp: (App) => (props) =>
-            sheet.collectStyles(<App {...props} />),
+            materialSheets.collect(
+              styledComponentsSheet.collectStyles(<App {...props} />)
+            ),
         });
 
       const initialProps = await Document.getInitialProps(context);
@@ -30,19 +36,31 @@ export default class MainDocument extends Document {
         styles: (
           <>
             {initialProps.styles}
-            {sheet.getStyleElement()}
+            <style
+              id="jss-server-side"
+              nonce={process.env.nonce}
+              dangerouslySetInnerHTML={{ __html: materialSheets.toString() }}
+            />
+            {styledComponentsSheet.getStyleElement()}
           </>
         ),
       };
     } finally {
-      sheet.seal();
+      styledComponentsSheet.seal();
     }
   }
 
   render(): JSX.Element {
     return (
       <Html lang="en">
-        <Head>
+        <Head nonce={process.env.nonce}>
+          <script
+            nonce={process.env.nonce}
+            dangerouslySetInnerHTML={{
+              __html: `window.__webpack_nonce__ = '${process.env.nonce}'`,
+            }}
+          />
+          <meta property="csp-nonce" content={process.env.nonce} />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -54,7 +72,7 @@ export default class MainDocument extends Document {
         </Head>
         <body>
           <Main />
-          <NextScript />
+          <NextScript nonce={process.env.nonce} />
         </body>
       </Html>
     );

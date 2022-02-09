@@ -10,9 +10,10 @@ import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import { useLocalStorage } from '../hooks';
 import { OutlinedButton, TextButton } from '../styles/buttons';
+import { NavProps } from '../interfaces/props';
 
-const Nav: React.FC = () => {
-  const { destroyToken, saveDarkMode, isDarkMode } = useLocalStorage();
+const Nav: React.FC<NavProps> = ({ toggleTheme }) => {
+  const { destroyToken } = useLocalStorage();
   const { userStore } = useContext(StoreContext);
   const { route, push, reload } = useRouter();
   const isAuthPages = route === EndPoint.Login || route === EndPoint.Register;
@@ -25,10 +26,7 @@ const Nav: React.FC = () => {
     push(EndPoint.Main).then();
   };
 
-  const toggleThemeHandler = () => {
-    saveDarkMode(!isDarkMode());
-    reload();
-  };
+  const toggleThemeHandler = () => toggleTheme();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -62,11 +60,11 @@ const Nav: React.FC = () => {
 
           {!isAuthPages && !userStore?.getIsAuth() && (
             <>
-              <Link href={EndPoint.Register} passHref>
+              <Link href={EndPoint.Register} passHref={true}>
                 <OutlinedButton>Register</OutlinedButton>
               </Link>
 
-              <Link href={EndPoint.Login} passHref>
+              <Link href={EndPoint.Login} passHref={true}>
                 <OutlinedButton>Login</OutlinedButton>
               </Link>
             </>

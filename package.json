@@ -11,7 +11,9 @@
     "@mui/icons-material": "^5.3.1",
     "@mui/lab": "^5.0.0-alpha.67",
     "@mui/material": "^5.4.0",
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@^5.3.0",
     "@mui/styled-engine-sc": "^5.3.0",
+    "@mui/styles": "^5.4.1",
     "axios": "^0.25.0",
     "jwt-decode": "^3.1.2",
     "mobx": "^6.3.13",
@@ -20,17 +22,23 @@
     "next-transpile-modules": "^9.0.0",
     "normalize.css": "^8.0.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.17.2",
     "@types/material-ui": "^0.21.12",
     "@types/node": "17.0.15",
     "@types/react": "17.0.39",
-    "babel-plugin-styled-components": "^2.0.2",
+    "@types/styled-components": "^5.1.22",
     "eslint": "8.8.0",
     "eslint-config-next": "12.0.10",
     "prettier": "2.5.1",
     "typescript": "4.5.5"
+  },
+  "resolutions": {
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
+  },
+  "alias": {
+    "@mui/styled-engine": "@mui/styled-engine-sc"
   }
 }

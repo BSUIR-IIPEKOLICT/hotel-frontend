@@ -7,38 +7,52 @@ const StyledButton = styled(Button)`
   margin: 0 ${({ theme }) => theme.spacing(1)};
 `;
 
-export const DefaultButton: React.FC<StyledButtonProps> = (props) => {
+export const DefaultButton: React.FC<StyledButtonProps> = ({
+  children,
+  primary,
+  variant,
+  ...props
+}) => {
   return (
     <StyledButton
-      variant={props.variant}
-      color={props.primary ? 'primary' : 'inherit'}
+      variant={variant}
+      color={primary ? 'primary' : 'inherit'}
       {...props}
     >
-      {props.children}
+      {children}
     </StyledButton>
   );
 };
 
-export const TextButton: React.FC<StyledButtonProps> = (props) => {
+export const TextButton: React.FC<StyledButtonProps> = ({
+  children,
+  ...props
+}) => {
   return (
     <DefaultButton variant="text" {...props}>
-      {props.children}
+      {children}
     </DefaultButton>
   );
 };
 
-export const OutlinedButton: React.FC<StyledButtonProps> = (props) => {
+export const OutlinedButton: React.FC<StyledButtonProps> = ({
+  children,
+  ...props
+}) => {
   return (
     <DefaultButton variant="outlined" {...props}>
-      {props.children}
+      {children}
     </DefaultButton>
   );
 };
 
-export const ContainedButton: React.FC<StyledButtonProps> = (props) => {
+export const ContainedButton: React.FC<StyledButtonProps> = ({
+  children,
+  ...props
+}) => {
   return (
     <DefaultButton variant="contained" {...props}>
-      {props.children}
+      {children}
     </DefaultButton>
   );
 };
