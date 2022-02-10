@@ -8,7 +8,7 @@ import Document, {
   DocumentInitialProps,
 } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
-import createEmotionCache from '../src/shared/createEmotionCache';
+import createEmotionCache from '../shared/createEmotionCache';
 
 export default class MainDocument extends Document {
   static async getInitialProps(

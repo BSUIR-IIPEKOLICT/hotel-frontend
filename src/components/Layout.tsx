@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import { LayoutProps } from '../interfaces/props';
 import Nav from './Nav';
 import theme from '../styles/theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { store, StoreContext } from '../store';
-import { useLocalStorage } from '../hooks';
+import { useThemeState } from '../hooks';
 
 const Layout: React.FC<LayoutProps> = ({ children, title }) => {
-  const [isDark, setIsDark] = useState(true);
-  const { isDarkMode, saveDarkMode } = useLocalStorage();
-
-  useEffect(() => setIsDark(isDarkMode), [isDarkMode]);
-  useEffect(() => saveDarkMode(isDark), [saveDarkMode, isDark]);
-
-  const toggleThemeHandler = () => setIsDark((prev) => !prev);
+  const { isDark, toggleThemeHandler } = useThemeState();
 
   return (
     <>

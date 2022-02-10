@@ -1,7 +1,6 @@
-import { Button } from '@mui/material';
-import { styled } from '@mui/system';
+import { Button, styled } from '@mui/material';
 import React from 'react';
-import { StyledButtonProps } from '../interfaces/styles';
+import { StyledButtonProps } from '../../interfaces/styled';
 
 const StyledButton = styled(Button)`
   margin: 0 ${({ theme }) => theme.spacing(1)};

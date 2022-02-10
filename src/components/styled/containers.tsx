@@ -1,7 +1,17 @@
-import { styled } from '@mui/system';
 import React from 'react';
-import { Box } from '@mui/material';
-import { StyledFormContainerProps } from '../interfaces/styles';
+import { Box, styled, Typography } from '@mui/material';
+import {
+  StyledFormContainerProps,
+  StyledTypographyProps,
+} from '../../interfaces/styled';
+
+const StyledGrowTypography = styled(Typography)`
+  flex-grow: 1;
+`;
+
+export const StyledGrowBox = styled(Box)`
+  flex-grow: 1;
+`;
 
 const StyledFormContainer = styled(Box)`
   padding: ${({ theme }) => theme.spacing(1)} 0;
@@ -22,3 +32,12 @@ export const FormContainer: React.FC<StyledFormContainerProps> = (props) => {
     <StyledFormContainer {...props}>{props.children}</StyledFormContainer>
   );
 };
+
+export const GrowTypography: React.FC<StyledTypographyProps> = ({
+  children,
+  ...props
+}) => (
+  <StyledGrowTypography component="div" {...props}>
+    {children}
+  </StyledGrowTypography>
+);

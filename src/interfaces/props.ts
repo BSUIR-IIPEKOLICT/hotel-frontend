@@ -4,6 +4,7 @@ import {
   RoomPopulated,
 } from './populatedModels';
 import { Building, Review, Service, Type, User } from './models';
+import { ChangeEvent } from 'react';
 
 export type LayoutProps = {
   title: string;
@@ -107,4 +108,10 @@ export interface ReviewCardProps {
 
 export interface SpoilerProps {
   title: string;
+}
+
+export interface AuthFormProps {
+  title: string;
+  emailHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+  passwordHandler: (e: ChangeEvent<HTMLInputElement>) => void;
 }

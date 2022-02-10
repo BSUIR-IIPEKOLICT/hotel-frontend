@@ -1,7 +1,6 @@
 import React from 'react';
-import { Typography, TypographyProps } from '@mui/material';
-import { styled } from '@mui/system';
-import { StyledTypographyProps } from '../interfaces/styles';
+import { Typography, TypographyProps, styled } from '@mui/material';
+import { StyledTypographyProps } from '../../interfaces/styled';
 
 const PrimaryTypography = styled(Typography)`
   color: ${({ theme }) => theme.palette.primary.main};

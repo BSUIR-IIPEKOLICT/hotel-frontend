@@ -1,8 +1,8 @@
 import type { AppProps } from 'next/app';
-import Global from '../src/styles/global';
-import 'normalize.css';
+import '../styles/global.css';
+import '../../node_modules/normalize.css/normalize.css';
 import React from 'react';
-import createEmotionCache from '../src/shared/createEmotionCache';
+import createEmotionCache from '../shared/createEmotionCache';
 import { EmotionCache } from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 
@@ -15,7 +15,6 @@ function MyApp({
 }: AppProps & { emotionCache: EmotionCache }) {
   return (
     <CacheProvider value={emotionCache}>
-      <Global />
       <Component {...pageProps} />
     </CacheProvider>
   );

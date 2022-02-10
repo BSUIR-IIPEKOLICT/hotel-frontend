@@ -2,76 +2,68 @@ import React, { useContext } from 'react';
 import Link from 'next/link';
 import { observer } from 'mobx-react-lite';
 import { StoreContext } from '../store';
-import { useRouter } from 'next/router';
 import { EndPoint } from '../shared/enums';
-import { AppBar, Box, Toolbar, Typography, useTheme } from '@mui/material';
+import { AppBar, Toolbar, useTheme } from '@mui/material';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
-import { useLocalStorage } from '../hooks';
-import { OutlinedButton, TextButton } from '../styles/buttons';
+import { useNavigation, useUser } from '../hooks';
+import { OutlinedButton, TextButton } from './styled/buttons';
 import { NavProps } from '../interfaces/props';
+import { RouteLink } from './styled/common';
+import { GrowTypography, StyledGrowBox } from './styled/containers';
 
 const Nav: React.FC<NavProps> = ({ toggleTheme }) => {
-  const { destroyToken } = useLocalStorage();
+  const { logoutHandler } = useUser();
   const { userStore } = useContext(StoreContext);
-  const { route, push, reload } = useRouter();
-  const isAuthPages = route === EndPoint.Login || route === EndPoint.Register;
+  const { isAuthPages } = useNavigation();
   const { palette } = useTheme();
 
-  const logout = () => {
-    userStore.setUser();
-    userStore.setIsAuth(false);
-    destroyToken();
-    push(EndPoint.Main).then();
-  };
-
-  const toggleThemeHandler = () => toggleTheme();
-
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <StyledGrowBox>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+          <GrowTypography variant="h5">
             <Link href={EndPoint.Main}>Hotel app</Link>
-            <TextButton onClick={toggleThemeHandler}>
+            <TextButton onClick={toggleTheme}>
               {palette.mode === 'dark' ? (
                 <DarkModeRoundedIcon />
               ) : (
                 <LightModeRoundedIcon />
               )}
             </TextButton>
-          </Typography>
+          </GrowTypography>
 
-          {userStore?.getIsAuth() && userStore?.isAdmin() && (
-            <OutlinedButton onClick={() => push(EndPoint.Admin)}>
-              Admin
-            </OutlinedButton>
+          {userStore.getIsAuth() && userStore.isAdmin() && (
+            <RouteLink href={EndPoint.Admin}>
+              <OutlinedButton>Admin</OutlinedButton>
+            </RouteLink>
           )}
 
-          {userStore?.getIsAuth() && (
+          {userStore.getIsAuth() && (
             <>
-              <TextButton onClick={() => push(EndPoint.Orders)}>
-                <AccountCircleRoundedIcon />
-              </TextButton>
-              <OutlinedButton onClick={logout}>Logout</OutlinedButton>
+              <RouteLink href={EndPoint.Orders}>
+                <TextButton>
+                  <AccountCircleRoundedIcon />
+                </TextButton>
+              </RouteLink>
+              <OutlinedButton onClick={logoutHandler}>Logout</OutlinedButton>
             </>
           )}
 
-          {!isAuthPages && !userStore?.getIsAuth() && (
+          {!isAuthPages() && !userStore.getIsAuth() && (
             <>
-              <Link href={EndPoint.Register} passHref={true}>
+              <RouteLink href={EndPoint.Register}>
                 <OutlinedButton>Register</OutlinedButton>
-              </Link>
-
-              <Link href={EndPoint.Login} passHref={true}>
+              </RouteLink>
+              <RouteLink href={EndPoint.Login}>
                 <OutlinedButton>Login</OutlinedButton>
-              </Link>
+              </RouteLink>
             </>
           )}
         </Toolbar>
       </AppBar>
-    </Box>
+    </StyledGrowBox>
   );
 };
 
