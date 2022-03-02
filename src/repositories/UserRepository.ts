@@ -1,10 +1,10 @@
 import BaseRepository from '../core/BaseRepository';
 import { User } from '../interfaces/models';
 import jwtDecode from 'jwt-decode';
-import { LSKey, Role } from '../shared/enums';
+import { APIRoute, LSKey, Role } from '../shared/enums';
 import { Repository } from '../shared/decorators';
 
-@Repository('/user')
+@Repository(APIRoute.Users)
 export default class UserRepository extends BaseRepository<User> {
   private saveToken(token: string) {
     localStorage.setItem(LSKey.Token, token);

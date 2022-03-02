@@ -19,6 +19,17 @@ export enum EndPoint {
   Types = '/types',
 }
 
+export enum APIRoute {
+  Users = '/users',
+  Buildings = '/buildings',
+  Types = '/types',
+  Rooms = '/rooms',
+  Reviews = '/reviews',
+  Baskets = '/baskets',
+  Services = '/services',
+  Orders = '/orders',
+}
+
 export enum Role {
   Admin = 'admin',
   Client = 'client',
