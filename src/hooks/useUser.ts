@@ -7,25 +7,24 @@ import { userRepository } from '../repositories';
 import { errorViewer } from '../shared/utils';
 
 export default function useUser() {
-  const { push } = useRouter();
+  const { push, pathname } = useRouter();
   const { userStore } = useContext(StoreContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const submitHandler = (isRegister?: boolean) => {
-    return async () => {
-      try {
-        const user: User = isRegister
+  const submitHandler = async () => {
+    try {
+      const user: User =
+        pathname === EndPoint.Register
           ? await userRepository.register(email, password)
           : await userRepository.login(email, password);
 
-        userStore.setUser(user);
-        userStore.setIsAuth(true);
-        await push(EndPoint.Main);
-      } catch (e) {
-        errorViewer(e);
-      }
-    };
+      userStore.setUser(user);
+      userStore.setIsAuth(true);
+      await push(EndPoint.Main);
+    } catch (e) {
+      errorViewer(e);
+    }
   };
 
   const changeEmailHandler = (e: ChangeEvent<HTMLInputElement>) =>

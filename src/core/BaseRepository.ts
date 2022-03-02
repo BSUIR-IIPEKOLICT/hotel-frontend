@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { API_URL } from '../shared/constants';
 
 export default abstract class BaseRepository<M> {
-  protected readonly route: string | undefined;
+  protected readonly route: string = '/';
 
   private readonly baseURL: string = `${API_URL}/api`;
   protected readonly api: AxiosInstance = axios.create({

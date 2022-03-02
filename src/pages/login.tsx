@@ -29,7 +29,7 @@ const Login: NextPage = () => {
                 <Link href={EndPoint.Register}>Register</Link>
               </PrimaryText>
             </Typography>
-            <ContainedButton primary onClick={submitHandler()}>
+            <ContainedButton primary onClick={submitHandler}>
               Login
             </ContainedButton>
           </FormContainer>
