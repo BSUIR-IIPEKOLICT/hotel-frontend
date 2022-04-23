@@ -1,5 +1,5 @@
 import useThemeState from './useThemeState';
-import useUser from './useUser';
+import useAuth from './useAuth';
 import useNavigation from './useNavigation';
 
-export { useThemeState, useUser, useNavigation };
+export { useThemeState, useAuth, useNavigation };

@@ -11,3 +11,7 @@ export interface StyledFormContainerProps extends BoxProps {
 export interface StyledTypographyProps extends TypographyProps {
   component?: string;
 }
+
+export interface StyledBoxProps extends BoxProps {
+  column?: boolean;
+}

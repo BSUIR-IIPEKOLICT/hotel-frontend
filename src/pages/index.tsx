@@ -4,7 +4,7 @@ import { Title } from '../shared/enums';
 
 const Main: NextPage = () => {
   return (
-    <Layout title={Title.Main}>
+    <Layout title={Title.MAIN}>
       <h1>Main page</h1>
     </Layout>
   );

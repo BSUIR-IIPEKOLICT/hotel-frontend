@@ -1,35 +1,34 @@
 import type { NextPage } from 'next';
+import Link from 'next/link';
+import { Box, Container, Typography } from '@mui/material';
 import Layout from '../components/Layout';
 import { EndPoint, Title } from '../shared/enums';
-import { Box, Container, Typography } from '@mui/material';
-import Link from 'next/link';
 import { ContainedButton } from '../components/styled/buttons';
 import { FormContainer } from '../components/styled/containers';
 import { PrimaryText } from '../components/styled/typography';
 import AuthForm from '../components/forms/AuthForm';
-import { useUser } from '../hooks';
+import { useAuth } from '../hooks';
 
 const Register: NextPage = () => {
-  const { changePasswordHandler, changeEmailHandler, submitHandler } =
-    useUser();
+  const { changePasswordHandler, changeEmailHandler, isSubmitBlocked, submitHandler } = useAuth();
 
   return (
-    <Layout title={Title.Register}>
+    <Layout title={Title.REGISTER}>
       <Container>
         <Box component="form" noValidate autoComplete="off" className="form">
           <AuthForm
             title="Register"
-            emailHandler={changeEmailHandler}
-            passwordHandler={changePasswordHandler}
+            changeEmailHandler={changeEmailHandler}
+            changePasswordHandler={changePasswordHandler}
           />
           <FormContainer large>
             <Typography component="div">
               Already have account?{' '}
               <PrimaryText>
-                <Link href={EndPoint.Login}>Login</Link>
+                <Link href={EndPoint.LOGIN}>Login</Link>
               </PrimaryText>
             </Typography>
-            <ContainedButton primary onClick={submitHandler}>
+            <ContainedButton primary onClick={submitHandler} disabled={isSubmitBlocked}>
               Register
             </ContainedButton>
           </FormContainer>

@@ -1,41 +1,46 @@
 export enum Title {
-  Main = 'main',
-  Login = 'login',
-  Register = 'register',
-  Error = 'error',
-  Admin = 'admin',
-  Orders = 'orders',
+  MAIN = 'Main',
+  LOGIN = 'Login',
+  REGISTER = 'Register',
+  ERROR = 'Error',
+  ADMIN = 'Admin',
+  BOOKINGS = 'Bookings',
+  USERS = 'Users',
+  BUILDINGS = 'Buildings',
+  TYPES = 'Types',
+  OPTIONS = 'Options',
 }
 
 export enum EndPoint {
-  Main = '/',
-  Admin = '/admin',
-  Login = '/login',
-  Register = '/register',
-  Orders = '/orders',
-  Room = '/room',
-  Buildings = '/buildings',
-  Services = '/services',
-  Types = '/types',
+  MAIN = '/',
+  ADMIN = '/admin',
+  LOGIN = '/login',
+  REGISTER = '/register',
+  BOOKINGS = '/bookings',
+  ROOM = '/room',
+  USERS = '/admin/users',
+  BUILDINGS = '/admin/buildings',
+  OPTIONS = '/admin/options',
+  TYPES = '/admin/types',
 }
 
 export enum APIRoute {
-  Users = '/users',
-  Buildings = '/buildings',
-  Types = '/types',
-  Rooms = '/rooms',
-  Reviews = '/reviews',
-  Baskets = '/baskets',
-  Services = '/services',
-  Orders = '/orders',
+  AUTH = '/auth',
+  BOOKINGS = '/bookings',
+  BUILDINGS = '/buildings',
+  COMMENTS = '/comments',
+  OPTIONS = '/options',
+  ROOMS = '/rooms',
+  TYPES = '/types',
+  USERS = '/users',
 }
 
 export enum Role {
-  Admin = 'admin',
-  Client = 'client',
+  ADMIN = 'admin',
+  CLIENT = 'client',
 }
 
-export enum LSKey {
-  DarkMode = 'darkMode',
-  Token = 'token',
+export enum StorageKey {
+  DARK_MODE = 'darkMode',
+  TOKEN = 'token',
 }

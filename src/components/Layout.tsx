@@ -1,9 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
-import { LayoutProps } from '../interfaces/props';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { LayoutProps } from '../abstractions/props';
 import Nav from './Nav';
 import theme from '../styles/theme';
-import { CssBaseline, ThemeProvider } from '@mui/material';
 import { store, StoreContext } from '../store';
 import { useThemeState } from '../hooks';
 

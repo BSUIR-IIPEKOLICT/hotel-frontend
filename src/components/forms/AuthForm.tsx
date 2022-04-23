@@ -1,12 +1,12 @@
 import React from 'react';
-import { AuthFormProps } from '../../interfaces/props';
+import { AuthFormProps } from '../../abstractions/props';
 import { FormHeader } from '../styled/typography';
 import { TextField } from '@mui/material';
 
 const AuthForm: React.FC<AuthFormProps> = ({
   title,
-  emailHandler,
-  passwordHandler,
+  changeEmailHandler,
+  changePasswordHandler,
 }) => {
   return (
     <>
@@ -15,13 +15,13 @@ const AuthForm: React.FC<AuthFormProps> = ({
         label="E-mail"
         type="email"
         autoComplete="current-email"
-        onChange={emailHandler}
+        onChange={changeEmailHandler}
       />
       <TextField
         label="Password"
         type="password"
         autoComplete="current-password"
-        onChange={passwordHandler}
+        onChange={changePasswordHandler}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { IBuildingStore } from '../interfaces/stores';
+import { IBuildingStore } from '../abstractions/storeInterfaces';
 import { makeAutoObservable } from 'mobx';
 
 export default class BuildingStore implements IBuildingStore {

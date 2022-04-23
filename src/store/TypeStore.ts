@@ -1,4 +1,4 @@
-import { ITypeStore } from '../interfaces/stores';
+import { ITypeStore } from '../abstractions/storeInterfaces';
 import { makeAutoObservable } from 'mobx';
 
 export default class TypeStore implements ITypeStore {

@@ -3,8 +3,7 @@ import { EndPoint } from '../shared/enums';
 
 export default function useNavigation() {
   const { route } = useRouter();
-  const isAuthPages = () =>
-    route === EndPoint.Login || route === EndPoint.Register;
+  const isAuthPages = () => route === EndPoint.LOGIN || route === EndPoint.REGISTER;
 
   return { isAuthPages };
 }

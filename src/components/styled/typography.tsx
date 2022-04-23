@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, TypographyProps, styled } from '@mui/material';
-import { StyledTypographyProps } from '../../interfaces/styled';
+import { StyledTypographyProps } from '../../abstractions/styledInterfaces';
 
 const PrimaryTypography = styled(Typography)`
   color: ${({ theme }) => theme.palette.primary.main};
@@ -11,18 +11,26 @@ const StyledFormHeader = styled(Typography)`
   flex-grow: 1;
 `;
 
-export const PrimaryText: React.FC<StyledTypographyProps> = (props) => {
+export const PrimaryText: React.FC<StyledTypographyProps> = ({ children, component, ...props }) => {
   return (
-    <PrimaryTypography component={props.component || 'span'} {...props}>
-      {props.children}
+    <PrimaryTypography component={component || 'span'} {...props}>
+      {children}
     </PrimaryTypography>
   );
 };
 
-export const FormHeader: React.FC<TypographyProps> = (props) => {
+export const FormHeader: React.FC<TypographyProps> = ({ children, variant, ...props }) => {
   return (
-    <StyledFormHeader variant={props.variant || 'h4'} {...props}>
-      {props.children}
+    <StyledFormHeader variant={variant || 'h4'} {...props}>
+      {children}
     </StyledFormHeader>
+  );
+};
+
+export const CenteredHeader: React.FC<TypographyProps> = ({ children, variant, ...props }) => {
+  return (
+    <Typography component={variant || 'h4'} variant={variant || 'h4'} align="center">
+      {children}
+    </Typography>
   );
 };

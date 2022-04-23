@@ -1,33 +1,45 @@
-import { IUserStore } from '../interfaces/stores';
-import { User } from '../interfaces/models';
 import { makeAutoObservable } from 'mobx';
+import { IUserStore } from '../abstractions/storeInterfaces';
+import { UserPopulated } from '../abstractions/models';
 import { Role } from '../shared/enums';
 
 export default class UserStore implements IUserStore {
-  private user: User | undefined;
-  private isAuth: boolean = false;
+  private users: UserPopulated[] = [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  getIsAuth(): boolean {
-    return this.isAuth;
+  private getUser(id: number): UserPopulated | undefined {
+    return this.users.find(({ id: userId }) => userId === id);
   }
 
-  getUser(): User | undefined {
-    return this.user;
+  getUsers(): UserPopulated[] {
+    return this.users;
   }
 
-  isAdmin(): boolean {
-    return !!this.user && this.user.role === Role.Admin;
+  setUsers(users: UserPopulated[]): void {
+    this.users = users;
   }
 
-  setIsAuth(isAuth: boolean): void {
-    this.isAuth = isAuth;
+  changeRole(id: number, role: Role): void {
+    const changedUser: UserPopulated | undefined = this.getUser(id);
+
+    if (changedUser) {
+      changedUser.role = role;
+    }
   }
 
-  setUser(user?: User): void {
-    this.user = user;
+  changeCredentials(id: number, email: string, password: string): void {
+    const changedUser: UserPopulated | undefined = this.getUser(id);
+
+    if (changedUser) {
+      changedUser.email = email;
+      changedUser.password = password;
+    }
+  }
+
+  delete(id: number): void {
+    this.users = this.users.filter(({ id: userId }) => userId !== id);
   }
 }

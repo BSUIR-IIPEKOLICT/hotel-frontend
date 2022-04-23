@@ -1,14 +1,17 @@
 import {
-  BasketPopulated,
-  OrderPopulated,
+  Building,
+  Comment,
+  Option,
+  Type,
   RoomPopulated,
-} from './populatedModels';
-import { Building, Review, Service, Type, User } from './models';
+  BookingPopulated,
+  UserPopulated,
+} from './models';
 import { ChangeEvent } from 'react';
 
-export type LayoutProps = {
+export interface LayoutProps {
   title: string;
-};
+}
 
 export interface NavProps {
   toggleTheme(): void;
@@ -34,10 +37,10 @@ export interface RoomCardProps {
   isAdmin: boolean;
 }
 
-export interface RoomServiceContainerProps {
-  services: Service[];
+export interface RoomOptionContainerProps {
+  options: Option[];
   checked: string[];
-  onChange(checked: boolean, service: Service): void;
+  onChange(checked: boolean, option: Option): void;
 }
 
 export interface RoomPriceContainerProps {
@@ -56,17 +59,25 @@ export interface PreloaderProps {
   isDark: boolean;
 }
 
-export interface OrderCardProps {
-  order: OrderPopulated;
-  onDelete(order: OrderPopulated): void;
+export interface BookingCardProps {
+  order: BookingPopulated;
+  onDelete(booking: BookingPopulated): void;
 }
 
-export interface BasketCardProps {
-  basket: BasketPopulated;
-  sortDate: Date;
-  onChangeRole(user: User): void;
-  onDelete(basketId: string, userId: string): void;
+export interface UserCardProps {
+  user: UserPopulated;
+  // sortDate: Date;
+  // onChangeRole(user: UserPopulated): void;
+  // onChangeCredentials(user: UserPopulated): void;
+  // onDelete(user: UserPopulated): void;
 }
+
+// export interface BasketCardProps {
+//   basket: BasketPopulated;
+//   sortDate: Date;
+//   onChangeRole(user: User): void;
+//   onDelete(basketId: string, userId: string): void;
+// }
 
 export interface DatePickerProps {
   onChange(value: Date | null): void;
@@ -78,9 +89,9 @@ export interface BuildingCardProps {
   onDelete(id: string): void;
 }
 
-export interface ServiceCardProps {
-  service: Service;
-  onChange(service: Service): void;
+export interface OptionCardProps {
+  option: Option;
+  onChange(option: Option): void;
   onDelete(id: string): void;
 }
 
@@ -99,10 +110,10 @@ export interface RoomCreateFormProps {
   loadRooms(): void;
 }
 
-export interface ReviewCardProps {
-  review: Review;
+export interface CommentCardProps {
+  comment: Comment;
   isOwner: boolean;
-  onChange(review: Review): void;
+  onChange(comment: Comment): void;
   onDelete(id: string): void;
 }
 
@@ -112,6 +123,22 @@ export interface SpoilerProps {
 
 export interface AuthFormProps {
   title: string;
-  emailHandler: (e: ChangeEvent<HTMLInputElement>) => void;
-  passwordHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+  changeEmailHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+  changePasswordHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface UsersPageProps {
+  users: UserPopulated[];
+}
+
+export interface BuildingsPageProps {
+  buildings: Building[];
+}
+
+export interface TypesPageProps {
+  types: Type[];
+}
+
+export interface OptionsPageProps {
+  options: Option[];
 }

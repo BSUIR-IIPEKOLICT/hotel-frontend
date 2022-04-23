@@ -1,6 +1,6 @@
 import { Button, styled } from '@mui/material';
 import React from 'react';
-import { StyledButtonProps } from '../../interfaces/styled';
+import { StyledButtonProps } from '../../abstractions/styledInterfaces';
 
 const StyledButton = styled(Button)`
   margin: 0 ${({ theme }) => theme.spacing(1)};
@@ -13,20 +13,13 @@ export const DefaultButton: React.FC<StyledButtonProps> = ({
   ...props
 }) => {
   return (
-    <StyledButton
-      variant={variant}
-      color={primary ? 'primary' : 'inherit'}
-      {...props}
-    >
+    <StyledButton variant={variant} color={primary ? 'primary' : 'inherit'} {...props}>
       {children}
     </StyledButton>
   );
 };
 
-export const TextButton: React.FC<StyledButtonProps> = ({
-  children,
-  ...props
-}) => {
+export const TextButton: React.FC<StyledButtonProps> = ({ children, ...props }) => {
   return (
     <DefaultButton variant="text" {...props}>
       {children}
@@ -34,10 +27,7 @@ export const TextButton: React.FC<StyledButtonProps> = ({
   );
 };
 
-export const OutlinedButton: React.FC<StyledButtonProps> = ({
-  children,
-  ...props
-}) => {
+export const OutlinedButton: React.FC<StyledButtonProps> = ({ children, ...props }) => {
   return (
     <DefaultButton variant="outlined" {...props}>
       {children}
@@ -45,10 +35,7 @@ export const OutlinedButton: React.FC<StyledButtonProps> = ({
   );
 };
 
-export const ContainedButton: React.FC<StyledButtonProps> = ({
-  children,
-  ...props
-}) => {
+export const ContainedButton: React.FC<StyledButtonProps> = ({ children, ...props }) => {
   return (
     <DefaultButton variant="contained" {...props}>
       {children}

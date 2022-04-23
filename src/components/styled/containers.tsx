@@ -1,9 +1,9 @@
 import React from 'react';
-import { Box, styled, Typography } from '@mui/material';
+import { Box, Container, ContainerProps, styled, Typography } from '@mui/material';
 import {
   StyledFormContainerProps,
   StyledTypographyProps,
-} from '../../interfaces/styled';
+} from '../../abstractions/styledInterfaces';
 
 const StyledGrowTypography = styled(Typography)`
   flex-grow: 1;
@@ -25,6 +25,12 @@ const LargeFormContainer = styled(StyledFormContainer)`
   width: 40ch;
 `;
 
+const StyledCenteredContainer = styled(Container)`
+  padding: ${({ theme }) => theme.spacing(2)};
+  margin: 0 auto;
+  width: 500px;
+`;
+
 export const FormContainer: React.FC<StyledFormContainerProps> = (props) => {
   return props.large ? (
     <LargeFormContainer {...props}>{props.children}</LargeFormContainer>
@@ -33,11 +39,12 @@ export const FormContainer: React.FC<StyledFormContainerProps> = (props) => {
   );
 };
 
-export const GrowTypography: React.FC<StyledTypographyProps> = ({
-  children,
-  ...props
-}) => (
+export const GrowTypography: React.FC<StyledTypographyProps> = ({ children, ...props }) => (
   <StyledGrowTypography component="div" {...props}>
     {children}
   </StyledGrowTypography>
+);
+
+export const CenteredContainer: React.FC<ContainerProps> = ({ children, ...props }) => (
+  <StyledCenteredContainer {...props}>{children}</StyledCenteredContainer>
 );
