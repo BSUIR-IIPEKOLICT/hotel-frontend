@@ -6,7 +6,7 @@ import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import { StoreContext } from '../store';
-import { EndPoint } from '../shared/enums';
+import { EndPoint } from '../constants/enums';
 import { useNavigation, useAuth } from '../hooks';
 import { OutlinedButton, TextButton } from './styled/buttons';
 import { NavProps } from '../abstractions/props';

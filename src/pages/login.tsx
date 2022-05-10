@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { Box, Container, Typography } from '@mui/material';
 import Layout from '../components/Layout';
-import { EndPoint, Title } from '../shared/enums';
+import { EndPoint, Title } from '../constants/enums';
 import { ContainedButton } from '../components/styled/buttons';
 import AuthForm from '../components/forms/AuthForm';
 import { FormContainer } from '../components/styled/containers';

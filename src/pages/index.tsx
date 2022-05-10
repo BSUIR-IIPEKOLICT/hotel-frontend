@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Layout from '../components/Layout';
-import { Title } from '../shared/enums';
+import { Title } from '../constants/enums';
 
 const Main: NextPage = () => {
   return (

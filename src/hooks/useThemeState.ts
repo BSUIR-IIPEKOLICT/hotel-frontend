@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StorageKey } from '../shared/enums';
+import { StorageKey } from '../constants/enums';
 
 export default function useThemeState() {
   const [isDark, setIsDark] = useState(true);

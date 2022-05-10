@@ -1,14 +1,22 @@
 import { makeAutoObservable } from 'mobx';
-import { IAuthStore } from '../abstractions/storeInterfaces';
+import { IAuthStore } from '../abstractions/interfaces';
 import { TokenModel } from '../abstractions/models';
-import { Role } from '../shared/enums';
+import { Role } from '../constants/enums';
 
 export default class AuthStore implements IAuthStore {
   private userData: TokenModel | undefined;
-  private isAuth = false;
+  private isAuthValue = false;
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  get isAuth(): boolean {
+    return this.isAuthValue;
+  }
+
+  get isAdminObserved(): boolean {
+    return this.isAdmin();
   }
 
   getUserData(): TokenModel | undefined {
@@ -20,7 +28,7 @@ export default class AuthStore implements IAuthStore {
   }
 
   getIsAuth(): boolean {
-    return this.isAuth;
+    return this.isAuthValue;
   }
 
   isAdmin(): boolean {
@@ -28,6 +36,6 @@ export default class AuthStore implements IAuthStore {
   }
 
   setIsAuth(isAuth: boolean): void {
-    this.isAuth = isAuth;
+    this.isAuthValue = isAuth;
   }
 }

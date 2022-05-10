@@ -1,6 +1,6 @@
-import { IAuthStore, IBuildingStore, ITypeStore, IUserStore } from './storeInterfaces';
+import { TokenModel } from './models';
 
-export interface ErrorResponse {
+export interface IErrorResponse {
   response?: {
     data?: {
       message?: string;
@@ -8,22 +8,47 @@ export interface ErrorResponse {
   };
 }
 
-export interface AppStore {
+export interface IEditStore {
+  getIsEdit(): boolean;
+  getId(): number;
+  setEdited(id?: number): void;
+}
+
+export interface IAuthStore {
+  isAuth: boolean;
+  isAdminObserved: boolean;
+  getUserData(): TokenModel | undefined;
+  getIsAuth(): boolean;
+  isAdmin(): boolean;
+  setUserData(tokenData?: TokenModel): void;
+  setIsAuth(isAuth: boolean): void;
+}
+
+export interface IBuildingStore {
+  getCurrent(): number;
+  setCurrent(buildingId: number): void;
+}
+
+export interface ITypeStore {
+  getCurrent(): number;
+  setCurrent(typeId: number): void;
+}
+
+export interface IStore {
+  editStore: IEditStore;
   authStore: IAuthStore;
-  userStore: IUserStore;
   buildingStore: IBuildingStore;
   typeStore: ITypeStore;
 }
 
-export interface RoomRequestConfig {
+export interface IRoomRequestConfig {
   buildingId?: number;
   typeId?: number;
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
   isFree?: boolean;
 }
 
-export interface ButtonConfiguraton {
-  title: string;
-  path: string;
+export interface IIterableObject {
+  [key: string]: any;
 }

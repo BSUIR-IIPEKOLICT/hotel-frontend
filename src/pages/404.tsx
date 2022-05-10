@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Layout from '../components/Layout';
-import { Title } from '../shared/enums';
+import { Title } from '../constants/enums';
 
 export default function Error() {
   return (

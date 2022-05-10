@@ -4,7 +4,7 @@ import { EmotionCache } from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import '../styles/global.css';
 import '../../node_modules/normalize.css/normalize.css';
-import createEmotionCache from '../shared/createEmotionCache';
+import { createEmotionCache } from '../shared/common';
 
 const clientSideEmotionCache = createEmotionCache();
 

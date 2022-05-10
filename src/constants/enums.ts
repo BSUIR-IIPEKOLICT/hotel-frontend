@@ -3,12 +3,15 @@ export enum Title {
   LOGIN = 'Login',
   REGISTER = 'Register',
   ERROR = 'Error',
+  UNAUTHORIZED = 'unauthorized',
   ADMIN = 'Admin',
   BOOKINGS = 'Bookings',
   USERS = 'Users',
   BUILDINGS = 'Buildings',
   TYPES = 'Types',
   OPTIONS = 'Options',
+  ROOMS = 'Rooms',
+  ROOM = 'Room',
 }
 
 export enum EndPoint {
@@ -18,10 +21,11 @@ export enum EndPoint {
   REGISTER = '/register',
   BOOKINGS = '/bookings',
   ROOM = '/room',
-  USERS = '/admin/users',
-  BUILDINGS = '/admin/buildings',
-  OPTIONS = '/admin/options',
-  TYPES = '/admin/types',
+  ADMIN_USERS = '/admin/users',
+  ADMIN_BUILDINGS = '/admin/buildings',
+  ADMIN_OPTIONS = '/admin/options',
+  ADMIN_TYPES = '/admin/types',
+  ADMIN_ROOMS = '/admin/rooms',
 }
 
 export enum APIRoute {

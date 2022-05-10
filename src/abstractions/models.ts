@@ -1,6 +1,6 @@
-import { Role } from '../shared/enums';
+import { Role } from '../constants/enums';
 
-type Entity = { id: number };
+export type Entity = { id: number };
 
 type TBooking = Entity & {
   price: number;

@@ -6,71 +6,69 @@ import {
   RoomPopulated,
   BookingPopulated,
   UserPopulated,
+  TypePopulated,
 } from './models';
 import { ChangeEvent } from 'react';
+import { BoxProps, ButtonProps, SelectChangeEvent, TypographyProps } from '@mui/material';
 
-export interface LayoutProps {
+export type LayoutProps = {
   title: string;
-}
+};
 
-export interface NavProps {
+export type NavProps = {
   toggleTheme(): void;
-}
+};
 
-export interface RoomInfoProps {
+export type AuthWrapperProps = {
+  onlyAdmin: boolean;
+};
+
+export type RoomInfoProps = {
   room: RoomPopulated;
-}
+};
 
-export interface SelectProps {
+export type SelectProps = {
   label?: string | number;
   value?: string | number;
   options: string[] | number[];
   values: string[] | number[];
   changeHandler(value: string): void;
-}
+};
 
-export interface RoomCardProps {
-  room: RoomPopulated;
-  clickHandler(room: RoomPopulated): void;
-  onChange(id: string): void;
-  onDelete(id: string): void;
-  isAdmin: boolean;
-}
+// export type RoomCardProps = {
+//   room: RoomPopulated;
+//   clickHandler(room: RoomPopulated): void;
+//   onChange(id: number): void;
+//   onDelete(id: number): void;
+//   isAdmin: boolean;
+// };
 
-export interface RoomOptionContainerProps {
+export type RoomOptionContainerProps = {
   options: Option[];
   checked: string[];
   onChange(checked: boolean, option: Option): void;
-}
+};
 
-export interface RoomPriceContainerProps {
+export type RoomPriceContainerProps = {
   value: number;
-}
+};
 
-export interface RoomBookContainerProps {
+export type RoomBookContainerProps = {
   selectOptions: string[];
   selectValues: number[];
   selectValue: number;
   selectHandler(value: string): void;
   bookHandler(): void;
-}
+};
 
-export interface PreloaderProps {
+export type PreloaderProps = {
   isDark: boolean;
-}
+};
 
-export interface BookingCardProps {
+export type BookingCardProps = {
   order: BookingPopulated;
   onDelete(booking: BookingPopulated): void;
-}
-
-export interface UserCardProps {
-  user: UserPopulated;
-  // sortDate: Date;
-  // onChangeRole(user: UserPopulated): void;
-  // onChangeCredentials(user: UserPopulated): void;
-  // onDelete(user: UserPopulated): void;
-}
+};
 
 // export interface BasketCardProps {
 //   basket: BasketPopulated;
@@ -79,66 +77,164 @@ export interface UserCardProps {
 //   onDelete(basketId: string, userId: string): void;
 // }
 
-export interface DatePickerProps {
+export type DatePickerProps = {
   onChange(value: Date | null): void;
-}
+};
 
-export interface BuildingCardProps {
+export type BaseCardProps = {
+  onPick(): void;
+  onDelete(): void;
+};
+
+export type BuildingCardProps = {
   building: Building;
-  onChange(building: Building): void;
-  onDelete(id: string): void;
-}
+  onPick(building: Building): void;
+  onDelete(id: number): void;
+};
 
-export interface OptionCardProps {
+export type OptionCardProps = {
   option: Option;
-  onChange(option: Option): void;
-  onDelete(id: string): void;
-}
+  onPick(option: Option): void;
+  onDelete(id: number): void;
+};
 
-export interface PageButtonProps {
+export type RoomCardProps = {
+  room: RoomPopulated;
+  onPick(room: RoomPopulated): void;
+  onDelete(id: number): void;
+};
+
+export type TypeCardProps = {
+  type: TypePopulated;
+  onPick(type: TypePopulated): void;
+  onDelete(id: number): void;
+};
+
+export type UserCardProps = {
+  user: UserPopulated;
+  selfEmail: string;
+  // sortDate: Date;
+  onChangeRole(user: UserPopulated): void;
+  onPick(user: UserPopulated): void;
+  onDelete(id: number): void;
+};
+
+export type PageButtonProps = {
   title: string;
   path: string;
-}
+};
 
-export interface TypeCardProps {
-  type: Type;
-  onChange(type: Type): void;
-  onDelete(id: string): void;
-}
-
-export interface RoomCreateFormProps {
+export type RoomCreateFormProps = {
   loadRooms(): void;
-}
+};
 
-export interface CommentCardProps {
+export type CommentCardProps = {
   comment: Comment;
   isOwner: boolean;
   onChange(comment: Comment): void;
-  onDelete(id: string): void;
-}
+  onDelete(id: number): void;
+};
 
-export interface SpoilerProps {
+export type SpoilerProps = {
   title: string;
-}
+};
 
-export interface AuthFormProps {
+export type AuthFormProps = {
   title: string;
   changeEmailHandler: (e: ChangeEvent<HTMLInputElement>) => void;
   changePasswordHandler: (e: ChangeEvent<HTMLInputElement>) => void;
-}
+};
 
-export interface UsersPageProps {
-  users: UserPopulated[];
-}
+export type BuildingFormProps = {
+  address: string;
+  isEdit: boolean;
+  isSubmitDisabled: boolean;
+  onChangeAddress(e: ChangeEvent<HTMLInputElement>): void;
+  onSubmit(): void;
+};
 
-export interface BuildingsPageProps {
+export type OptionFormProps = {
+  name: string;
+  price: number | string;
+  isEdit: boolean;
+  isSubmitDisabled: boolean;
+  onChangeName(e: ChangeEvent<HTMLInputElement>): void;
+  onChangePrice(e: ChangeEvent<HTMLInputElement>): void;
+  onSubmit(): void;
+};
+
+export type RoomFormProps = {
+  building: string;
+  type: string;
   buildings: Building[];
-}
+  types: TypePopulated[];
+  isEdit: boolean;
+  isSubmitDisabled: boolean;
+  onChangeBuilding(e: SelectChangeEvent): void;
+  onChangeType(e: SelectChangeEvent): void;
+  onSubmit(): void;
+};
 
-export interface TypesPageProps {
-  types: Type[];
-}
-
-export interface OptionsPageProps {
+export type TypeFormProps = {
+  name: string;
+  price: number | string;
+  places: number | string;
+  checkedOptions: number[];
   options: Option[];
-}
+  isEdit: boolean;
+  isSubmitDisabled: boolean;
+  onChangeName(e: ChangeEvent<HTMLInputElement>): void;
+  onChangePrice(e: ChangeEvent<HTMLInputElement>): void;
+  onChangePlaces(e: ChangeEvent<HTMLInputElement>): void;
+  onChangeOptions(id: number, checked: boolean): void;
+  onSubmit(): void;
+};
+
+export type UserFormProps = {
+  email: string;
+  password: string;
+  isEdit: boolean;
+  isSubmitDisabled: boolean;
+  onChangeEmail(e: ChangeEvent<HTMLInputElement>): void;
+  onChangePassword(e: ChangeEvent<HTMLInputElement>): void;
+  onSubmit(): void;
+};
+
+export type UsersPageProps = {
+  initialUsers: UserPopulated[];
+};
+
+export type BuildingsPageProps = {
+  initialBuildings: Building[];
+};
+
+export type TypesPageProps = {
+  initialTypes: TypePopulated[];
+  initialOptions: Option[];
+};
+
+export type OptionsPageProps = {
+  initialOptions: Option[];
+};
+
+export type RoomsPageProps = {
+  initialRooms: RoomPopulated[];
+  initialBuildings: Building[];
+  initialTypes: TypePopulated[];
+};
+
+export type StyledButtonProps = ButtonProps & {
+  primary?: boolean;
+};
+
+export type StyledFormContainerProps = BoxProps & {
+  large?: boolean;
+};
+
+export type StyledBoxProps = BoxProps & {
+  column?: boolean;
+};
+
+export type StyledTypographyProps = TypographyProps & {
+  component?: string;
+};

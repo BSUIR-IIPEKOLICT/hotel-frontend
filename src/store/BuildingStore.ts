@@ -1,18 +1,18 @@
-import { IBuildingStore } from '../abstractions/storeInterfaces';
+import { IBuildingStore } from '../abstractions/interfaces';
 import { makeAutoObservable } from 'mobx';
 
 export default class BuildingStore implements IBuildingStore {
-  private current: string = '';
+  private current: number = -1;
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  getCurrent(): string {
+  getCurrent(): number {
     return this.current;
   }
 
-  setCurrent(buildingId: string): void {
-    this.current = buildingId;
+  setCurrent(buildingId: number): void {
+    this.current = this.current === buildingId ? -1 : buildingId;
   }
 }

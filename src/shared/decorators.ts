@@ -1,7 +1,7 @@
 import BaseRepository from '../core/BaseRepository';
 
-export function Repository(route: string = '/') {
-  return function <T extends new (...args: any[]) => BaseRepository<any, any>>(Constructor: T) {
+export function Repository<M>(route: string = '/') {
+  return function <T extends new (...args: any[]) => BaseRepository>(Constructor: T) {
     return class extends Constructor {
       override route: string;
 

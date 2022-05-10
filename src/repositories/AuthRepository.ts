@@ -1,11 +1,11 @@
 import jwtDecode from 'jwt-decode';
 import BaseRepository from '../core/BaseRepository';
 import { AuthModel, TokenModel } from '../abstractions/models';
-import { APIRoute, StorageKey } from '../shared/enums';
+import { APIRoute, StorageKey } from '../constants/enums';
 import { Repository } from '../shared/decorators';
 
 @Repository(APIRoute.AUTH)
-export default class AuthRepository extends BaseRepository<any, any> {
+export default class AuthRepository extends BaseRepository {
   private static saveToken(token: string) {
     localStorage.setItem(StorageKey.TOKEN, token);
   }

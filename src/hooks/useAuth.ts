@@ -1,17 +1,21 @@
 import { useRouter } from 'next/router';
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
-import { EndPoint, StorageKey } from '../shared/enums';
+import { EndPoint, StorageKey } from '../constants/enums';
 import { StoreContext } from '../store';
 import { TokenModel } from '../abstractions/models';
 import { authRepository } from '../repositories';
-import { errorViewer } from '../shared/utils';
+import { errorHandler } from '../shared/common';
 
 export default function useAuth() {
   const { push, pathname } = useRouter();
   const { authStore } = useContext(StoreContext);
+
+  const [isAuth, setIsAuth] = useState(authStore.getIsAuth());
+  const [isAdmin, setIsAdmin] = useState(authStore.isAdmin());
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitBlocked, setIsSubmitBlocked] = useState(true);
+  const [userEmail, setUserEmail] = useState('');
 
   const authorize = () => {
     const savedToken: string | null = localStorage.getItem(StorageKey.TOKEN);
@@ -22,13 +26,16 @@ export default function useAuth() {
         .then((userData: TokenModel) => {
           authStore.setUserData(userData);
           authStore.setIsAuth(true);
+          setUserEmail(() => userData.email);
         })
         .catch(() => {});
     }
   };
 
   useEffect(authorize, []);
-  useEffect(() => setIsSubmitBlocked(!email || !password), [email, password]);
+  useEffect(() => setIsAuth(() => authStore.isAuth), [authStore.isAuth]);
+  useEffect(() => setIsAdmin(() => authStore.isAdminObserved), [authStore.isAdminObserved]);
+  useEffect(() => setIsSubmitBlocked(() => !email || !password), [email, password]);
 
   const submitHandler = async () => {
     try {
@@ -39,9 +46,11 @@ export default function useAuth() {
 
       authStore.setUserData(tokenData);
       authStore.setIsAuth(true);
+      setUserEmail(() => tokenData.email);
+
       await push(EndPoint.MAIN);
     } catch (e) {
-      errorViewer(e);
+      errorHandler(e);
     }
   };
 
@@ -51,6 +60,7 @@ export default function useAuth() {
   const logoutHandler = () => {
     authStore.setUserData();
     authStore.setIsAuth(false);
+    setUserEmail(() => '');
     localStorage.removeItem(StorageKey.TOKEN);
     push(EndPoint.MAIN).then();
   };
@@ -60,6 +70,9 @@ export default function useAuth() {
     submitHandler,
     changeEmailHandler,
     changePasswordHandler,
+    isAuth,
+    isAdmin,
     isSubmitBlocked,
+    userEmail,
   };
 }
